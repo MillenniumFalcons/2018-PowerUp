@@ -2,38 +2,37 @@ package team3647pistons;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Timer;
+import team3647ConstantsAndFunctions.Constants;
 
 public class Shifter 
 {
-	//Double Pistons
+	public static DoubleSolenoid piston = new DoubleSolenoid(Constants.shifterPinSourceA, Constants.shifterPinSourceB);
+		
+	public static void lowGear()
+	{
+		piston.set(DoubleSolenoid.Value.kForward);
+	}
+		
+	public static void highGear()
+	{
+		piston.set(DoubleSolenoid.Value.kReverse);		
+	}
+		
 	
-		public static DoubleSolenoid piston = new DoubleSolenoid(1,0);
-		
-		public static void Shifted()
+	public static void runPiston(boolean joyValue)
+	{
+		if(joyValue)
 		{
-			piston.set(DoubleSolenoid.Value.kForward);
-		}
-		
-		public static void notShifted()
-		{
-			piston.set(DoubleSolenoid.Value.kReverse);
-			
-		}
-		
-		public static void runPiston(boolean joyValue)
-		{
-			if(joyValue)
+			if(piston.get() == DoubleSolenoid.Value.kReverse)
 			{
-				if(piston.get() == DoubleSolenoid.Value.kReverse)
-				{
-					Shifted();
-					Timer.delay(.75);
-				}
-				else
-				{
-					notShifted();
-					Timer.delay(.75);
-				}
+				lowGear();
+				Timer.delay(.75);	
 			}
-		}	
+			else
+			{
+				highGear();
+				Timer.delay(.75);
+			}			
+		}
+	}	
 }

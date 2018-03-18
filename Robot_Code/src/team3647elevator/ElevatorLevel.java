@@ -2,14 +2,14 @@ package team3647elevator;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import team3647ConstantsAndFunctions.Constants;
-import team3647ConstantsAndFunctions.Functions;
+import team3647ConstantsAndFunctions.OldFunctions;
 import team3647subsystems.Drivetrain;
 
 public class ElevatorLevel 
 {
 	public static double elevatorEncoderValue;
 	
-	public static DigitalInput bannerSensor = new DigitalInput(9); 
+	public static DigitalInput bannerSensor = new DigitalInput(Constants.elevatorBannerSensor); 
 	
 	public void setElevatorEncoder()
 	{
@@ -28,6 +28,18 @@ public class ElevatorLevel
 	public static void testElevatorEncoders()
 	{
 		System.out.println("Elevator Encoder Value: " + elevatorEncoderValue);
+	}
+	
+	public static void testBannerSensor()
+	{
+		if(reachedStop())
+		{
+			System.out.println("Banner Sensor Triggered!");
+		}
+		else
+		{
+			System.out.println("Banner Sensor Not Triggered!");
+		}
 	}
 	
 	public static boolean reachedStop()
@@ -100,11 +112,11 @@ public class ElevatorLevel
 		{
 			if(elevatorEncoderValue > Constants.pickUp)
 			{
-				Elevator.moveEleVader(Functions.switchToPickUp(elevatorEncoderValue));
+				Elevator.moveEleVader(OldFunctions.switchToPickUp(elevatorEncoderValue));
 			}
 			else
 			{
-				Elevator.moveEleVader(Functions.stopToPickUp(elevatorEncoderValue));
+				Elevator.moveEleVader(OldFunctions.stopToPickUp(elevatorEncoderValue));
 			}
 		}
 	}
@@ -119,11 +131,30 @@ public class ElevatorLevel
 		{
 			if(elevatorEncoderValue > Constants.sWitch)
 			{
-				Elevator.moveEleVader(Functions.lowerScaleToSwitch(elevatorEncoderValue));
+				Elevator.moveEleVader(OldFunctions.lowerScaleToSwitch(elevatorEncoderValue));
 			}
 			else
 			{
-				Elevator.moveEleVader(Functions.pickUpToSwitch(elevatorEncoderValue));
+				Elevator.moveEleVader(OldFunctions.pickUpToSwitch(elevatorEncoderValue));
+			}
+		}
+	}
+	
+	public static void maintainLowerScalePosition()
+	{
+		if(reachedScale())
+		{
+			Elevator.moveEleVader(.13);
+		}
+		else
+		{
+			if(elevatorEncoderValue > Constants.scale)
+			{
+				Elevator.moveEleVader(-.2);
+			}
+			else
+			{
+				Elevator.moveEleVader(OldFunctions.lowerScaleToScale(elevatorEncoderValue));
 			}
 		}
 	}
@@ -142,12 +173,8 @@ public class ElevatorLevel
 			}
 			else
 			{
-				Elevator.moveEleVader(Functions.lowerScaleToScale(elevatorEncoderValue));
+				Elevator.moveEleVader(OldFunctions.lowerScaleToScale(elevatorEncoderValue));
 			}
 		}
 	}
-	
-	
-	
-
 }

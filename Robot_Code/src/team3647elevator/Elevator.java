@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import team3647ConstantsAndFunctions.Constants;
-import team3647ConstantsAndFunctions.Functions;
+import team3647ConstantsAndFunctions.OldFunctions;
 
 public class Elevator 
 {
@@ -16,19 +16,20 @@ public class Elevator
 	 * 2. PickUp
 	 * 3. Switch
 	 * 4. Scale
+	 * 5. Lower Scale
 	 */
 	public static int aimedElevatorState;
 	
 	public static boolean stop, pickUp, sWitch, scale, lowerScale, moving, manualOverride, originalPositionButton;
 	static double overrideValue;
 	
-	public static WPI_TalonSRX leftElevator = new WPI_TalonSRX(52);
-	public static WPI_TalonSRX rightElevator = new WPI_TalonSRX(62);
+	public static WPI_TalonSRX leftElevator = new WPI_TalonSRX(Constants.leftElevatorMaster);
+	public static WPI_TalonSRX rightElevator = new WPI_TalonSRX(Constants.rightElevatorMaster);
 	
-	public static VictorSPX leftElevatorSPX = new VictorSPX(54);
-	public static VictorSPX rightElevatorSPX = new VictorSPX(57);
+	public static VictorSPX leftElevatorSPX = new VictorSPX(Constants.leftElevatorSlave);
+	public static VictorSPX rightElevatorSPX = new VictorSPX(Constants.rightElevatorSlave);
 	
-	public static DifferentialDrive elevatorDrive = new DifferentialDrive(leftElevator, rightElevator);
+	public static DifferentialDrive elevatorDrive = new DifferentialDrive(Constants.leftElevatorMaster, Constants.rightElevatorMaster);
 	
 	public static void moveEleVader(double speed)
 	{
@@ -49,8 +50,8 @@ public class Elevator
 		stop = stopButton;
 		pickUp = pickUpButton;
 		sWitch = switchButton;
-		scale = scaleButton;
 		lowerScale = LSButton;
+		scale = scaleButton;
 	}
 	
 	public static void setManualOverride(double jValue)
@@ -65,7 +66,7 @@ public class Elevator
 			manualOverride = true;
 		}
 	}
-	
+
 	public static void runDarthVader()
 	{
 		switch(elevatorState)
@@ -120,51 +121,51 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(-.2);//
+							moveEleVader(-.2);
 						}
 						break;
 					case 2:
 						if(ElevatorLevel.reachedPickUp())
 						{
-							stopEleVader();
+							ElevatorLevel.maintainPickUpPosition();
 							elevatorState = 2;
 						}
 						else
 						{
-							moveEleVader(Functions.stopToPickUp(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(OldFunctions.stopToPickUp(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case 3:
 						if(ElevatorLevel.reachedSwitch())
 						{
-							stopEleVader();
+							ElevatorLevel.maintainSwitchPosition();
 							elevatorState = 3;
 						}
 						else
 						{
-							moveEleVader(Functions.stopToSwitch(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(OldFunctions.stopToSwitch(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case 4:
 						if(ElevatorLevel.reachedScale())
 						{
-							moveEleVader(.13);
+							ElevatorLevel.maintainScalePosition();
 							elevatorState = 4;
 						}
 						else
 						{
-							moveEleVader(Functions.stopToScale(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(OldFunctions.stopToScale(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case 5:
 						if(ElevatorLevel.reachedLowerScale())
 						{
-							moveEleVader(.1);
+							ElevatorLevel.maintainLowerScalePosition();
 							elevatorState = 5;
 						}
 						else
 						{
-							moveEleVader(Functions.stopToLowerScale(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(OldFunctions.stopToLowerScale(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case -1:
@@ -207,59 +208,43 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(Functions.pickUpToStop(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(OldFunctions.pickUpToStop(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 2:
-						if(ElevatorLevel.reachedPickUp())
-						{
-							stopEleVader();
-							originalPositionButton = false;
-						}
-						else
-						{
-							if(ElevatorLevel.elevatorEncoderValue > Constants.pickUp)
-							{
-								Functions.switchToPickUp(ElevatorLevel.elevatorEncoderValue);
-							}
-							else
-							{
-								Functions.stopToPickUp(ElevatorLevel.elevatorEncoderValue);
-							}
-							
-						}
+						ElevatorLevel.maintainPickUpPosition();
 						break;
 					case 3:
 						if(ElevatorLevel.reachedSwitch())
 						{
-							stopEleVader();
+							ElevatorLevel.maintainSwitchPosition();
 							elevatorState = 3;
 						}
 						else
 						{
-							moveEleVader(Functions.pickUpToSwitch(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(OldFunctions.pickUpToSwitch(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 4:
 						if(ElevatorLevel.reachedScale())
 						{
-							moveEleVader(.13);
+							ElevatorLevel.maintainScalePosition();
 							elevatorState = 4;
 						}
 						else
 						{
-							moveEleVader(Functions.pickUpToScale(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(OldFunctions.pickUpToScale(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 5:
 						if(ElevatorLevel.reachedLowerScale())
 						{
-							moveEleVader(.1);
+							ElevatorLevel.maintainLowerScalePosition();
 							elevatorState = 5;
 						}
 						else
 						{
-							moveEleVader(Functions.pickUpToLowerScale(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(OldFunctions.pickUpToLowerScale(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case -1:
@@ -306,59 +291,44 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(Functions.switchToStop(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(OldFunctions.switchToStop(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case 2:
 						if(ElevatorLevel.reachedPickUp())
 						{
-							stopEleVader();
+							ElevatorLevel.maintainPickUpPosition();
 							elevatorState = 2;
 						}
 						else
 						{
-							moveEleVader(Functions.switchToPickUp(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(OldFunctions.switchToPickUp(ElevatorLevel.elevatorEncoderValue));
 						}
 						
 						break;
 					case 3:
-						if(ElevatorLevel.reachedSwitch())
-						{
-							stopEleVader();
-							originalPositionButton = false;
-						}
-						else
-						{
-							if(ElevatorLevel.elevatorEncoderValue > Constants.sWitch)
-							{
-								moveEleVader(Functions.scaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
-							}
-							else
-							{
-								moveEleVader(Functions.pickUpToSwitch(ElevatorLevel.elevatorEncoderValue));
-							}
-						}
+						ElevatorLevel.maintainSwitchPosition();
 						break;
 					case 4:
 						if(ElevatorLevel.reachedScale())
 						{
-							moveEleVader(.13);
+							ElevatorLevel.maintainScalePosition();
 							elevatorState = 4;
 						}
 						else
 						{
-							moveEleVader(Functions.switchToScale(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(OldFunctions.switchToScale(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 5:
 						if(ElevatorLevel.reachedLowerScale())
 						{
-							moveEleVader(.1);
+							ElevatorLevel.maintainLowerScalePosition();
 							elevatorState = 5;
 						}
 						else
 						{
-							moveEleVader(Functions.switchToLowerScale(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(OldFunctions.switchToLowerScale(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case -1:
@@ -405,60 +375,44 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(Functions.scaleToStop(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(OldFunctions.scaleToStop(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 2:
 						if(ElevatorLevel.reachedPickUp())
 						{
-							stopEleVader();
+							ElevatorLevel.maintainPickUpPosition();
 							elevatorState = 2;
 						}
 						else
 						{
-							moveEleVader(Functions.scaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(OldFunctions.scaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
 						}
 						
 						break;
 					case 3:
 						if(ElevatorLevel.reachedSwitch())
 						{
-							stopEleVader();
+							ElevatorLevel.maintainSwitchPosition();
 							elevatorState = 3;
 						}
 						else
 						{
-							moveEleVader(Functions.scaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(OldFunctions.scaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 4:
-						if(ElevatorLevel.reachedScale())
-						{
-							moveEleVader(.12);
-							originalPositionButton = false;
-						}
-						else
-						{
-							if(ElevatorLevel.elevatorEncoderValue > Constants.scale)
-							{
-								moveEleVader(-.03);//
-							}
-							else
-							{
-								moveEleVader(Functions.switchToScale(ElevatorLevel.elevatorEncoderValue));//
-							}
-							
-						}
+						ElevatorLevel.maintainScalePosition();
 						break;
 					case 5:
 						if(ElevatorLevel.reachedLowerScale())
 						{
-							moveEleVader(.1);
+							ElevatorLevel.maintainLowerScalePosition();
 							elevatorState = 5;
 						}
 						else
 						{
-							moveEleVader(Functions.scaleToLowerScale(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(OldFunctions.scaleToLowerScale(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case -1:
@@ -505,57 +459,57 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(Functions.lowerScaleToStop(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(OldFunctions.lowerScaleToStop(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 2:
 						if(ElevatorLevel.reachedPickUp())
 						{
-							stopEleVader();
+							ElevatorLevel.maintainPickUpPosition();
 							elevatorState = 2;
 						}
 						else
 						{
-							moveEleVader(Functions.lowerScaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(OldFunctions.lowerScaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
 						}
 						
 						break;
 					case 3:
 						if(ElevatorLevel.reachedSwitch())
 						{
-							stopEleVader();
+							ElevatorLevel.maintainSwitchPosition();
 							elevatorState = 3;
 						}
 						else
 						{
-							moveEleVader(Functions.lowerScaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(OldFunctions.lowerScaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 4:
 						if(ElevatorLevel.reachedScale())
 						{
-							moveEleVader(.13);
+							ElevatorLevel.maintainScalePosition();
 							elevatorState = 3;
 						}
 						else
 						{
-							moveEleVader(Functions.lowerScaleToScale(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(OldFunctions.lowerScaleToScale(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 5:
 						if(ElevatorLevel.reachedLowerScale())
 						{
-							moveEleVader(.1);
+							ElevatorLevel.maintainLowerScalePosition();
 						}
 						else
 						{
 							if(ElevatorLevel.elevatorEncoderValue > Constants.lowerScale)
 							{
-								moveEleVader(Functions.scaleToLowerScale(ElevatorLevel.elevatorEncoderValue));//
+								moveEleVader(OldFunctions.scaleToLowerScale(ElevatorLevel.elevatorEncoderValue));//
 							}
 							else
 							{
-								moveEleVader(Functions.switchToLowerScale(ElevatorLevel.elevatorEncoderValue));//
+								moveEleVader(OldFunctions.switchToLowerScale(ElevatorLevel.elevatorEncoderValue));//
 							}
 						}
 						break;
