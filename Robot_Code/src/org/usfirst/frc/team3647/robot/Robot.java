@@ -10,6 +10,7 @@ import team3647elevator.Elevator;
 import team3647elevator.ElevatorLevel;
 import team3647elevator.IntakeWheels;
 import team3647pistons.Intake;
+import team3647pistons.Compressor007;
 import team3647pistons.Forks;
 import team3647pistons.Shifter;
 import team3647subsystems.Drivetrain;
@@ -136,14 +137,10 @@ public class Robot extends IterativeRobot {
 
 	public void runPistons()
 	{
-		//Clamps.runPiston(joy.buttonA);
-//		if(Drivetrain.leftSRX.get() == 0 && Drivetrain.rightSRX.get() == 0 && Elevator.elevatorState == Elevator.aimedElevatorState && Elevator.aimedElevatorState!=-1)
-//		{
-			Intake.runIntake(joy.rightBumper1);
-			Forks.runPiston(joy.buttonX);
-			Shifter.runPiston(joy.buttonY);
-		//}
-		
+		Intake.runIntake(joy.rightBumper1);
+		Forks.runPiston(joy.buttonX);
+		Shifter.runPiston(joy.buttonY);
+		Compressor007.runCompressor();
 	}
 	
 	public void runDrivetrain()

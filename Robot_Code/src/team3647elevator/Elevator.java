@@ -21,7 +21,7 @@ public class Elevator
 	public static int aimedElevatorState;
 	
 	public static boolean stop, pickUp, sWitch, scale, lowerScale, moving, manualOverride, originalPositionButton;
-	static double overrideValue;
+	public static double overrideValue;
 	
 	public static WPI_TalonSRX leftElevator = new WPI_TalonSRX(Constants.leftElevatorMaster);
 	public static WPI_TalonSRX rightElevator = new WPI_TalonSRX(Constants.rightElevatorMaster);
