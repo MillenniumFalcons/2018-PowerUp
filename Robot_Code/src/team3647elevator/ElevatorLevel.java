@@ -2,7 +2,7 @@ package team3647elevator;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import team3647ConstantsAndFunctions.Constants;
-import team3647ConstantsAndFunctions.OldFunctions;
+import team3647ConstantsAndFunctions.Functions;
 import team3647subsystems.Drivetrain;
 
 public class ElevatorLevel 
@@ -112,11 +112,11 @@ public class ElevatorLevel
 		{
 			if(elevatorEncoderValue > Constants.pickUp)
 			{
-				Elevator.moveEleVader(OldFunctions.switchToPickUp(elevatorEncoderValue));
+				Elevator.moveEleVader(Functions.switchToPickUp(elevatorEncoderValue));
 			}
 			else
 			{
-				Elevator.moveEleVader(OldFunctions.stopToPickUp(elevatorEncoderValue));
+				Elevator.moveEleVader(Functions.stopToPickUp(elevatorEncoderValue));
 			}
 		}
 	}
@@ -131,11 +131,11 @@ public class ElevatorLevel
 		{
 			if(elevatorEncoderValue > Constants.sWitch)
 			{
-				Elevator.moveEleVader(OldFunctions.lowerScaleToSwitch(elevatorEncoderValue));
+				Elevator.moveEleVader(Functions.lowerScaleToSwitch(elevatorEncoderValue));
 			}
 			else
 			{
-				Elevator.moveEleVader(OldFunctions.pickUpToSwitch(elevatorEncoderValue));
+				Elevator.moveEleVader(Functions.pickUpToSwitch(elevatorEncoderValue));
 			}
 		}
 	}
@@ -154,7 +154,7 @@ public class ElevatorLevel
 			}
 			else
 			{
-				Elevator.moveEleVader(OldFunctions.lowerScaleToScale(elevatorEncoderValue));
+				Elevator.moveEleVader(Functions.lowerScaleToScale(elevatorEncoderValue));
 			}
 		}
 	}
@@ -173,7 +173,7 @@ public class ElevatorLevel
 			}
 			else
 			{
-				Elevator.moveEleVader(OldFunctions.lowerScaleToScale(elevatorEncoderValue));
+				Elevator.moveEleVader(Functions.lowerScaleToScale(elevatorEncoderValue));
 			}
 		}
 	}

@@ -18,7 +18,6 @@ public class Forks
 		piston.set(DoubleSolenoid.Value.kReverse);
 	}
 	
-	
 	public static void runPiston(boolean joyvalue) 
 	{
 		if(joyvalue)

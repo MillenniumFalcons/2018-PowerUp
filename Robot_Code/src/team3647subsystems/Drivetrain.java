@@ -17,6 +17,9 @@ public class Drivetrain
 	public static double aimedRatio, currentRatio, sum;
 	public static boolean withinRange;
 	
+	public static double initialCorrection = .1;//-.04
+	public static double correction = .05;
+	
 	public static WPI_TalonSRX leftSRX = new WPI_TalonSRX(Constants.leftMaster);
 	public static WPI_TalonSRX rightSRX = new WPI_TalonSRX(Constants.rightMaster);
 	
@@ -35,7 +38,6 @@ public class Drivetrain
 		leftSPX1.follow(leftSRX);
 		leftSPX2.follow(leftSRX);    
 		rightSPX1.follow(rightSRX);
-		
 		rightSPX2.follow(rightSRX);
 	}
 	
@@ -52,295 +54,149 @@ public class Drivetrain
 		drive.tankDrive(lYValue, rYValue, false);
 	}
 	
-//	public static void driveForw(double lValue, double rValue, double speed)
-//	{
-//		if(Math.abs(lValue - rValue) < 30)
-//		{
-//			FRCarcadedrive(speed, 0);
-//		}
-//		else if(rValue > lValue)
-//		{
-//			if(Math.abs(lValue - rValue) < 45)
-//			{
-//				FRCarcadedrive(speed, .15);
-//			}
-//			else if(Math.abs(lValue - rValue) < 60)
-//			{
-//				FRCarcadedrive(speed, .2);
-//			}
-//			else if(Math.abs(lValue - rValue) < 80)
-//			{
-//				FRCarcadedrive(speed, .25);
-//			}
-//			else if(Math.abs(lValue - rValue) < 100)
-//			{
-//				FRCarcadedrive(speed, .3);
-//			}
-//			else if(Math.abs(lValue - rValue) < 125)
-//			{
-//				FRCarcadedrive(speed, .35);
-//			}
-//			else if(Math.abs(lValue - rValue) < 150)
-//			{
-//				FRCarcadedrive(speed, .4);
-//			}
-//			else
-//			{
-//				FRCarcadedrive(speed, .5);
-//			}
-//		}
-//		else
-//		{
-//			if(Math.abs(lValue - rValue) < 45)
-//			{
-//				FRCarcadedrive(speed, .05);
-//			}
-//			else if(Math.abs(lValue - rValue) < 60)
-//			{
-//				FRCarcadedrive(speed, 0);
-//			}
-//			else if(Math.abs(lValue - rValue) < 80)
-//			{
-//				FRCarcadedrive(speed, -.05);
-//			}
-//			else if(Math.abs(lValue - rValue) < 100)
-//			{
-//				FRCarcadedrive(speed, -.1);
-//			}
-//			else if(Math.abs(lValue - rValue) < 125)
-//			{
-//				FRCarcadedrive(speed, -.15);
-//			}
-//			else if(Math.abs(lValue - rValue) < 150)
-//			{
-//				FRCarcadedrive(speed, -.2);
-//			}
-//			else
-//			{
-//				FRCarcadedrive(speed, -.3);
-//			}
-//		}
-//	}
-//	
-//	public static void  driveBack(double lValue, double rValue, double speed)
-//	{
-//		lValue = Math.abs(lValue);
-//		rValue = Math.abs(rValue);
-//		
-//		if(Math.abs(lValue - rValue) < 30)
-//		{
-//			FRCarcadedrive(speed, -.1);
-//		}
-//		else if(rValue > lValue)
-//		{
-//			if(Math.abs(lValue - rValue) < 45)
-//			{
-//				FRCarcadedrive(speed, -.15);
-//			}
-//			else if(Math.abs(lValue - rValue) < 60)
-//			{
-//				FRCarcadedrive(speed, -.2);
-//			}
-//			else if(Math.abs(lValue - rValue) < 80)
-//			{
-//				FRCarcadedrive(speed, -.25);
-//			}
-//			else if(Math.abs(lValue - rValue) < 100)
-//			{
-//				FRCarcadedrive(speed, -.3);
-//			}
-//			else if(Math.abs(lValue - rValue) < 125)
-//			{
-//				FRCarcadedrive(speed, -.35);
-//			}
-//			else if(Math.abs(lValue - rValue) < 150)
-//			{
-//				FRCarcadedrive(speed, -.4);
-//			}
-//			else
-//			{
-//				FRCarcadedrive(speed, -.5);
-//			}
-//		}
-//		else
-//		{
-//			if(Math.abs(lValue - rValue) < 45)
-//			{
-//				FRCarcadedrive(speed, -.05);
-//			}
-//			else if(Math.abs(lValue - rValue) < 60)
-//			{
-//				FRCarcadedrive(speed, 0);
-//			}
-//			else if(Math.abs(lValue - rValue) < 80)
-//			{
-//				FRCarcadedrive(speed, .05);
-//			}
-//			else if(Math.abs(lValue - rValue) < 100)
-//			{
-//				FRCarcadedrive(speed, .1);
-//			}
-//			else if(Math.abs(lValue - rValue) < 125)
-//			{
-//				FRCarcadedrive(speed, .15);
-//			}
-//			else if(Math.abs(lValue - rValue) < 150)
-//			{
-//				FRCarcadedrive(speed, .2);
-//			}
-//			else
-//			{
-//				FRCarcadedrive(speed, .3);
-//			}
-//		}
-//	}
-
 	public static void driveForw(double lValue, double rValue, double speed)
 	{
 		if(Math.abs(lValue - rValue) < 30)
 		{
-			FRCarcadedrive(speed, -.05);
+			FRCarcadedrive(speed, initialCorrection);
 		}
 		else if(rValue > lValue)
 		{
 			if(Math.abs(lValue - rValue) < 45)
 			{
-				FRCarcadedrive(speed, 0);
+				FRCarcadedrive(speed, initialCorrection + (1 *correction));
 			}
 			else if(Math.abs(lValue - rValue) < 60)
 			{
-				FRCarcadedrive(speed, 0.05);
+				FRCarcadedrive(speed, initialCorrection + (2 *correction));
 			}
 			else if(Math.abs(lValue - rValue) < 80)
 			{
-				FRCarcadedrive(speed, .1);
+				FRCarcadedrive(speed, initialCorrection + (3 *correction));
 			}
 			else if(Math.abs(lValue - rValue) < 100)
 			{
-				FRCarcadedrive(speed, .15);
+				FRCarcadedrive(speed, initialCorrection + (4 *correction));
 			}
 			else if(Math.abs(lValue - rValue) < 125)
 			{
-				FRCarcadedrive(speed, .2);
+				FRCarcadedrive(speed, initialCorrection + (5 *correction));
 			}
 			else if(Math.abs(lValue - rValue) < 150)
 			{
-				FRCarcadedrive(speed, .25);
+				FRCarcadedrive(speed, initialCorrection + (6 *correction));
 			}
 			else
 			{
-				FRCarcadedrive(speed, .35);
+				FRCarcadedrive(speed, initialCorrection + (8 *correction));
 			}
-		
 		}
 		else
 		{
 			if(Math.abs(lValue - rValue) < 45)
 			{
-				FRCarcadedrive(speed, -.1);
+				FRCarcadedrive(speed, initialCorrection - (1 *correction));
 			}
 			else if(Math.abs(lValue - rValue) < 60)
 			{
-				FRCarcadedrive(speed, -0.15);
+				FRCarcadedrive(speed, initialCorrection - (2 *correction));
 			}
 			else if(Math.abs(lValue - rValue) < 80)
 			{
-				FRCarcadedrive(speed, -.2);
+				FRCarcadedrive(speed, initialCorrection - (3 *correction));
 			}
 			else if(Math.abs(lValue - rValue) < 100)
 			{
-				FRCarcadedrive(speed, -.25);
+				FRCarcadedrive(speed, initialCorrection - (4 *correction));
 			}
 			else if(Math.abs(lValue - rValue) < 125)
 			{
-				FRCarcadedrive(speed, -.3);
+				FRCarcadedrive(speed, initialCorrection - (5 *correction));
 			}
 			else if(Math.abs(lValue - rValue) < 150)
 			{
-				FRCarcadedrive(speed, -.35);
+				FRCarcadedrive(speed, initialCorrection - (6 *correction));
 			}
 			else
 			{
-				FRCarcadedrive(speed, -.4);
+				FRCarcadedrive(speed, initialCorrection - (8 *correction));
 			}
 		}
-		//FRCarcadedrive(speed, 0);
 	}
 	
 	public static void  driveBack(double lValue, double rValue, double speed)
 	{
-//		lValue = Math.abs(lValue);
-//		rValue = Math.abs(rValue);
-//		
-//		if(Math.abs(lValue - rValue) < 30)
-//		{
-//			FRCarcadedrive(speed, 0);
-//		}
-//		else if(rValue > lValue)
-//		{
-//			if(Math.abs(lValue - rValue) < 45)
-//			{
-//				FRCarcadedrive(speed, -.05);
-//			}
-//			else if(Math.abs(lValue - rValue) < 60)
-//			{
-//				FRCarcadedrive(speed, -.1);
-//			}
-//			else if(Math.abs(lValue - rValue) < 80)
-//			{
-//				FRCarcadedrive(speed, -.15);
-//			}
-//			else if(Math.abs(lValue - rValue) < 100)
-//			{
-//				FRCarcadedrive(speed, -.2);
-//			}
-//			else if(Math.abs(lValue - rValue) < 125)
-//			{
-//				FRCarcadedrive(speed, -.25);
-//			}
-//			else if(Math.abs(lValue - rValue) < 150)
-//			{
-//				FRCarcadedrive(speed, -.3);
-//			}
-//			else
-//			{
-//				FRCarcadedrive(speed, -.4);
-//			}
-//		}
-//		else
-//		{
-//			if(Math.abs(lValue - rValue) < 45)
-//			{
-//				FRCarcadedrive(speed, .05);
-//			}
-//			else if(Math.abs(lValue - rValue) < 60)
-//			{
-//				FRCarcadedrive(speed, .1);
-//			}
-//			else if(Math.abs(lValue - rValue) < 80)
-//			{
-//				FRCarcadedrive(speed, .15);
-//			}
-//			else if(Math.abs(lValue - rValue) < 100)
-//			{
-//				FRCarcadedrive(speed, .2);
-//			}
-//			else if(Math.abs(lValue - rValue) < 125)
-//			{
-//				FRCarcadedrive(speed, .25);
-//			}
-//			else if(Math.abs(lValue - rValue) < 150)
-//			{
-//				FRCarcadedrive(speed, .3);
-//			}
-//			else
-//			{
-//				FRCarcadedrive(speed, .4);
-//			}
-//		}
+		lValue = Math.abs(lValue);
+		rValue = Math.abs(rValue);
 		
-		FRCarcadedrive(speed, 0);
+		if(Math.abs(lValue - rValue) < 30)
+		{
+			FRCarcadedrive(speed, -initialCorrection);
+		}
+		else if(rValue > lValue)
+		{
+			if(Math.abs(lValue - rValue) < 45)
+			{
+				FRCarcadedrive(speed, -initialCorrection - (1 * correction));
+			}
+			else if(Math.abs(lValue - rValue) < 60)
+			{
+				FRCarcadedrive(speed, -initialCorrection - (2 * correction));
+			}
+			else if(Math.abs(lValue - rValue) < 80)
+			{
+				FRCarcadedrive(speed, -initialCorrection - (3 * correction));
+			}
+			else if(Math.abs(lValue - rValue) < 100)
+			{
+				FRCarcadedrive(speed, -initialCorrection - (4 * correction));
+			}
+			else if(Math.abs(lValue - rValue) < 125)
+			{
+				FRCarcadedrive(speed, -initialCorrection - (5 * correction));
+			}
+			else if(Math.abs(lValue - rValue) < 150)
+			{
+				FRCarcadedrive(speed, -initialCorrection - (6 * correction));
+			}
+			else
+			{
+				FRCarcadedrive(speed, -initialCorrection - (8 * correction));
+			}
+		}
+		else
+		{
+			if(Math.abs(lValue - rValue) < 45)
+			{
+				FRCarcadedrive(speed, -initialCorrection + (1 * correction));
+			}
+			else if(Math.abs(lValue - rValue) < 60)
+			{
+				FRCarcadedrive(speed, -initialCorrection + (2 * correction));
+			}
+			else if(Math.abs(lValue - rValue) < 80)
+			{
+				FRCarcadedrive(speed, -initialCorrection + (3 * correction));
+			}
+			else if(Math.abs(lValue - rValue) < 100)
+			{
+				FRCarcadedrive(speed, -initialCorrection + (4 * correction));
+			}
+			else if(Math.abs(lValue - rValue) < 125)
+			{
+				FRCarcadedrive(speed, -initialCorrection + (5 * correction));
+			}
+			else if(Math.abs(lValue - rValue) < 150)
+			{
+				FRCarcadedrive(speed, -initialCorrection + (6 * correction));
+			}
+			else
+			{
+				FRCarcadedrive(speed, -initialCorrection + (8 * correction));
+			}
+		}
 	}
+
 	static double drift;
 	static String movingStatus, driftStatus;
 	public static void arcadeDrive(double leftEnc, double rightEnc, double yValue, double xValue)
@@ -415,92 +271,6 @@ public class Drivetrain
 	 			Encoders.resetEncoders();
 	 			break;
 	 	}
-	}
-	
-	public static void turnLeft(double lValue, double rValue)//facing left at end
-	{
-		lValue = Math.abs(lValue);
-		rValue = Math.abs(rValue);
-		if(Math.abs(lValue - rValue) < 24)
-		{
-			drive.tankDrive(-.6, .6, false);
-		}
-		else
-		{
-			if(lValue > rValue)
-			{
-				if(Math.abs(lValue - rValue) < 40)
-				{
-					drive.tankDrive(-.5, .7, false);
-				}
-				else if(Math.abs(lValue - rValue) < 70)
-				{
-					drive.tankDrive(-.4, .8, false);
-				}
-				else
-				{
-					drive.tankDrive(-.3, .9, false);
-				}
-			}
-			else
-			{
-				if(Math.abs(lValue - rValue) < 40)
-				{
-					drive.tankDrive(-.7, .5, false);
-				}
-				else if(Math.abs(lValue - rValue) < 70)
-				{
-					drive.tankDrive(-.8, .4, false);
-				}
-				else
-				{
-					drive.tankDrive(-.9, .3, false);
-				}
-			}
-		}
-	}
-	
-	public static void turnRight(double lValue, double rValue)
-	{
-		lValue = Math.abs(lValue);
-		rValue = Math.abs(rValue);
-		if(Math.abs(lValue - rValue) < 24)
-		{
-			drive.tankDrive(.6, - .6, false);
-		}
-		else
-		{
-			if(lValue > rValue)
-			{
-				if(Math.abs(lValue - rValue) < 40)
-				{
-					drive.tankDrive(.5, - .7, false);
-				}
-				else if(Math.abs(lValue - rValue) < 70)
-				{
-					drive.tankDrive(.4, - .8, false);
-				}
-				else
-				{
-					drive.tankDrive(.3, - .9, false);
-				}
-			}
-			else
-			{
-				if(Math.abs(lValue - rValue) < 40)
-				{
-					drive.tankDrive(.7, - .5, false);
-				}
-				else if(Math.abs(lValue - rValue) < 70)
-				{
-					drive.tankDrive(.8, - .4, false);
-				}
-				else
-				{
-					drive.tankDrive(.9, - .3, false);
-				}
-			}
-		}
 	}
 	
 	public static boolean reachedDistance(double leftEnc, double rightEnc, double distance)

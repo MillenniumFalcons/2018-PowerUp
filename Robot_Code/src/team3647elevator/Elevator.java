@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import team3647ConstantsAndFunctions.Constants;
-import team3647ConstantsAndFunctions.OldFunctions;
+import team3647ConstantsAndFunctions.Functions;
 
 public class Elevator 
 {
@@ -132,7 +132,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.stopToPickUp(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(Functions.stopToPickUp(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case 3:
@@ -143,7 +143,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.stopToSwitch(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(Functions.stopToSwitch(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case 4:
@@ -154,7 +154,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.stopToScale(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(Functions.stopToScale(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case 5:
@@ -165,7 +165,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.stopToLowerScale(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(Functions.stopToLowerScale(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case -1:
@@ -208,7 +208,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.pickUpToStop(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(Functions.pickUpToStop(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 2:
@@ -222,7 +222,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.pickUpToSwitch(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(Functions.pickUpToSwitch(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 4:
@@ -233,7 +233,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.pickUpToScale(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(Functions.pickUpToScale(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 5:
@@ -244,7 +244,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.pickUpToLowerScale(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(Functions.pickUpToLowerScale(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case -1:
@@ -291,7 +291,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.switchToStop(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(Functions.switchToStop(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case 2:
@@ -302,7 +302,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.switchToPickUp(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(Functions.switchToPickUp(ElevatorLevel.elevatorEncoderValue));
 						}
 						
 						break;
@@ -317,7 +317,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.switchToScale(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(Functions.switchToScale(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 5:
@@ -328,7 +328,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.switchToLowerScale(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(Functions.switchToLowerScale(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case -1:
@@ -375,7 +375,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.scaleToStop(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(Functions.scaleToStop(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 2:
@@ -386,7 +386,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.scaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(Functions.scaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
 						}
 						
 						break;
@@ -398,7 +398,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.scaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(Functions.scaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 4:
@@ -412,7 +412,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.scaleToLowerScale(ElevatorLevel.elevatorEncoderValue));
+							moveEleVader(Functions.scaleToLowerScale(ElevatorLevel.elevatorEncoderValue));
 						}
 						break;
 					case -1:
@@ -459,7 +459,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.lowerScaleToStop(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(Functions.lowerScaleToStop(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 2:
@@ -470,7 +470,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.lowerScaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(Functions.lowerScaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
 						}
 						
 						break;
@@ -482,7 +482,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.lowerScaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(Functions.lowerScaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 4:
@@ -493,7 +493,7 @@ public class Elevator
 						}
 						else
 						{
-							moveEleVader(OldFunctions.lowerScaleToScale(ElevatorLevel.elevatorEncoderValue));//
+							moveEleVader(Functions.lowerScaleToScale(ElevatorLevel.elevatorEncoderValue));//
 						}
 						break;
 					case 5:
@@ -505,11 +505,11 @@ public class Elevator
 						{
 							if(ElevatorLevel.elevatorEncoderValue > Constants.lowerScale)
 							{
-								moveEleVader(OldFunctions.scaleToLowerScale(ElevatorLevel.elevatorEncoderValue));//
+								moveEleVader(Functions.scaleToLowerScale(ElevatorLevel.elevatorEncoderValue));//
 							}
 							else
 							{
-								moveEleVader(OldFunctions.switchToLowerScale(ElevatorLevel.elevatorEncoderValue));//
+								moveEleVader(Functions.switchToLowerScale(ElevatorLevel.elevatorEncoderValue));//
 							}
 						}
 						break;
@@ -655,5 +655,4 @@ public class Elevator
 		}
 	}
 	
-
 }
