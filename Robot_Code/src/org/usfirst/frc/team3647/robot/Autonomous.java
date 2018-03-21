@@ -142,6 +142,67 @@ public class Autonomous
 				ElevatorLevel.maintainPickUpPosition();
 				if(!Drivetrain.reachedDistance(lValue, rValue, 5000))
 				{
+					Drivetrain.driveBack(lValue, rValue, .74);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 7000))
+				{
+					Drivetrain.driveBack(lValue, rValue, .3);
+				}
+				else
+				{
+					currentState = 4;
+				}
+				break;
+			case 4:
+				ElevatorLevel.maintainPickUpPosition();
+				Drivetrain.stop();
+				break;
+		}
+	}
+	
+	public static void test3(double lValue, double rValue)
+	{
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.start();
+				currentState = 1;
+				break;
+			case 1:
+				time = stopWatch.get();
+				if(lValue == 0 && rValue == 0 && time >= 2)
+				{
+					
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					currentState = 2;
+				}
+				else if(lValue == 0 && rValue == 0 && ElevatorLevel.reachedStop())
+				{
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					currentState = 2;
+				}
+				else
+				{
+					Elevator.moveEleVader(-.23);
+					Encoders.resetEncoders();
+				}
+				break;
+			case 2:
+				if(ElevatorLevel.reachedPickUp())
+				{
+					currentState = 3;
+				}
+				else
+				{
+					Elevator.moveEleVader(Functions.stopToPickUp(ElevatorLevel.elevatorEncoderValue));
+				}
+				break;
+			case 3:
+				ElevatorLevel.maintainPickUpPosition();
+				if(!Drivetrain.reachedDistance(lValue, rValue, 5000))
+				{
 					Drivetrain.driveForw(lValue, rValue, .74);
 				}
 				else if(!Drivetrain.reachedDistance(lValue, rValue, 7000))
@@ -156,13 +217,14 @@ public class Autonomous
 				}
 				break;
 			case 4:
+				ElevatorLevel.maintainPickUpPosition();
 				lValue -= prevLeftEncoder;
 				rValue -= prevRightEncoder;
 				double dist = 5400;
 				double ratio = 3.26;
 				if(rValue < dist)
 				{
-					rSSpeed = Functions.test2Turn(rValue, dist);
+					rSSpeed = Functions.test3Turn(rValue, dist);
 					lSSpeed = rSSpeed/ratio;
 					Drivetrain.goStraightLeft(lValue, rValue, ratio, lSSpeed, rSSpeed, .06);
 				}
@@ -172,7 +234,8 @@ public class Autonomous
 				}
 				break;
 			case 5:
-				
+				ElevatorLevel.maintainPickUpPosition();
+				Drivetrain.stop();
 				break;
 		}
 	}
