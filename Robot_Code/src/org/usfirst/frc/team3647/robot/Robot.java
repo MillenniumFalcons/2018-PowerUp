@@ -38,6 +38,7 @@ public class Robot extends IterativeRobot {
 			Encoders.resetEncoders();
 			ElevatorLevel.resetElevatorEncoders();
 			Drivetrain.drivetrainInitialization();
+			Autonomous.stopWatch.start();
 		}
 		catch(Throwable t)
 		{
@@ -103,7 +104,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() 
 	{
-//		updateJoysticks();
+		updateJoysticks();
 //		eleVader.setElevatorEncoder();
 //		Shifter.runPiston(joy.buttonY);
 //		runDrivetrain();
@@ -111,7 +112,10 @@ public class Robot extends IterativeRobot {
 //		ElevatorLevel.testElevatorEncoders();
 //		ElevatorLevel.testBannerSensor();
 //		Encoders.testEncoders();
-		ElevatorLevel.testBannerSensor();
+//		runDrivetrain();
+//		Intake.runIntake(joy.rightBumper1);
+//		IntakeWheels.runIntake(joy.leftTrigger, joy.rightTrigger, false, 0, 0);
+		Autonomous.testTimer(joy.buttonA);
 	}
 	
 	
