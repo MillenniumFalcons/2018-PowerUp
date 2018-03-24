@@ -26,11 +26,16 @@ public class Constants
 	public final static int leftElevatorSlave = 54;
 	public final static int rightElevatorSlave = 57;
 	public final static int elevatorBannerSensor = 9;
+	public final static int intakeBannerSensor = 8;
 	
 	public static final double stop = 0;
 	public static final double pickUp = 3000;
 	public static final double sWitch = 13000;
 	public static final double lowerScale = 36300;
 	public static final double scale = 42500;
-
+	
+	//Auto Constants
+	public static final double lrandrrFirstStraightDist = 21936.6;
+	public static final double lrandrrFirstTurnToScaleDist = 5400;
+	public static final double lrandrrFirstTurnToScaleRatio = 3.26;
 }

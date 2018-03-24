@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3647.robot;
 
 import edu.wpi.first.wpilibj.Timer;
+import team3647ConstantsAndFunctions.Constants;
 import team3647ConstantsAndFunctions.Functions;
 import team3647elevator.Elevator;
 import team3647elevator.ElevatorLevel;
@@ -402,6 +403,63 @@ public class Autonomous
 			case 5:
 				ElevatorLevel.maintainPickUpPosition();
 				Drivetrain.stop();
+				break;
+		}
+	}
+	
+	public static void rr(double lValue, double rValue)
+	{
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.start();
+				currentState = 1;
+				break;
+			case 1:
+				time = stopWatch.get();
+				if(lValue == 0 && rValue == 0 && time >= 2)
+				{
+					
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					currentState = 2;
+					stopWatch.stop();
+				}
+				else if(lValue == 0 && rValue == 0 && ElevatorLevel.reachedStop())
+				{
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					currentState = 2;
+					stopWatch.stop();
+				}
+				else
+				{
+					Elevator.moveEleVader(-.23);
+					Encoders.resetEncoders();
+				}
+				break;
+			case 2:
+				if(ElevatorLevel.reachedPickUp())
+				{
+					currentState = 3;
+				}
+				else
+				{
+					Elevator.moveEleVader(Functions.stopToPickUp(ElevatorLevel.elevatorEncoderValue));
+				}
+				break;
+			case 3:
+				Functions.lrandrrElevatorForFirstScale(lValue, rValue, ElevatorLevel.elevatorEncoderValue);
+				if(Functions.lrandrrSpeedForFirstScale(lValue, rValue, Constants.lrandrrFirstStraightDist) != 0)
+				{
+					Drivetrain.driveForw(lValue, rValue, Functions.lrandrrSpeedForFirstScale(lValue, rValue, Constants.lrandrrFirstStraightDist));
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					currentState = 4;
+				}
 				break;
 		}
 	}

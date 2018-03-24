@@ -9,8 +9,7 @@ public class ElevatorLevel
 {
 	public static double elevatorEncoderValue;
 	
-//	public static DigitalInput bannerSensor = new DigitalInput(Constants.elevatorBannerSensor); 
-	public static DigitalInput bannerSensor = new DigitalInput(8);
+	public static DigitalInput bannerSensor = new DigitalInput(Constants.elevatorBannerSensor); 
 	
 	public void setElevatorEncoder()
 	{

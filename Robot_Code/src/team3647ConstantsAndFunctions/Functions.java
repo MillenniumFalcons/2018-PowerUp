@@ -1,7 +1,12 @@
 package team3647ConstantsAndFunctions;
 
+import team3647elevator.Elevator;
+import team3647elevator.ElevatorLevel;
+
 public class Functions 
 {
+	static double avg;
+	
 	public static double stopToPickUp(double eValue)
 	{
 		eValue*=(-0.00005);
@@ -253,6 +258,80 @@ public class Functions
 		else if(eValue < dist)
 		{
 			return -.5;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+	public static void lrandrrElevatorForFirstScale(double lValue, double rValue, double eValue)
+	{
+		avg = (lValue + rValue)/2.0;
+		if(avg < 10000)
+		{
+			ElevatorLevel.maintainPickUpPosition();
+		}
+		else
+		{
+			if(eValue < 8000)
+			{
+				Elevator.moveEleVader(.4);
+			}
+			else if(!ElevatorLevel.reachedSwitch())
+			{
+				Elevator.moveEleVader(.3);
+			}
+			else
+			{
+				ElevatorLevel.maintainSwitchPosition();
+			}
+			
+		}
+	}
+	
+	public static double lrandrrSpeedForFirstScale(double lValue, double rValue, double dist)
+	{
+		avg = (lValue + rValue)/2.0;
+		if(avg < 2000)
+		{
+			return .6;
+		}
+		else if(avg < 5000)
+		{
+			return .74;
+		}
+		else if(avg < 8000)
+		{
+			return .87;
+		}
+		else if(avg < 15000)
+		{
+			return 1;
+		}
+		else if(avg < (dist -2000))
+		{
+			return .74;
+		}
+		else if(avg < dist)
+		{
+			return .34;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+	public static double lrandrrFirstTurnToScale(double eValue, double dist)
+	{
+		if(eValue < (dist - 2000))
+		{
+			return .7;
+		}
+		else if(eValue < dist)
+		{
+			return .5;
 		}
 		else
 		{
