@@ -13,12 +13,6 @@ public class Encoders
 		rightEncoderValue = -Drivetrain.rightSRX.getSensorCollection().getQuadraturePosition();
 	}
 	
-	public void setEncoderValuesInInches()
-	{
-		leftEncoderValue = Drivetrain.leftSRX.getSensorCollection().getQuadraturePosition() * 0.00347222222222;
-		rightEncoderValue = -Drivetrain.rightSRX.getSensorCollection().getQuadraturePosition() * 0.00347222222222;
-	}
-	
 	public static void resetEncoders()
 	{
 		Drivetrain.leftSRX.getSensorCollection().setQuadraturePosition(0, 10);

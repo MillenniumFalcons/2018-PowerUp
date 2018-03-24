@@ -11,6 +11,8 @@ public class IntakeWheels
 	public static VictorSPX rightIntakeMotor = new VictorSPX(Constants.rightIntakePin);
 	public static VictorSPX leftIntakeMotor = new VictorSPX(Constants.leftIntakePin);
 	
+	public static DigitalInput bannerSensor = new DigitalInput(Constants.intakeBannerSensor);
+	
 	public static void runIntake(double lTrigger, double rTrigger, boolean auto, double lSpeed, double rSpeed)
 	{
 		if(!auto)
