@@ -461,659 +461,659 @@ public class OldFunctions
 		return -eValue;
 	}
 	
-	public static double uTurnForFirstCubeRightSideBigJank(double eValue)
-	{
-		if(eValue<= AutoConstants.UTurntoFirstCubeJankRightSideRatio - 1800)
-		{
-			eValue*=(-0.0000388888888889);
-			eValue+=1;
-			return -eValue;
-		}
-		else if(eValue<= AutoConstants.UTurntoFirstCubeJankRightSideRatio)
-		{
-			return .45;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double backUpAfterPickUpFirstCubeRightSideBigJank(double eValue, boolean sign)
-	{
-		if(sign)
-		{
-			if(eValue<= AutoConstants.halfCircleTurnForCubesRightSideJank - 1400)
-			{
-				eValue*=(-0.0000625);
-				eValue+=.9;
-				return eValue;
-			}
-			else if(eValue<= AutoConstants.halfCircleTurnForCubesRightSideJank)
-			{
-				return .5;
-			}
-			else
-			{
-				return 0;
-			}
-		}
-		else
-		{
-			if(eValue<= AutoConstants.halfCircleTurnForCubesRightSideJank - 1400)
-			{
-				eValue*=(-0.0000625);
-				eValue+=.9;
-				return -eValue;
-			}
-			else if(eValue<= AutoConstants.halfCircleTurnForCubesRightSideJank)
-			{
-				return -.5;
-			}
-			else
-			{
-				return -0;
-			}
-		}
-	}
-	
-	public static double firstTurnSpeedForMSlSW(double eValue)
-	{
-		if(eValue < AutoConstants.firstBigTurnMSLSW - 3000)
-		{
-			return .9;
-		}
-		if(eValue < AutoConstants.firstBigTurnMSLSW - 2000)
-		{
-			return .65;
-		}
-		else if(eValue < AutoConstants.firstBigTurnMSLSW)
-		{
-			return .3;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double secondTurnSpeedForMSlSW(double eValue)
-	{
-		if(eValue < AutoConstants.secondBigTurnMSLSW - 2500)
-		{
-			return .8;
-		}
-		if(eValue < AutoConstants.secondBigTurnMSLSW - 2000)
-		{
-			return .7;
-		}
-		else if(eValue < AutoConstants.secondBigTurnMSLSW)
-		{
-			return .6;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double firstTurnSpeedForMSRSW(double eValue)
-	{
-		if(eValue < AutoConstants.firstBigTurnMSRSW - 2500)
-		{
-			return .9;
-		}
-		if(eValue < AutoConstants.firstBigTurnMSRSW - 1400)
-		{
-			return .65;
-		}
-		else if(eValue < AutoConstants.firstBigTurnMSRSW)
-		{
-			return .3;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double secondTurnSpeedForMSRSW(double eValue)
-	{
-		if(eValue < AutoConstants.secondBigOneWheelCurveMSRSW - 2000)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.secondBigOneWheelCurveMSRSW - 1440)
-		{
-			return .5;
-		}
-		else if(eValue < AutoConstants.secondBigOneWheelCurveMSRSW)
-		{
-			return .3;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double frontLeftTurn8Speed(double eValue)
-	{
-		if(eValue < AutoConstants.frontLeftTurn8Dist - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.frontLeftTurn8Dist)
-		{
-			return .6;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double frontRightTurn8Speed(double eValue)
-	{
-		if(eValue < AutoConstants.frontRightTurn8Dist - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.frontRightTurn8Dist)
-		{
-			return .6;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double frontRightTurn6Speed(double eValue)
-	{
-		if(eValue < AutoConstants.frontRightTurn6Dist - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.frontRightTurn6Dist)
-		{
-			return .6;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double frontLeftTurn6Speed(double eValue)
-	{
-		if(eValue < AutoConstants.frontLeftTurn6Dist - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.frontLeftTurn6Dist)
-		{
-			return .6;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double backUpRightTurnSpeed(double eValue)
-	{
-		if(eValue < AutoConstants.backRightTurnDist - 1500)
-		{
-			return -.8;
-		}
-		else if(eValue < AutoConstants.backRightTurnDist)
-		{
-			return -.6;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	//rr functions
-	
-	public static double rrStarightToScale(double eValue)
-	{
-		if(eValue < 1000)
-		{
-			return .6;
-		}
-		else if(eValue < 2000)
-		{
-			return .8;
-		}
-		else if(eValue < 6000)
-		{
-			return 1;
-		}
-		else  if(eValue < 7000)
-		{
-			return .8;
-		}
-		else
-		{
-			return .7;
-		}
-		/*
-		if(eValue < 2000)
-		{
-			return .6;
-		}
-		else if(eValue < 3500)
-		{
-			return .7;
-		}
-		else if(eValue < 5000)
-		{
-			return .9;
-		}
-		else if(eValue < 16000)
-		{
-			return 1;
-		}
-		else
-		{
-			return .8;
-		}
-		 */
-		//.8 to .6
-	}
-	
-	public static double rrPickUpCube(double eValue)
-	{
-		if(eValue < AutoConstants.rrCubeTurn - 2400)
-		{
-			return .5;
-		}
-		else if(eValue < AutoConstants.rrCubeTurn)
-		{
-			return .25;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-
-	//rr functions
-	
-		public static double lrStarightToScale(double eValue)
-		{
-			if(eValue < 1000)
-			{
-				return .6;
-			}
-			else if(eValue < 2000)
-			{
-				return .8;
-			}
-			else if(eValue < 7000)
-			{
-				return 1;
-			}
-			else
-			{
-				return .8;
-			}
-			/*
-			if(eValue < 2000)
-			{
-				return .6;
-			}
-			else if(eValue < 3500)
-			{
-				return .7;
-			}
-			else if(eValue < 5000)
-			{
-				return .9;
-			}
-			else if(eValue < 16000)
-			{
-				return 1;
-			}
-			else
-			{
-				return .8;
-			}
-			 */
-			//.8 to .6
-		}
-		
-		public static double lrPickUpCube(double eValue)
-		{
-			if(eValue < AutoConstants.rrCubeTurn - 1500)
-			{
-				return .8;
-			}
-			else if(eValue < AutoConstants.rrCubeTurn)
-			{
-				return .5;
-			}
-			else
-			{
-				return 0;
-			}
-		}
-		
-	public static double llStraightBeforeTurn(double eValue)
-	{
-		if(eValue < 1000)
-		{
-			return .6;
-		}
-		else if(eValue < 2500)
-		{
-			return .8;
-		}
-		else if(eValue < 6500)
-		{
-			return 1;
-		}
-		else if(eValue < 7500)
-		{
-			return .8;
-		}
-		else
-		{
-			return .7;
-		}
-	}
-	
-	public static double llFirstTurn(double eValue)
-	{
-		if(eValue < AutoConstants.llFirstTurn - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.llFirstTurn)
-		{
-			return .5;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double llcrossFieldDist(double eValue)
-	{
-		if(eValue < 1000)
-		{
-			return .6;
-		}
-		else if(eValue < 2500)
-		{
-			return .8;
-		}
-		else if(eValue < 6500)
-		{
-			return 1;
-		}
-		else if(eValue < 7500)
-		{
-			return .8;
-		}
-		else
-		{
-			return .7;
-		}
-	}
-	
-	public static double llFirstTurnToScale(double eValue)
-	{
-		if(eValue < AutoConstants.llFirstTurnToScale - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.llFirstTurnToScale)
-		{
-			return .5;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double llSecondTurnToScale(double eValue)
-	{
-		if(eValue < AutoConstants.llSecondTurnToScale - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.llSecondTurnToScale)
-		{
-			return .5;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double llFirstTurnAfterScale(double eValue)
-	{
-		if(eValue < AutoConstants.llFirstTurnAfterScale - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.llFirstTurnAfterScale)
-		{
-			return .5;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double llSecondTurnAfterScale(double eValue)
-	{
-		if(eValue < AutoConstants.llSecondTurnAfterScale - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.llSecondTurnAfterScale)
-		{
-			return .5;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double llPickUpCubeTurn(double eValue)
-	{
-		if(eValue < AutoConstants.llPickUpCubeTurn - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.llPickUpCubeTurn)
-		{
-			return .5;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double rlStraightBeforeTurn(double eValue)
-	{
-		if(eValue < 1000)
-		{
-			return .6;
-		}
-		else if(eValue < 2500)
-		{
-			return .8;
-		}
-		else if(eValue < 6500)
-		{
-			return 1;
-		}
-		else if(eValue < 7500)
-		{
-			return .8;
-		}
-		else
-		{
-			return .7;
-		}
-	}
-	
-	public static double rlFirstTurn(double eValue)
-	{
-		if(eValue < AutoConstants.rlFirstTurn - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.rlFirstTurn)
-		{
-			return .5;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double rlcrossFieldDist(double eValue)
-	{
-		if(eValue < 1000)
-		{
-			return .6;
-		}
-		else if(eValue < 2500)
-		{
-			return .8;
-		}
-		else if(eValue < 6500)
-		{
-			return 1;
-		}
-		else if(eValue < 7500)
-		{
-			return .8;
-		}
-		else
-		{
-			return .7;
-		}
-	}
-	
-	public static double rlFirstTurnToScale(double eValue)
-	{
-		if(eValue < AutoConstants.rlFirstTurnToScale - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.rlFirstTurnToScale)
-		{
-			return .5;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double rlSecondTurnToScale(double eValue)
-	{
-		if(eValue < AutoConstants.rlSecondTurnToScale - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.rlSecondTurnToScale)
-		{
-			return .5;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double rlFirstTurnAfterScale(double eValue)
-	{
-		if(eValue < AutoConstants.rlFirstTurnAfterScale - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.rlFirstTurnAfterScale)
-		{
-			return .5;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double rlSecondTurnAfterScale(double eValue)
-	{
-		if(eValue < AutoConstants.rlSecondTurnAfterScale - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.rlSecondTurnAfterScale)
-		{
-			return .5;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double rlStraightBeforeSwitch(double eValue)
-	{
-		if(eValue < 1000)
-		{
-			return .6;
-		}
-		else if(eValue < 2500)
-		{
-			return .8;
-		}
-		else if(eValue < 6500)
-		{
-			return 1;
-		}
-		else if(eValue < 7500)
-		{
-			return .8;
-		}
-		else
-		{
-			return .7;
-		}
-	}
-	
-	
-	public static double rlPickUpCubeTurn(double eValue)
-	{
-		if(eValue < AutoConstants.rlPickUpCubeTurn - 1500)
-		{
-			return .8;
-		}
-		else if(eValue < AutoConstants.rlPickUpCubeTurn)
-		{
-			return .5;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
+//	public static double uTurnForFirstCubeRightSideBigJank(double eValue)
+//	{
+//		if(eValue<= AutoConstants.UTurntoFirstCubeJankRightSideRatio - 1800)
+//		{
+//			eValue*=(-0.0000388888888889);
+//			eValue+=1;
+//			return -eValue;
+//		}
+//		else if(eValue<= AutoConstants.UTurntoFirstCubeJankRightSideRatio)
+//		{
+//			return .45;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double backUpAfterPickUpFirstCubeRightSideBigJank(double eValue, boolean sign)
+//	{
+//		if(sign)
+//		{
+//			if(eValue<= AutoConstants.halfCircleTurnForCubesRightSideJank - 1400)
+//			{
+//				eValue*=(-0.0000625);
+//				eValue+=.9;
+//				return eValue;
+//			}
+//			else if(eValue<= AutoConstants.halfCircleTurnForCubesRightSideJank)
+//			{
+//				return .5;
+//			}
+//			else
+//			{
+//				return 0;
+//			}
+//		}
+//		else
+//		{
+//			if(eValue<= AutoConstants.halfCircleTurnForCubesRightSideJank - 1400)
+//			{
+//				eValue*=(-0.0000625);
+//				eValue+=.9;
+//				return -eValue;
+//			}
+//			else if(eValue<= AutoConstants.halfCircleTurnForCubesRightSideJank)
+//			{
+//				return -.5;
+//			}
+//			else
+//			{
+//				return -0;
+//			}
+//		}
+//	}
+//	
+//	public static double firstTurnSpeedForMSlSW(double eValue)
+//	{
+//		if(eValue < AutoConstants.firstBigTurnMSLSW - 3000)
+//		{
+//			return .9;
+//		}
+//		if(eValue < AutoConstants.firstBigTurnMSLSW - 2000)
+//		{
+//			return .65;
+//		}
+//		else if(eValue < AutoConstants.firstBigTurnMSLSW)
+//		{
+//			return .3;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double secondTurnSpeedForMSlSW(double eValue)
+//	{
+//		if(eValue < AutoConstants.secondBigTurnMSLSW - 2500)
+//		{
+//			return .8;
+//		}
+//		if(eValue < AutoConstants.secondBigTurnMSLSW - 2000)
+//		{
+//			return .7;
+//		}
+//		else if(eValue < AutoConstants.secondBigTurnMSLSW)
+//		{
+//			return .6;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double firstTurnSpeedForMSRSW(double eValue)
+//	{
+//		if(eValue < AutoConstants.firstBigTurnMSRSW - 2500)
+//		{
+//			return .9;
+//		}
+//		if(eValue < AutoConstants.firstBigTurnMSRSW - 1400)
+//		{
+//			return .65;
+//		}
+//		else if(eValue < AutoConstants.firstBigTurnMSRSW)
+//		{
+//			return .3;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double secondTurnSpeedForMSRSW(double eValue)
+//	{
+//		if(eValue < AutoConstants.secondBigOneWheelCurveMSRSW - 2000)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.secondBigOneWheelCurveMSRSW - 1440)
+//		{
+//			return .5;
+//		}
+//		else if(eValue < AutoConstants.secondBigOneWheelCurveMSRSW)
+//		{
+//			return .3;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double frontLeftTurn8Speed(double eValue)
+//	{
+//		if(eValue < AutoConstants.frontLeftTurn8Dist - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.frontLeftTurn8Dist)
+//		{
+//			return .6;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double frontRightTurn8Speed(double eValue)
+//	{
+//		if(eValue < AutoConstants.frontRightTurn8Dist - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.frontRightTurn8Dist)
+//		{
+//			return .6;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double frontRightTurn6Speed(double eValue)
+//	{
+//		if(eValue < AutoConstants.frontRightTurn6Dist - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.frontRightTurn6Dist)
+//		{
+//			return .6;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double frontLeftTurn6Speed(double eValue)
+//	{
+//		if(eValue < AutoConstants.frontLeftTurn6Dist - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.frontLeftTurn6Dist)
+//		{
+//			return .6;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double backUpRightTurnSpeed(double eValue)
+//	{
+//		if(eValue < AutoConstants.backRightTurnDist - 1500)
+//		{
+//			return -.8;
+//		}
+//		else if(eValue < AutoConstants.backRightTurnDist)
+//		{
+//			return -.6;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	//rr functions
+//	
+//	public static double rrStarightToScale(double eValue)
+//	{
+//		if(eValue < 1000)
+//		{
+//			return .6;
+//		}
+//		else if(eValue < 2000)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < 6000)
+//		{
+//			return 1;
+//		}
+//		else  if(eValue < 7000)
+//		{
+//			return .8;
+//		}
+//		else
+//		{
+//			return .7;
+//		}
+//		/*
+//		if(eValue < 2000)
+//		{
+//			return .6;
+//		}
+//		else if(eValue < 3500)
+//		{
+//			return .7;
+//		}
+//		else if(eValue < 5000)
+//		{
+//			return .9;
+//		}
+//		else if(eValue < 16000)
+//		{
+//			return 1;
+//		}
+//		else
+//		{
+//			return .8;
+//		}
+//		 */
+//		//.8 to .6
+//	}
+//	
+//	public static double rrPickUpCube(double eValue)
+//	{
+//		if(eValue < AutoConstants.rrCubeTurn - 2400)
+//		{
+//			return .5;
+//		}
+//		else if(eValue < AutoConstants.rrCubeTurn)
+//		{
+//			return .25;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//
+//	//rr functions
+//	
+//		public static double lrStarightToScale(double eValue)
+//		{
+//			if(eValue < 1000)
+//			{
+//				return .6;
+//			}
+//			else if(eValue < 2000)
+//			{
+//				return .8;
+//			}
+//			else if(eValue < 7000)
+//			{
+//				return 1;
+//			}
+//			else
+//			{
+//				return .8;
+//			}
+//			/*
+//			if(eValue < 2000)
+//			{
+//				return .6;
+//			}
+//			else if(eValue < 3500)
+//			{
+//				return .7;
+//			}
+//			else if(eValue < 5000)
+//			{
+//				return .9;
+//			}
+//			else if(eValue < 16000)
+//			{
+//				return 1;
+//			}
+//			else
+//			{
+//				return .8;
+//			}
+//			 */
+//			//.8 to .6
+//		}
+//		
+//		public static double lrPickUpCube(double eValue)
+//		{
+//			if(eValue < AutoConstants.rrCubeTurn - 1500)
+//			{
+//				return .8;
+//			}
+//			else if(eValue < AutoConstants.rrCubeTurn)
+//			{
+//				return .5;
+//			}
+//			else
+//			{
+//				return 0;
+//			}
+//		}
+//		
+//	public static double llStraightBeforeTurn(double eValue)
+//	{
+//		if(eValue < 1000)
+//		{
+//			return .6;
+//		}
+//		else if(eValue < 2500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < 6500)
+//		{
+//			return 1;
+//		}
+//		else if(eValue < 7500)
+//		{
+//			return .8;
+//		}
+//		else
+//		{
+//			return .7;
+//		}
+//	}
+//	
+//	public static double llFirstTurn(double eValue)
+//	{
+//		if(eValue < AutoConstants.llFirstTurn - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.llFirstTurn)
+//		{
+//			return .5;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double llcrossFieldDist(double eValue)
+//	{
+//		if(eValue < 1000)
+//		{
+//			return .6;
+//		}
+//		else if(eValue < 2500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < 6500)
+//		{
+//			return 1;
+//		}
+//		else if(eValue < 7500)
+//		{
+//			return .8;
+//		}
+//		else
+//		{
+//			return .7;
+//		}
+//	}
+//	
+//	public static double llFirstTurnToScale(double eValue)
+//	{
+//		if(eValue < AutoConstants.llFirstTurnToScale - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.llFirstTurnToScale)
+//		{
+//			return .5;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double llSecondTurnToScale(double eValue)
+//	{
+//		if(eValue < AutoConstants.llSecondTurnToScale - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.llSecondTurnToScale)
+//		{
+//			return .5;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double llFirstTurnAfterScale(double eValue)
+//	{
+//		if(eValue < AutoConstants.llFirstTurnAfterScale - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.llFirstTurnAfterScale)
+//		{
+//			return .5;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double llSecondTurnAfterScale(double eValue)
+//	{
+//		if(eValue < AutoConstants.llSecondTurnAfterScale - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.llSecondTurnAfterScale)
+//		{
+//			return .5;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double llPickUpCubeTurn(double eValue)
+//	{
+//		if(eValue < AutoConstants.llPickUpCubeTurn - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.llPickUpCubeTurn)
+//		{
+//			return .5;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double rlStraightBeforeTurn(double eValue)
+//	{
+//		if(eValue < 1000)
+//		{
+//			return .6;
+//		}
+//		else if(eValue < 2500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < 6500)
+//		{
+//			return 1;
+//		}
+//		else if(eValue < 7500)
+//		{
+//			return .8;
+//		}
+//		else
+//		{
+//			return .7;
+//		}
+//	}
+//	
+//	public static double rlFirstTurn(double eValue)
+//	{
+//		if(eValue < AutoConstants.rlFirstTurn - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.rlFirstTurn)
+//		{
+//			return .5;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double rlcrossFieldDist(double eValue)
+//	{
+//		if(eValue < 1000)
+//		{
+//			return .6;
+//		}
+//		else if(eValue < 2500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < 6500)
+//		{
+//			return 1;
+//		}
+//		else if(eValue < 7500)
+//		{
+//			return .8;
+//		}
+//		else
+//		{
+//			return .7;
+//		}
+//	}
+//	
+//	public static double rlFirstTurnToScale(double eValue)
+//	{
+//		if(eValue < AutoConstants.rlFirstTurnToScale - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.rlFirstTurnToScale)
+//		{
+//			return .5;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double rlSecondTurnToScale(double eValue)
+//	{
+//		if(eValue < AutoConstants.rlSecondTurnToScale - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.rlSecondTurnToScale)
+//		{
+//			return .5;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double rlFirstTurnAfterScale(double eValue)
+//	{
+//		if(eValue < AutoConstants.rlFirstTurnAfterScale - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.rlFirstTurnAfterScale)
+//		{
+//			return .5;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double rlSecondTurnAfterScale(double eValue)
+//	{
+//		if(eValue < AutoConstants.rlSecondTurnAfterScale - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.rlSecondTurnAfterScale)
+//		{
+//			return .5;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double rlStraightBeforeSwitch(double eValue)
+//	{
+//		if(eValue < 1000)
+//		{
+//			return .6;
+//		}
+//		else if(eValue < 2500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < 6500)
+//		{
+//			return 1;
+//		}
+//		else if(eValue < 7500)
+//		{
+//			return .8;
+//		}
+//		else
+//		{
+//			return .7;
+//		}
+//	}
+//	
+//	
+//	public static double rlPickUpCubeTurn(double eValue)
+//	{
+//		if(eValue < AutoConstants.rlPickUpCubeTurn - 1500)
+//		{
+//			return .8;
+//		}
+//		else if(eValue < AutoConstants.rlPickUpCubeTurn)
+//		{
+//			return .5;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
 }

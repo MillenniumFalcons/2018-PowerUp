@@ -10,7 +10,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.*;
 import team3647ConstantsAndFunctions.Constants;
-import team3647ConstantsAndFunctions.NewFunctions;
 
 public class Drivetrain 
 {

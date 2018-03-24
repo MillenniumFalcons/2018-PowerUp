@@ -29,7 +29,7 @@ public class Elevator
 	public static VictorSPX leftElevatorSPX = new VictorSPX(Constants.leftElevatorSlave);
 	public static VictorSPX rightElevatorSPX = new VictorSPX(Constants.rightElevatorSlave);
 	
-	public static DifferentialDrive elevatorDrive = new DifferentialDrive(Constants.leftElevatorMaster, Constants.rightElevatorMaster);
+	public static DifferentialDrive elevatorDrive = new DifferentialDrive(leftElevator, rightElevator);
 	
 	public static void moveEleVader(double speed)
 	{

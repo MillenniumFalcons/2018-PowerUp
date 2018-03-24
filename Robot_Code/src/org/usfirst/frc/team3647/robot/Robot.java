@@ -52,7 +52,7 @@ public class Robot extends IterativeRobot {
 		try 
 		{
 			CrashChecker.logAutoInit();
-			OldAutos.initialize();
+			Autonomous.initialize();
 		}
 		catch(Throwable t)
 		{
@@ -103,14 +103,15 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void testPeriodic() 
 	{
-		updateJoysticks();
-		eleVader.setElevatorEncoder();
-		Shifter.runPiston(joy.buttonY);
-		runDrivetrain();
-		Elevator.moveEleVader(joy.rightJoySticky * .4);
-		ElevatorLevel.testElevatorEncoders();
+//		updateJoysticks();
+//		eleVader.setElevatorEncoder();
+//		Shifter.runPiston(joy.buttonY);
+//		runDrivetrain();
+//		Elevator.moveEleVader(joy.rightJoySticky * .4);
+//		ElevatorLevel.testElevatorEncoders();
+//		ElevatorLevel.testBannerSensor();
+//		Encoders.testEncoders();
 		ElevatorLevel.testBannerSensor();
-		Encoders.testEncoders();
 	}
 	
 	
