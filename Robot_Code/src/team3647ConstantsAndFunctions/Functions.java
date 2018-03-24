@@ -6,6 +6,7 @@ import team3647elevator.ElevatorLevel;
 public class Functions 
 {
 	static double avg;
+	static boolean reached;
 	
 	public static double stopToPickUp(double eValue)
 	{
@@ -265,28 +266,50 @@ public class Functions
 		}
 	}
 	
-	public static void lrandrrElevatorForFirstScale(double lValue, double rValue, double eValue)
+	public static void lrandrrElevatorForFirstScale(double lValue, double rValue, double eValue, double step)
 	{
-		avg = (lValue + rValue)/2.0;
-		if(avg < 10000)
+		if(step == 1)
 		{
-			ElevatorLevel.maintainPickUpPosition();
-		}
-		else
-		{
-			if(eValue < 8000)
+			reached = false;
+			avg = (lValue + rValue)/2.0;
+			if(avg < 10000)
 			{
-				Elevator.moveEleVader(.4);
-			}
-			else if(!ElevatorLevel.reachedSwitch())
-			{
-				Elevator.moveEleVader(.3);
+				ElevatorLevel.maintainPickUpPosition();
 			}
 			else
 			{
-				ElevatorLevel.maintainSwitchPosition();
+				if(eValue < 8000)
+				{
+					Elevator.moveEleVader(.4);
+				}
+				else if(!ElevatorLevel.reachedSwitch())
+				{
+					Elevator.moveEleVader(.3);
+				}
+				else
+				{
+					ElevatorLevel.maintainSwitchPosition();
+				}
 			}
-			
+		}
+		else
+		{
+			if(!reached)
+			{
+				if(eValue < 40000)
+				{
+					Elevator.moveEleVader(switchToScale(eValue));
+				}
+				else
+				{
+					Elevator.moveEleVader(.13);
+					reached = true;
+				}
+			}
+			else
+			{
+				ElevatorLevel.maintainScalePosition();
+			}	
 		}
 	}
 	

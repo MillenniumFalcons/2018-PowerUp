@@ -15,13 +15,22 @@ import team3647subsystems.Encoders;
 public class Autonomous 
 {
 	//Timer-Stuff
-	static Timer stopWatch = new Timer();
+	public static Timer stopWatch = new Timer();
 	static double time;
 	
 	//Other variables for auto
 	static double prevLeftEncoder, prevRightEncoder;
 	static int currentState;
 	static double lSSpeed, rSSpeed, speed;
+	
+	public static void testTimer(boolean jValue)
+	{
+		if(jValue)
+		{
+			stopWatch.reset();
+		}
+		System.out.println(stopWatch.get());
+	}
 	
 	public static void initialize()
 	{
@@ -439,6 +448,7 @@ public class Autonomous
 				}
 				break;
 			case 2:
+				stopWatch.reset();
 				if(ElevatorLevel.reachedPickUp())
 				{
 					currentState = 3;
@@ -449,7 +459,7 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				Functions.lrandrrElevatorForFirstScale(lValue, rValue, ElevatorLevel.elevatorEncoderValue);
+				Functions.lrandrrElevatorForFirstScale(lValue, rValue, ElevatorLevel.elevatorEncoderValue, 1);
 				if(Functions.lrandrrSpeedForFirstScale(lValue, rValue, Constants.lrandrrFirstStraightDist) != 0)
 				{
 					Drivetrain.driveForw(lValue, rValue, Functions.lrandrrSpeedForFirstScale(lValue, rValue, Constants.lrandrrFirstStraightDist));
@@ -460,6 +470,26 @@ public class Autonomous
 					prevRightEncoder = rValue;
 					currentState = 4;
 				}
+				break;
+			case 4:
+				Functions.lrandrrElevatorForFirstScale(lValue, rValue, ElevatorLevel.elevatorEncoderValue, 2);
+				lValue -= prevLeftEncoder;
+				rValue -= prevRightEncoder;
+				if(Functions.lrandrrFirstTurnToScale(rValue, Constants.lrandrrFirstTurnToScaleDist) != 0)
+				{
+					rSSpeed = Functions.lrandrrFirstTurnToScale(rValue, Constants.lrandrrFirstTurnToScaleDist);
+					lSSpeed = rSSpeed/Constants.lrandrrFirstTurnToScaleRatio;
+					Drivetrain.goStraightLeft(lValue, rValue, Constants.lrandrrFirstTurnToScaleRatio, lSSpeed, rSSpeed, .06);
+				}
+				else
+				{
+					currentState = 5;
+				}
+				break;
+			case 5:
+				ElevatorLevel.maintainScalePosition();
+				Drivetrain.stop();
+				
 				break;
 		}
 	}
