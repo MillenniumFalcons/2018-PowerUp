@@ -361,5 +361,51 @@ public class Functions
 			return 0;
 		}
 	}
+	
+	public static double lrandrrBackUpTurnAfterScale(double eValue, double dist)
+	{
+		eValue = Math.abs(eValue);
+		if(eValue < (dist - 2000))
+		{
+			return -.7;
+		}
+		else if(eValue < dist)
+		{
+			return -.5;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+	public static void moveElevatorToStop(double eValue)
+	{
+		if(!ElevatorLevel.reachedStop())
+		{
+			Elevator.moveEleVader(scaleToStop(eValue));
+		}
+		else
+		{
+			Elevator.stopEleVader();
+		}
+	}
+	
+	public static void lrandrrBackUpToWallTurn(double eValue, double dist)
+	{
+		eValue = Math.abs(eValue);
+		if(eValue < (dist - 2000))
+		{
+			return -.7;
+		}
+		else if(eValue < dist)
+		{
+			return -.5;
+		}
+		else
+		{
+			return 0;
+		}
+	}
 
 }

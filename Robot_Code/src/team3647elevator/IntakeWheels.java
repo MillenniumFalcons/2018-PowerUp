@@ -39,4 +39,24 @@ public class IntakeWheels
 			leftIntakeMotor.set(ControlMode.PercentOutput, lSpeed);
 		}
 	}
+	
+	public static void shoot(double speed)
+	{
+		runIntake(0, 0, true, speed, speed);
+	}
+	
+	public static void pickUp(double speed)
+	{
+		runIntake(0, 0, true, -speed, -speed);
+	}
+	
+	public static void manuallyRunIntake(double lSpeed, double rSpeed)
+	{
+		runIntake(0, 0, true, lSpeed, rSpeed);
+	}
+	
+	public static boolean getIntakeBannerSenor()
+	{
+		return !bannerSensor.get();
+	}
 }

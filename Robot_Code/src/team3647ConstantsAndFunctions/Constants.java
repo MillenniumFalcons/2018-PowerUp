@@ -38,4 +38,10 @@ public class Constants
 	public static final double lrandrrFirstStraightDist = 21936.6;
 	public static final double lrandrrFirstTurnToScaleDist = 5400;
 	public static final double lrandrrFirstTurnToScaleRatio = 3.26;
+	public static final double lrandrrBackUpTurnAfterScaleDist = 5400;
+	public static final double lrandrrBackUpTurnAfterScaleRatio = 3.26;
+	public static final double lrandrrBackUpTurnAfterScale = 3222;
+	public static final double lrandrrBackUpToWallTurnDist = 5400;
+	public static final double lrandrrBackUpToWallTurnRatio = 3.26;
+	public static final double lrStraightAfterWall = 	2928;
 }
