@@ -16,7 +16,7 @@ public class Drivetrain
 	public static double aimedRatio, currentRatio, sum;
 	public static boolean withinRange;
 	
-	public static double initialCorrection = .1;//-.04
+	public static double initialCorrection = .07;//-.04
 	public static double correction = .05;
 	
 	public static WPI_TalonSRX leftSRX = new WPI_TalonSRX(Constants.leftMaster);

@@ -76,12 +76,12 @@ public class Autonomous
 				}
 				else
 				{
-					Elevator.moveEleVader(Functions.stopToPickUp(ElevatorLevel.elevatorEncoderValue));
+					Elevator.moveEleVader(.4);
 				}
 				break;
 			case 3:
 				ElevatorLevel.maintainPickUpPosition();
-				if(!Drivetrain.reachedDistance(lValue, rValue, 5000))
+				if(!Drivetrain.reachedDistance(lValue, rValue, 6000))
 				{
 					Drivetrain.driveForw(lValue, rValue, .74);
 				}

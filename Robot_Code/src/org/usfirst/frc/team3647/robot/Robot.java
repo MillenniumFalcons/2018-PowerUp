@@ -70,6 +70,7 @@ public class Robot extends IterativeRobot {
 			runMotorSafety();
 			enc.setEncoderValues();
 			eleVader.setElevatorEncoder();
+			Autonomous.test1(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
 		}
 	}
 	
@@ -113,8 +114,11 @@ public class Robot extends IterativeRobot {
 //		ElevatorLevel.testBannerSensor();
 //		Encoders.testEncoders();
 //		runDrivetrain();
-		Intake.runIntake(joy.rightBumper);
-		IntakeWheels.runIntake(joy.leftTrigger, joy.rightTrigger, false, 0, 0);
+//		Intake.runIntake(joy.rightBumper);
+//		IntakeWheels.runIntake(joy.leftTrigger, joy.rightTrigger, false, 0, 0);
+		enc.setEncoderValues();
+		Drivetrain.FRCarcadedrive(joy.leftJoySticky, joy.rightJoyStickx);
+		Encoders.testEncoders();
 		//Autonomous.testTimer(joy.buttonA);
 	}
 	

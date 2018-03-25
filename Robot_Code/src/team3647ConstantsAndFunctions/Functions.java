@@ -391,7 +391,7 @@ public class Functions
 		}
 	}
 	
-	public static void lrandrrBackUpToWallTurn(double eValue, double dist)
+	public static double lrandrrBackUpToWallTurn(double eValue, double dist)
 	{
 		eValue = Math.abs(eValue);
 		if(eValue < (dist - 2000))
