@@ -113,9 +113,9 @@ public class Robot extends IterativeRobot {
 //		ElevatorLevel.testBannerSensor();
 //		Encoders.testEncoders();
 //		runDrivetrain();
-//		Intake.runIntake(joy.rightBumper1);
-//		IntakeWheels.runIntake(joy.leftTrigger, joy.rightTrigger, false, 0, 0);
-		Autonomous.testTimer(joy.buttonA);
+		Intake.runIntake(joy.rightBumper);
+		IntakeWheels.runIntake(joy.leftTrigger, joy.rightTrigger, false, 0, 0);
+		//Autonomous.testTimer(joy.buttonA);
 	}
 	
 	
