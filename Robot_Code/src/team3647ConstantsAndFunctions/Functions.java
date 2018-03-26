@@ -216,6 +216,41 @@ public class Functions
 		return -.32;
 	}
 	
+	public static double test1and3Straight(double lValue, double rValue, double dist)
+	{
+		avg = (lValue + rValue)/2.0;
+		if(avg < 1800)
+		{
+			return .6;
+		}
+		else if(avg < 4000)
+		{
+			return .74;
+		}
+		else if(avg < 7000)
+		{
+			return .87;
+		}
+		else if(avg < 12000)
+		{
+			return 1;
+		}
+		else if(avg < (dist -2000))
+		{
+			return .74;
+		}
+		else if(avg < dist)
+		{
+			return .34;
+		}
+		else
+		{
+			return 0;
+		}
+		//assuming distance 17000
+	}
+	
+	
 	public static double test3Turn(double eValue, double dist)
 	{
 		if(eValue < (dist - 2000))
