@@ -81,9 +81,13 @@ public class Autonomous
 				break;
 			case 3:
 				ElevatorLevel.maintainPickUpPosition();
-				if(Functions.test1and3Straight(lValue, rValue, 17000)!= 0)
+				if(!Drivetrain.reachedDistance(lValue, rValue, 8000))
 				{
-					Drivetrain.driveForw(lValue, rValue, Functions.test1and3Straight(lValue, rValue, 17000));
+					Drivetrain.driveForw(lValue, rValue, .8);
+				}
+				if(!Drivetrain.reachedDistance(lValue, rValue, 9500))
+				{
+					Drivetrain.driveForw(lValue, rValue, .3);
 				}
 				else
 				{
@@ -201,9 +205,13 @@ public class Autonomous
 				break;
 			case 3:
 				ElevatorLevel.maintainPickUpPosition();
-				if(Functions.test1and3Straight(lValue, rValue, 17000)!= 0)
+				if(!Drivetrain.reachedDistance(lValue, rValue, 5000))
 				{
-					Drivetrain.driveForw(lValue, rValue, Functions.test1and3Straight(lValue, rValue, 17000));
+					Drivetrain.driveBack(lValue, rValue, -.74);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 7000))
+				{
+					Drivetrain.driveBack(lValue, rValue, -.3);
 				}
 				else
 				{
