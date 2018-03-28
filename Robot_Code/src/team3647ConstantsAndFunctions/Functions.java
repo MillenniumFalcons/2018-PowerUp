@@ -231,7 +231,7 @@ public class Functions
 		{
 			return .87;
 		}
-		else if(avg < 12000)
+		else if(avg < 10000)
 		{
 			return 1;
 		}

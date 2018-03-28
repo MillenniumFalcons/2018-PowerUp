@@ -70,7 +70,7 @@ public class Robot extends IterativeRobot {
 			runMotorSafety();
 			enc.setEncoderValues();
 			eleVader.setElevatorEncoder();
-			Autonomous.test1(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
+			Autonomous.test3(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
 		}
 	}
 	
@@ -93,6 +93,7 @@ public class Robot extends IterativeRobot {
 			runPistons();
 			runDrivetrain();
 			runElevator();
+			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
 			//Encoders.testEncoders();
 		}
 		catch(Throwable t)
@@ -114,8 +115,8 @@ public class Robot extends IterativeRobot {
 //		ElevatorLevel.testBannerSensor();
 //		Encoders.testEncoders();
 //		runDrivetrain();
-//		Intake.runIntake(joy.rightBumper);
-//		IntakeWheels.runIntake(joy.leftTrigger, joy.rightTrigger, false, 0, 0);
+		Intake.runIntake(joy.rightBumper1);
+		IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
 		enc.setEncoderValues();
 		Drivetrain.FRCarcadedrive(joy.leftJoySticky, joy.rightJoyStickx);
 		Encoders.testEncoders();
@@ -149,7 +150,7 @@ public class Robot extends IterativeRobot {
 		Intake.runIntake(joy.rightBumper1);
 		Forks.runPiston(joy.buttonX);
 		Shifter.runPiston(joy.buttonY);
-		Compressor007.runCompressor();
+		//Compressor007.runCompressor();
 	}
 	
 	public void runDrivetrain()

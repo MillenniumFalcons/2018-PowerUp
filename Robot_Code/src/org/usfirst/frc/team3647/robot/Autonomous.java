@@ -61,7 +61,7 @@ public class Autonomous
 				{
 					Elevator.stopEleVader();
 					ElevatorLevel.resetElevatorEncoders();
-					currentState = 2;
+					currentState = 3;
 				}
 				else
 				{
@@ -85,12 +85,13 @@ public class Autonomous
 				{
 					Drivetrain.driveForw(lValue, rValue, .8);
 				}
-				if(!Drivetrain.reachedDistance(lValue, rValue, 9500))
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 9500))
 				{
 					Drivetrain.driveForw(lValue, rValue, .3);
 				}
 				else
 				{
+					Encoders.testEncoders();
 					currentState = 4;
 				}
 				break;
@@ -184,7 +185,7 @@ public class Autonomous
 				{
 					Elevator.stopEleVader();
 					ElevatorLevel.resetElevatorEncoders();
-					currentState = 2;
+					currentState = 3;
 					stopWatch.stop();
 				}
 				else
@@ -205,13 +206,13 @@ public class Autonomous
 				break;
 			case 3:
 				ElevatorLevel.maintainPickUpPosition();
-				if(!Drivetrain.reachedDistance(lValue, rValue, 5000))
+				if(!Drivetrain.reachedDistance(lValue, rValue, 8000))
 				{
-					Drivetrain.driveBack(lValue, rValue, -.74);
+					Drivetrain.driveForw(lValue, rValue, .8);
 				}
-				else if(!Drivetrain.reachedDistance(lValue, rValue, 7000))
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 9500))
 				{
-					Drivetrain.driveBack(lValue, rValue, -.3);
+					Drivetrain.driveForw(lValue, rValue, .3);
 				}
 				else
 				{
@@ -224,8 +225,8 @@ public class Autonomous
 				ElevatorLevel.maintainPickUpPosition();
 				lValue -= prevLeftEncoder;
 				rValue -= prevRightEncoder;
-				double dist = 5400;
-				double ratio = 3.26;
+				double dist = 5000;
+				double ratio = 2.3;
 				if(rValue < dist)
 				{
 					rSSpeed = Functions.test3Turn(rValue, dist);
