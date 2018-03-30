@@ -29,8 +29,17 @@ public class IntakeWheels
 			}
 			else
 			{
-				rightIntakeMotor.set(ControlMode.PercentOutput, -.2);
-				leftIntakeMotor.set(ControlMode.PercentOutput, -.2);
+				if(getIntakeBannerSenor())
+				{
+					rightIntakeMotor.set(ControlMode.PercentOutput, 0);
+					leftIntakeMotor.set(ControlMode.PercentOutput, 0);
+				}
+				else
+				{
+					rightIntakeMotor.set(ControlMode.PercentOutput, -.2);
+					leftIntakeMotor.set(ControlMode.PercentOutput, -.2);
+				}
+				
 			}
 		}
 		else

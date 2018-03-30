@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3647.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -53,6 +55,12 @@ public class Robot extends IterativeRobot {
 		try 
 		{
 			CrashChecker.logAutoInit();
+			Drivetrain.leftSRX.setNeutralMode(NeutralMode.Brake);
+			Drivetrain.rightSRX.setNeutralMode(NeutralMode.Brake);
+			Drivetrain.leftSPX1.setNeutralMode(NeutralMode.Brake);
+			Drivetrain.leftSPX2.setNeutralMode(NeutralMode.Brake);
+			Drivetrain.rightSPX1.setNeutralMode(NeutralMode.Brake);
+			Drivetrain.rightSPX2.setNeutralMode(NeutralMode.Brake);
 			Autonomous.initialize();
 		}
 		catch(Throwable t)
@@ -70,6 +78,7 @@ public class Robot extends IterativeRobot {
 			runMotorSafety();
 			enc.setEncoderValues();
 			eleVader.setElevatorEncoder();
+		
 			Autonomous.test3(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
 		}
 	}
@@ -77,6 +86,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit()
 	{
+		Drivetrain.leftSRX.setNeutralMode(NeutralMode.Coast);
+		Drivetrain.rightSRX.setNeutralMode(NeutralMode.Coast);
+		Drivetrain.leftSPX1.setNeutralMode(NeutralMode.Coast);
+		Drivetrain.leftSPX2.setNeutralMode(NeutralMode.Coast);
+		Drivetrain.rightSPX1.setNeutralMode(NeutralMode.Coast);
+		Drivetrain.rightSPX2.setNeutralMode(NeutralMode.Coast);
 		Forks.lockTheForks();
 		Shifter.lowGear();
 		Elevator.elevatorState = 0;
@@ -93,7 +108,8 @@ public class Robot extends IterativeRobot {
 			runPistons();
 			runDrivetrain();
 			runElevator();
-			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
+			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1,	 false, 0, 0);
+			System.out.println("LEFT SRX: " + ElevatorLevel.elevatorEncoderValue);
 			//Encoders.testEncoders();
 		}
 		catch(Throwable t)
