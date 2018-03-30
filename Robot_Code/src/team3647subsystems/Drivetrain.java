@@ -16,7 +16,7 @@ public class Drivetrain
 	public static double aimedRatio, currentRatio, sum;
 	public static boolean withinRange;
 	
-	public static double initialCorrection = 0.085;//-.04
+	public static double initialCorrection = 0;//-.04//.085
 	public static double correction = .08;
 	
 	public static WPI_TalonSRX leftSRX = new WPI_TalonSRX(Constants.leftMaster);
@@ -28,6 +28,8 @@ public class Drivetrain
 	public static VictorSPX rightSPX2 = new VictorSPX(Constants.rightSlave2);
 	
 	public static DifferentialDrive drive = new DifferentialDrive(leftSRX, rightSRX);
+	
+	public static double adjustmentFactor = .7;
 	
 	static double []adjustmentValues = new double[2];
 	
@@ -50,7 +52,7 @@ public class Drivetrain
 	
 	public static void tankDrive(double lYValue, double rYValue)
 	{
-		drive.tankDrive(lYValue, rYValue, false);
+		drive.tankDrive(lYValue, rYValue * adjustmentFactor, false);
 	}
 	
 //	public static void driveForw(double lValue, double rValue, double speed)
@@ -125,70 +127,118 @@ public class Drivetrain
 	
 	public static void driveForw(double lValue, double rValue, double speed)
 	{
-		if(Math.abs(lValue - rValue) < 30)
+		if(Math.abs(lValue - rValue) < 40)
 		{
-			tankDrive(speed, speed);
+			tankDrive(speed, (speed - initialCorrection));
 		}
 		else if(rValue > lValue)
 		{
-			if(Math.abs(lValue - rValue) < 50)
+			if(Math.abs(lValue - rValue) < 52)
 			{
-				tankDrive(speed, speed - .07);
+				tankDrive(speed, (speed - initialCorrection) - .035);
 			}
-			else if(Math.abs(lValue - rValue) < 70)
+			else if(Math.abs(lValue - rValue) < 64)
 			{
-				tankDrive(speed, speed - .14);
+				tankDrive(speed, (speed - initialCorrection) - .07);
 			}
-			else if(Math.abs(lValue - rValue) < 90)
+			else if(Math.abs(lValue - rValue) < 76)
 			{
-				tankDrive(speed, speed - .21);
+				tankDrive(speed, (speed - initialCorrection) - .105);
 			}
-			else if(Math.abs(lValue - rValue) < 110)
+			else if(Math.abs(lValue - rValue) < 88)
 			{
-				tankDrive(speed, speed - .28);
+				tankDrive(speed, (speed - initialCorrection) - .14);
 			}
-			else if(Math.abs(lValue - rValue) < 130)
+			else if(Math.abs(lValue - rValue) < 100)
 			{
-				tankDrive(speed, speed - .35);
+				tankDrive(speed, (speed - initialCorrection) - .175);
 			}
-			else if(Math.abs(lValue - rValue) < 150)
+			else if(Math.abs(lValue - rValue) < 112)
 			{
-				tankDrive(speed, speed - .42);
+				tankDrive(speed, (speed - initialCorrection) - .21);
+			}
+			else if(Math.abs(lValue - rValue) < 124)
+			{
+				tankDrive(speed, (speed - initialCorrection) - .245);
+			}
+			else if(Math.abs(lValue - rValue) < 136)
+			{
+				tankDrive(speed, (speed - initialCorrection) - .28);
+			}
+			else if(Math.abs(lValue - rValue) < 148)
+			{
+				tankDrive(speed, (speed - initialCorrection) - .315);
+			}
+			else if(Math.abs(lValue - rValue) < 160)
+			{
+				tankDrive(speed, (speed - initialCorrection) - .35);
+			}
+			else if(Math.abs(lValue - rValue) < 172)
+			{
+				tankDrive(speed, (speed - initialCorrection) - .385);
+			}
+			else if(Math.abs(lValue - rValue) < 184)
+			{
+				tankDrive(speed, (speed - initialCorrection) - .42);
 			}
 			else
 			{
-				tankDrive(speed, speed - .5);
+				tankDrive(speed, (speed - initialCorrection) - .5);
 			}
 		}
 		else //rValue < lValue
 		{
-			if(Math.abs(lValue - rValue) < 50)
+			if(Math.abs(lValue - rValue) < 52)
 			{
-				tankDrive(speed - .07, speed);
+				tankDrive(speed - .035, (speed - initialCorrection));
 			}
-			else if(Math.abs(lValue - rValue) < 70)
+			else if(Math.abs(lValue - rValue) < 64)
 			{
-				tankDrive(speed - .14, speed);
+				tankDrive(speed - .07, (speed - initialCorrection));
 			}
-			else if(Math.abs(lValue - rValue) < 90)
+			else if(Math.abs(lValue - rValue) < 76)
 			{
-				tankDrive(speed - .21, speed);
+				tankDrive(speed - .105, (speed - initialCorrection));
 			}
-			else if(Math.abs(lValue - rValue) < 110)
+			else if(Math.abs(lValue - rValue) < 88)
 			{
-				tankDrive(speed - .28, speed);
+				tankDrive(speed - .14, (speed - initialCorrection));
 			}
-			else if(Math.abs(lValue - rValue) < 130)
+			else if(Math.abs(lValue - rValue) < 100)
 			{
-				tankDrive(speed - .35, speed);
+				tankDrive(speed -.175, (speed - initialCorrection));
 			}
-			else if(Math.abs(lValue - rValue) < 150)
+			else if(Math.abs(lValue - rValue) < 112)
 			{
-				tankDrive(speed - .42, speed);
+				tankDrive(speed - .21, (speed - initialCorrection));
+			}
+			else if(Math.abs(lValue - rValue) < 124)
+			{
+				tankDrive(speed - .245, (speed - initialCorrection));
+			}
+			else if(Math.abs(lValue - rValue) < 136)
+			{
+				tankDrive(speed - .28, (speed - initialCorrection));
+			}
+			else if(Math.abs(lValue - rValue) < 148)
+			{
+				tankDrive(speed - .315, (speed - initialCorrection));
+			}
+			else if(Math.abs(lValue - rValue) < 160)
+			{
+				tankDrive(speed - .35, (speed - initialCorrection));
+			}
+			else if(Math.abs(lValue - rValue) < 172)
+			{
+				tankDrive(speed - .385, (speed - initialCorrection));
+			}
+			else if(Math.abs(lValue - rValue) < 184)
+			{
+				tankDrive(speed - .42, (speed - initialCorrection));
 			}
 			else
 			{
-				tankDrive(speed - .5, speed);
+				tankDrive(speed - .5, (speed - initialCorrection));
 			}
 		}
 	}
@@ -199,68 +249,68 @@ public class Drivetrain
 		rValue = Math.abs(rValue);
 		if(Math.abs(lValue - rValue) < 30)
 		{
-			tankDrive(speed, speed);
+			tankDrive(speed, (speed + initialCorrection));
 		}
 		else if(rValue > lValue)
 		{
 			if(Math.abs(lValue - rValue) < 50)
 			{
-				tankDrive(speed, speed + .07);
+				tankDrive(speed, (speed + initialCorrection) + .07);
 			}
 			else if(Math.abs(lValue - rValue) < 70)
 			{
-				tankDrive(speed, speed + .14);
+				tankDrive(speed, (speed + initialCorrection) + .14);
 			}
 			else if(Math.abs(lValue - rValue) < 90)
 			{
-				tankDrive(speed, speed + .21);
+				tankDrive(speed, (speed + initialCorrection) + .21);
 			}
 			else if(Math.abs(lValue - rValue) < 110)
 			{
-				tankDrive(speed, speed + .28);
+				tankDrive(speed, (speed + initialCorrection) + .28);
 			}
 			else if(Math.abs(lValue - rValue) < 130)
 			{
-				tankDrive(speed, speed + .35);
+				tankDrive(speed, (speed + initialCorrection) + .35);
 			}
 			else if(Math.abs(lValue - rValue) < 150)
 			{
-				tankDrive(speed, speed + .42);
+				tankDrive(speed, (speed + initialCorrection) + .42);
 			}
 			else
 			{
-				tankDrive(speed, speed + .5);
+				tankDrive(speed, (speed + initialCorrection) + .5);
 			}
 		}
 		else //rValue < lValue
 		{
 			if(Math.abs(lValue - rValue) < 50)
 			{
-				tankDrive(speed + .07, speed);
+				tankDrive(speed + .07, (speed + initialCorrection));
 			}
 			else if(Math.abs(lValue - rValue) < 70)
 			{
-				tankDrive(speed + .14, speed);
+				tankDrive(speed + .14, (speed + initialCorrection));
 			}
 			else if(Math.abs(lValue - rValue) < 90)
 			{
-				tankDrive(speed + .21, speed);
+				tankDrive(speed + .21, (speed + initialCorrection));
 			}
 			else if(Math.abs(lValue - rValue) < 110)
 			{
-				tankDrive(speed + .28, speed);
+				tankDrive(speed + .28, (speed + initialCorrection));
 			}
 			else if(Math.abs(lValue - rValue) < 130)
 			{
-				tankDrive(speed + .35, speed);
+				tankDrive(speed + .35, (speed + initialCorrection));
 			}
 			else if(Math.abs(lValue - rValue) < 150)
 			{
-				tankDrive(speed + .42, speed);
+				tankDrive(speed + .42, (speed + initialCorrection));
 			}
 			else
 			{
-				tankDrive(speed + .5, speed);
+				tankDrive(speed + .5, (speed + initialCorrection));
 			}
 		}
 	}
