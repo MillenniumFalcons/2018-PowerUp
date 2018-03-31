@@ -55,12 +55,6 @@ public class Robot extends IterativeRobot {
 		try 
 		{
 			CrashChecker.logAutoInit();
-			Drivetrain.leftSRX.setNeutralMode(NeutralMode.Brake);
-			Drivetrain.rightSRX.setNeutralMode(NeutralMode.Brake);
-			Drivetrain.leftSPX1.setNeutralMode(NeutralMode.Brake);
-			Drivetrain.leftSPX2.setNeutralMode(NeutralMode.Brake);
-			Drivetrain.rightSPX1.setNeutralMode(NeutralMode.Brake);
-			Drivetrain.rightSPX2.setNeutralMode(NeutralMode.Brake);
 			Autonomous.initialize();
 		}
 		catch(Throwable t)
@@ -86,12 +80,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit()
 	{
-		Drivetrain.leftSRX.setNeutralMode(NeutralMode.Coast);
-		Drivetrain.rightSRX.setNeutralMode(NeutralMode.Coast);
-		Drivetrain.leftSPX1.setNeutralMode(NeutralMode.Coast);
-		Drivetrain.leftSPX2.setNeutralMode(NeutralMode.Coast);
-		Drivetrain.rightSPX1.setNeutralMode(NeutralMode.Coast);
-		Drivetrain.rightSPX2.setNeutralMode(NeutralMode.Coast);
+		Drivetrain.setToCoast();
 		Forks.lockTheForks();
 		Shifter.lowGear();
 		Elevator.elevatorState = 0;

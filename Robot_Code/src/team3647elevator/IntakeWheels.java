@@ -4,7 +4,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import team3647ConstantsAndFunctions.Constants;
+import team3647pistons.Intake;
 
 public class IntakeWheels 
 {
@@ -17,19 +19,19 @@ public class IntakeWheels
 	{
 		if(!auto)
 		{
-			if(lTrigger > 0)//pickUp
+			if(rTrigger > 0)//pickUp
 			{	
 				rightIntakeMotor.set(ControlMode.PercentOutput, -lTrigger*.8);
 				leftIntakeMotor.set(ControlMode.PercentOutput, -lTrigger*.8);
 			}
-			else if(rTrigger > 0)//shoot
+			else if(lTrigger > 0)//shoot
 			{
 				rightIntakeMotor.set(ControlMode.PercentOutput, rTrigger);
 				leftIntakeMotor.set(ControlMode.PercentOutput, rTrigger);
 			}
 			else
 			{
-				if(getIntakeBannerSenor())
+				if(getIntakeBannerSenor() || Intake.piston.get() == DoubleSolenoid.Value.kForward)
 				{
 					rightIntakeMotor.set(ControlMode.PercentOutput, 0);
 					leftIntakeMotor.set(ControlMode.PercentOutput, 0);
