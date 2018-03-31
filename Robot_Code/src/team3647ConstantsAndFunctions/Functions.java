@@ -301,6 +301,23 @@ public class Functions
 		}
 	}
 	
+	public static double testCurve(double eValue, double dist)
+	{
+		eValue = Math.abs(eValue);
+		if(eValue < (dist - 2000))
+		{
+			return -.7;
+		}
+		else if(eValue < dist)
+		{
+			return -.5;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
 	public static void lrandrrElevatorForFirstScale(double lValue, double rValue, double eValue, double step)
 	{
 		if(step == 1)
@@ -359,11 +376,11 @@ public class Functions
 		{
 			return .74;
 		}
-		else if(avg < 8000)
+		else if(avg < 7000)
 		{
 			return .87;
 		}
-		else if(avg < 15000)
+		else if(avg < 14000)
 		{
 			return 1;
 		}
@@ -373,7 +390,7 @@ public class Functions
 		}
 		else if(avg < dist)
 		{
-			return .34;
+			return .3;
 		}
 		else
 		{
