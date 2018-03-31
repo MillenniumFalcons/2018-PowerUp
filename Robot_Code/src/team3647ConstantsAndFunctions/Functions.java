@@ -25,6 +25,7 @@ public class Functions
 	
 	public static double stopToScale(double eValue)
 	{
+		
 		if(eValue < 25000)
 		{
 			return 1;
@@ -53,6 +54,7 @@ public class Functions
 	
 	public static double pickUpToScale(double eValue)
 	{
+		
 		if(eValue < 25000)
 		{
 			return 1;
@@ -94,15 +96,18 @@ public class Functions
 	{
 		if(eValue < 20000)
 		{
+			
 			return 1;
 		}
 		else
 		{
 			eValue*=(-0.0000352941176471);
 			eValue+=1.733;
+			
 			return eValue;
 			//.85 to .25
 		}
+		
 		//.8 to .2
 	}
 	
@@ -148,6 +153,7 @@ public class Functions
 	
 	public static double lowerScaleToScale(double eValue)
 	{
+		
 		if(eValue < 40000)
 		{
 			return .4;
@@ -304,13 +310,13 @@ public class Functions
 	public static double testCurve(double eValue, double dist)
 	{
 		eValue = Math.abs(eValue);
-		if(eValue < (dist - 2000))
+		if(eValue < (dist - 1000))
 		{
-			return -.7;
+			return .6;
 		}
 		else if(eValue < dist)
 		{
-			return -.5;
+			return .3;
 		}
 		else
 		{
@@ -326,13 +332,9 @@ public class Functions
 			avg = (lValue + rValue)/2.0;
 			if(avg < 10000)
 			{
-				ElevatorLevel.maintainPickUpPosition();
-			}
-			else
-			{
 				if(eValue < 8000)
 				{
-					Elevator.moveEleVader(.4);
+					Elevator.moveEleVader(.6);
 				}
 				else if(!ElevatorLevel.reachedSwitch())
 				{
@@ -343,25 +345,10 @@ public class Functions
 					ElevatorLevel.maintainSwitchPosition();
 				}
 			}
-		}
-		else
-		{
-			if(!reached)
-			{
-				if(eValue < 40000)
-				{
-					Elevator.moveEleVader(switchToScale(eValue));
-				}
-				else
-				{
-					Elevator.moveEleVader(.13);
-					reached = true;
-				}
-			}
 			else
 			{
-				ElevatorLevel.maintainScalePosition();
-			}	
+				Elevator.moveEleVader(Functions.switchToScale(ElevatorLevel.elevatorEncoderValue));
+			}
 		}
 	}
 	
@@ -376,13 +363,9 @@ public class Functions
 		{
 			return .74;
 		}
-		else if(avg < 7000)
-		{
-			return .87;
-		}
 		else if(avg < 14000)
 		{
-			return 1;
+			return .9;
 		}
 		else if(avg < (dist -2000))
 		{
@@ -448,11 +431,11 @@ public class Functions
 		eValue = Math.abs(eValue);
 		if(eValue < (dist - 2000))
 		{
-			return -.7;
+			return -.6;
 		}
 		else if(eValue < dist)
 		{
-			return -.5;
+			return -.4;
 		}
 		else
 		{

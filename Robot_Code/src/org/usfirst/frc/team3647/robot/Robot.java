@@ -72,9 +72,15 @@ public class Robot extends IterativeRobot {
 			runMotorSafety();
 			enc.setEncoderValues();
 			eleVader.setElevatorEncoder();
-		
-			Autonomous.test3(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
+			//System.out.println(Autonomous.currentState);
+			Autonomous.rrScaleFirstSwitchSecond(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
 		}
+	}
+	
+	@Override
+	public void disabledPeriodic()
+	{
+		Drivetrain.setToCoast();
 	}
 	
 	@Override
@@ -98,7 +104,7 @@ public class Robot extends IterativeRobot {
 			runDrivetrain();
 			runElevator();
 			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1,	 false, 0, 0);
-			System.out.println("LEFT SRX: " + ElevatorLevel.elevatorEncoderValue);
+			System.out.println("LEFT SRX: " + Elevator.leftElevator.get());
 			//Encoders.testEncoders();
 		}
 		catch(Throwable t)
@@ -120,10 +126,14 @@ public class Robot extends IterativeRobot {
 //		ElevatorLevel.testBannerSensor();
 //		Encoders.testEncoders();
 //		runDrivetrain();
-		Intake.runIntake(joy.rightBumper1);
-		IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
+		//Intake.runIntake(joy.rightBumper1);
+		//IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
+		if(joy.buttonA)
+		{
+			Encoders.resetEncoders();
+		}
 		enc.setEncoderValues();
-		Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
+		//Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
 		Encoders.testEncoders();
 		//Autonomous.testTimer(joy.buttonA);
 	}

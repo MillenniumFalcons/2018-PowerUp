@@ -2,6 +2,7 @@ package team3647subsystems;
 
 import com.ctre.CANTalon;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -29,7 +30,7 @@ public class Drivetrain
 	
 	public static DifferentialDrive drive = new DifferentialDrive(leftSRX, rightSRX);
 	
-	public static double adjustmentFactor = .7;
+	public static double adjustmentFactor = .88;
 	
 	static double []adjustmentValues = new double[2];
 	
@@ -52,7 +53,7 @@ public class Drivetrain
 	
 	public static void tankDrive(double lYValue, double rYValue)
 	{
-		drive.tankDrive(lYValue, rYValue * adjustmentFactor, false);
+		drive.tankDrive(lYValue, rYValue * .895, false);
 	}
 	
 	public static void driveForw(double lValue, double rValue, double speed)
@@ -351,11 +352,11 @@ public class Drivetrain
 //		}
 //	}
 
-	
+	static double drift;
+	static int movingStatus, driftStatus;
 	public static void arcadeDrive(double leftEnc, double rightEnc, double yValue, double xValue)
 	{
-		double drift;
-		int movingStatus, driftStatus;
+		
 		//Moving Status
 		//Forward = 1
 		//Backward = 2

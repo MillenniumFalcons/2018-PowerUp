@@ -19,15 +19,15 @@ public class IntakeWheels
 	{
 		if(!auto)
 		{
-			if(rTrigger > 0)//pickUp
+			if(lTrigger > 0)//pickUp
 			{	
-				rightIntakeMotor.set(ControlMode.PercentOutput, -lTrigger*.8);
-				leftIntakeMotor.set(ControlMode.PercentOutput, -lTrigger*.8);
+				rightIntakeMotor.set(ControlMode.PercentOutput, lTrigger);
+				leftIntakeMotor.set(ControlMode.PercentOutput, lTrigger);
 			}
-			else if(lTrigger > 0)//shoot
+			else if(rTrigger > 0)//shoot
 			{
-				rightIntakeMotor.set(ControlMode.PercentOutput, rTrigger);
-				leftIntakeMotor.set(ControlMode.PercentOutput, rTrigger);
+				rightIntakeMotor.set(ControlMode.PercentOutput, -rTrigger*.8);
+				leftIntakeMotor.set(ControlMode.PercentOutput, -rTrigger*.8);
 			}
 			else
 			{

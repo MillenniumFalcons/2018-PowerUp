@@ -73,18 +73,23 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				if(!Drivetrain.reachedDistance(lValue, rValue, 6000))
+				if(!Drivetrain.reachedDistance(lValue, rValue, 2000))
+				{
+					Drivetrain.driveForw(lValue, rValue, .5);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 6000))
 				{
 					Drivetrain.driveForw(lValue, rValue, .8);
 				}
 				else if(!Drivetrain.reachedDistance(lValue, rValue, 7500))
 				{
-					Drivetrain.driveForw(lValue, rValue, .3);
+					Drivetrain.driveForw(lValue, rValue, .5);
 				}
 				else
 				{
 					prevLeftEncoder = lValue;
 					prevRightEncoder = rValue;
+					Encoders.testEncoders();
 					currentState = 4;
 				}
 				break;
@@ -160,13 +165,17 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				if(!Drivetrain.reachedDistance(lValue, rValue, 6000))
+				if(!Drivetrain.reachedDistance(lValue, rValue, 2000))
 				{
-					Drivetrain.driveForw(lValue, rValue, .74);
+					Drivetrain.driveForw(lValue, rValue, .5);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 6000))
+				{
+					Drivetrain.driveForw(lValue, rValue, .8);
 				}
 				else if(!Drivetrain.reachedDistance(lValue, rValue, 7500))
 				{
-					Drivetrain.driveForw(lValue, rValue, .3);
+					Drivetrain.driveForw(lValue, rValue, .5);
 				}
 				else
 				{
@@ -180,14 +189,13 @@ public class Autonomous
 				rValue -= prevRightEncoder;
 				lSSpeed = Drivetrain.keepMotorInPlace(prevLeftEncoder, lValue);
 				rSSpeed = .6;
-				double dist = 2800;
+				double dist = 2000;
 				if(rValue < dist)
 				{
 					Drivetrain.tankDrive(lSSpeed, rSSpeed);
 				}
 				else
 				{
-					prevRightEncoder = rValue;
 					currentState = 5;
 				}
 				break;
@@ -201,6 +209,7 @@ public class Autonomous
 				{
 					stopWatch.stop();
 					currentState = 7;
+					prevRightEncoder = rValue;
 				}
 				break;
 			case 7:
@@ -208,7 +217,7 @@ public class Autonomous
 				rValue -= prevRightEncoder;
 				lSSpeed = Drivetrain.keepMotorInPlace(prevLeftEncoder, lValue);
 				rSSpeed = -.6;
-				dist = 2800;
+				dist = 2000;
 				rValue = Math.abs(rValue);
 				if(rValue < dist)
 				{
@@ -259,13 +268,13 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				if(!Drivetrain.reachedDistance(lValue, rValue, 2200))
+				if(!Drivetrain.reachedDistance(lValue, rValue, 2000))
 				{
-					Drivetrain.driveBack(lValue, rValue, -.6);
+					Drivetrain.driveBack(lValue, rValue, -.5);
 				}
 				else if(!Drivetrain.reachedDistance(lValue, rValue, 3000))
 				{
-					Drivetrain.driveBack(lValue, rValue, -.2);
+					Drivetrain.driveBack(lValue, rValue, -.4);
 				}
 				else
 				{
@@ -277,11 +286,11 @@ public class Autonomous
 			case 4:
 				rValue -= prevRightEncoder;
 				lValue -= prevLeftEncoder;
-				double dist = 5300;
+				double dist = 5200;
 				double ratio = 2.3;
-				if(Functions.testCurve(rValue, dist) != 0)
+				if(Functions.testCurve(lValue, dist) != 0)
 				{
-					lSSpeed = Functions.testCurve(rValue, dist);
+					lSSpeed = Functions.testCurve(lValue, dist);
 					rSSpeed = lSSpeed/ratio;
 					Drivetrain.goBackRight(lValue, rValue, ratio, -lSSpeed, -rSSpeed, .06);
 				}
@@ -289,7 +298,7 @@ public class Autonomous
 				{
 					prevLeftEncoder = lValue;
 					prevRightEncoder = rValue;
-					currentState = 5;
+					currentState = 6;
 				}
 				break;
 			case 5:
@@ -310,6 +319,99 @@ public class Autonomous
 				break;
 			case 6:
 				Drivetrain.stop();
+				break;
+		}
+	}
+	
+	public static void rightSwitch(double lValue, double rValue)
+	{
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.stop();
+				stopWatch.reset();
+				stopWatch.start();
+				IntakeWheels.pickUp(.2);
+				currentState = 1;
+				break;
+			case 1:
+				time = stopWatch.get();
+				if(lValue == 0 && rValue == 0 && time >= 2)
+				{
+					
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					currentState = 2;
+					stopWatch.stop();
+				}
+				else if(lValue == 0 && rValue == 0 && ElevatorLevel.reachedStop())
+				{
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					currentState = 2;
+					stopWatch.stop();
+				}
+				else
+				{
+					Elevator.moveEleVader(-.23);
+					Encoders.resetEncoders();
+				}
+				break;
+			case 2:
+				stopWatch.reset();
+				if(ElevatorLevel.reachedSwitch())
+				{
+					currentState = 3;
+				}
+				else
+				{
+					Elevator.moveEleVader(Functions.stopToSwitch(ElevatorLevel.elevatorEncoderValue));
+				}
+				break;
+			case 3:
+				ElevatorLevel.maintainSwitchPosition();
+				if(!Drivetrain.reachedDistance(lValue, rValue, 2000))
+				{
+					Drivetrain.driveForw(lValue, rValue, .5);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 7000 ))
+				{
+					Drivetrain.driveForw(lValue, rValue, .8);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 8500))
+				{
+					Drivetrain.driveForw(lValue, rValue, .5);
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					currentState = 4;
+				}
+				break;
+			case 4:
+				ElevatorLevel.maintainSwitchPosition();
+				rValue -= prevRightEncoder;
+				lValue -= prevLeftEncoder;
+				double dist = 5300;
+				double ratio = 2.3;
+				if(Functions.testCurve(rValue, dist) != 0)
+				{
+					rSSpeed = Functions.testCurve(rValue, dist);
+					lSSpeed = rSSpeed/ratio;
+					Drivetrain.goStraightLeft(lValue, rValue, ratio, lSSpeed, rSSpeed, .06);
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					currentState = 5;
+				}
+				break;
+			case 5:
+				Drivetrain.stop();
+				ElevatorLevel.maintainSwitchPosition();
+				IntakeWheels.shoot(1);
 				break;
 		}
 	}
@@ -576,13 +678,13 @@ public class Autonomous
 				break;
 			case 3:
 				ElevatorLevel.maintainPickUpPosition();
-				if(!Drivetrain.reachedDistance(lValue, rValue, 6500))
+				if(!Drivetrain.reachedDistance(lValue, rValue, 9500))
 				{
-					Drivetrain.driveForw(lValue, rValue, .8);
+					Drivetrain.tankDrive(.8, .8);
 				}
-				else if(!Drivetrain.reachedDistance(lValue, rValue, 8000))
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 11000))
 				{
-					Drivetrain.driveForw(lValue, rValue, .3);
+					Drivetrain.tankDrive(.5, .5);
 				}
 				else
 				{
@@ -1097,7 +1199,10 @@ public class Autonomous
 		switch(currentState)
 		{
 			case 0:
+				stopWatch.stop();
+				stopWatch.reset();
 				stopWatch.start();
+				IntakeWheels.pickUp(.2);
 				currentState = 1;
 				break;
 			case 1:
@@ -1131,54 +1236,62 @@ public class Autonomous
 				}
 				else
 				{
-					Elevator.moveEleVader(Functions.stopToPickUp(ElevatorLevel.elevatorEncoderValue));
+					Elevator.moveEleVader(.4);
 				}
 				break;
 			case 3:
 				Functions.lrandrrElevatorForFirstScale(lValue, rValue, ElevatorLevel.elevatorEncoderValue, 1);
-				if(Functions.lrandrrSpeedForFirstScale(lValue, rValue, Constants.lrandrrFirstStraightDist) != 0)
+				if(Functions.lrandrrSpeedForFirstScale(lValue, rValue, 23500) != 0)
 				{
-					Drivetrain.driveForw(lValue, rValue, Functions.lrandrrSpeedForFirstScale(lValue, rValue, Constants.lrandrrFirstStraightDist));
+					Drivetrain.driveForw(lValue, rValue, Functions.lrandrrSpeedForFirstScale(lValue, rValue, 23500));
 				}
 				else
 				{
 					prevLeftEncoder = lValue;
 					prevRightEncoder = rValue;
+					Encoders.testEncoders();
 					currentState = 4;
 				}
 				break;
 			case 4:
-				Functions.lrandrrElevatorForFirstScale(lValue, rValue, ElevatorLevel.elevatorEncoderValue, 2);
+				Functions.lrandrrElevatorForFirstScale(lValue, rValue, ElevatorLevel.elevatorEncoderValue, 1);
 				rValue -= prevRightEncoder;
 				lSSpeed = Drivetrain.keepMotorInPlace(prevLeftEncoder, lValue);
-				rSSpeed = .6;
-				double dist = 2800;
+				rSSpeed = .5;
+				double dist = 1700;
 				if(rValue < dist)
 				{
 					Drivetrain.tankDrive(lSSpeed, rSSpeed);
 				}
 				else
 				{
-					prevRightEncoder = rValue;
 					currentState = 5;
 				}
 				break;
 			case 5:
 				Drivetrain.stop();
-				ElevatorLevel.maintainScalePosition();
-				stopWatch.start();
-				currentState = 6;
+				if(ElevatorLevel.reachedScale())
+				{
+					ElevatorLevel.maintainScalePosition();
+					stopWatch.start();
+					currentState = 6;
+				}
+				else
+				{
+					Elevator.moveEleVader(Functions.stopToScale(ElevatorLevel.elevatorEncoderValue));
+				}
 				break;
 			case 6:
 				ElevatorLevel.maintainScalePosition();
 				if(stopWatch.get() < .6)
 				{
-					IntakeWheels.shoot(.6);
+					IntakeWheels.shoot(.4);
 				}
 				else
 				{
 					stopWatch.stop();
 					stopWatch.reset();
+					prevRightEncoder = rValue;
 					currentState = 7;
 				}
 				break;
@@ -1186,12 +1299,28 @@ public class Autonomous
 				ElevatorLevel.maintainScalePosition();
 				rValue -= prevRightEncoder;
 				lSSpeed = Drivetrain.keepMotorInPlace(prevLeftEncoder, lValue);
-				rSSpeed = -.6;
-				dist = 2800;
+				rSSpeed = -.4;
+				dist = 2400;
 				rValue = Math.abs(rValue);
 				if(rValue < dist)
 				{
 					Drivetrain.tankDrive(lSSpeed, rSSpeed);
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					currentState = 99;
+				}
+				break;
+			case 99:
+				Functions.moveElevatorToStop(ElevatorLevel.elevatorEncoderValue);
+				lValue -= prevLeftEncoder;
+				rValue -= prevRightEncoder;
+				System.out.println(lValue + " " + rValue);
+				if(!Drivetrain.reachedDistance(lValue, rValue, 2000))
+				{
+					Drivetrain.driveBack(lValue, rValue, -.4);
 				}
 				else
 				{
@@ -1202,37 +1331,38 @@ public class Autonomous
 				break;
 			case 8:
 				Functions.moveElevatorToStop(ElevatorLevel.elevatorEncoderValue);
+				System.out.println(lValue + " " + rValue);
 				lValue -= prevLeftEncoder;
-				rValue -= prevRightEncoder;
-				if(!Drivetrain.reachedDistance(lValue, rValue, Constants.lrandrrBackUpTurnAfterScale - 800))
+				rSSpeed = Drivetrain.keepMotorInPlace(prevRightEncoder, rValue);
+				lSSpeed = -.4;
+				dist = 3200;
+				lValue = Math.abs(lValue);
+				if(lValue < dist)
 				{
-					Drivetrain.driveBack(lValue, rValue, -.6);
-				}
-				else if(!Drivetrain.reachedDistance(lValue, rValue, Constants.lrandrrBackUpTurnAfterScale))
-				{
-					Drivetrain.driveBack(lValue, rValue, -.2);
+					Drivetrain.tankDrive(lSSpeed, rSSpeed);
 				}
 				else
 				{
 					prevLeftEncoder = lValue;
 					prevRightEncoder = rValue;
-					currentState = 9;
+					currentState = 15;
 				}
 				break;
 			case 9:
 				Functions.moveElevatorToStop(ElevatorLevel.elevatorEncoderValue);
 				lValue -= prevLeftEncoder;
 				rValue -= prevRightEncoder;
+				stopWatch.stop();
 				stopWatch.reset();
-				if(Functions.lrandrrBackUpToWallTurn(lValue, Constants.lrandrrBackUpToWallTurnDist) != 0)
+				if(Functions.lrandrrBackUpToWallTurn(lValue, 6500) != 0)
 				{
-					lSSpeed = Functions.lrandrrBackUpToWallTurn(lValue, Constants.lrandrrBackUpToWallTurnDist);
-					rSSpeed = lSSpeed/Constants.lrandrrBackUpToWallTurnRatio;
-					Drivetrain.goBackRight(lValue, rValue, Constants.lrandrrBackUpToWallTurnRatio, lSSpeed, rSSpeed, .06);
+					lSSpeed = Functions.lrandrrBackUpToWallTurn(lValue, 6500);
+					rSSpeed = lSSpeed/2.3;
+					Drivetrain.goBackRight(lValue, rValue, 2.3, lSSpeed, rSSpeed, .06);
 				}
 				else
 				{
-					currentState = 10;
+					currentState = 15;
 				}
 				break;
 			case 10:
@@ -1243,6 +1373,7 @@ public class Autonomous
 				currentState = 11;
 				break;
 			case 11:
+				Functions.moveElevatorToStop(ElevatorLevel.elevatorEncoderValue);
 				if(stopWatch.get() > .5)
 				{
 					currentState = 12;
@@ -1253,9 +1384,56 @@ public class Autonomous
 				}
 				break;
 			case 12:
-				
+				Functions.moveElevatorToStop(ElevatorLevel.elevatorEncoderValue);
+				if(!Drivetrain.reachedDistance(lValue, rValue, 2800))
+				{
+					Drivetrain.driveForw(lValue, rValue, .6);
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					currentState = 13;
+				}
 				break;
-				
+			case 13:
+				rValue -= prevRightEncoder;
+				lValue -= prevLeftEncoder;
+				dist = 5300;
+				double ratio = 2.3;
+				if(Functions.testCurve(rValue, dist) != 0)
+				{
+					rSSpeed = Functions.testCurve(rValue, dist);
+					lSSpeed = rSSpeed/ratio;
+					Drivetrain.goStraightLeft(lValue, rValue, ratio, lSSpeed, rSSpeed, .06);
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					currentState = 14;
+				}
+				break;
+			case 14:
+				rValue -= prevRightEncoder;
+				lValue -= prevLeftEncoder;
+				if(!Drivetrain.reachedDistance(lValue, rValue, 2800))
+				{
+					Intake.openIntake();
+					IntakeWheels.pickUp(.8);
+					Drivetrain.driveForw(lValue, rValue, .6);
+				}
+				else
+				{
+					Intake.closeIntake();
+					IntakeWheels.runIntake(0, 0, true, 0, 0);
+					Drivetrain.stop();
+				}
+				break;
+			case 15:
+				Drivetrain.stop();
+				Elevator.stopEleVader();
+				break;
 		}
 	}
 	
