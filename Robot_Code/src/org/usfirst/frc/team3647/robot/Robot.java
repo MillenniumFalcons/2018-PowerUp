@@ -123,7 +123,7 @@ public class Robot extends IterativeRobot {
 		Intake.runIntake(joy.rightBumper1);
 		IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
 		enc.setEncoderValues();
-		Drivetrain.FRCarcadedrive(joy.leftJoySticky, joy.rightJoyStickx);
+		Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
 		Encoders.testEncoders();
 		//Autonomous.testTimer(joy.buttonA);
 	}
