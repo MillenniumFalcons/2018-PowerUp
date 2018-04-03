@@ -3,38 +3,29 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Timer;
-//edu.wpi.first.wpilibj.PWM
-//edu.wpi.first.wpilibj.SendableBase
+
 
 
 public class TiltServo 
 {
 	public static Servo servo = new Servo(0);
 	public static WPI_TalonSRX upDownSRX = new WPI_TalonSRX(60);
-	public static void PullForks()
+	public static void PullForks(double leftTrigger, double rightTrigger)
 	{
-		double speed;
-		if(leftTrigger)
+		if(leftTrigger > 0)
 		{
-			speed = .2;
-			upDownSRX.set(speed); //Direction?
+			upDownSRX.set(leftTrigger); 
 		}
-		else if(rightTrigger)
+		else if(rightTrigger > 0)
 		{
 			servo.set(.5);
 			Timer.delay(3);
 			servo.set(0);
-			speed = .2;
-			upDownSRX.set(speed); //Direction?
+			upDownSRX.set(rightTrigger);
 		}
 		else
 		{
-			speed = 0;
-			upDownSRX.ser(speed);
+			upDownSRX.set(0);
 		}
-	}
-	
-	
-	
-		
-	}
+	}		
+}
