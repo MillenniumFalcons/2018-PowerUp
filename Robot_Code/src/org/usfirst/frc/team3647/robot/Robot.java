@@ -140,7 +140,7 @@ public class Robot extends IterativeRobot {
 		//Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
 		Encoders.testEncoders();
 		//Autonomous.testTimer(joy.buttonA);
-		TiltServo.PullForks();
+		TiltServo.PullForks(joy.leftTrigger, joy.rightTrigger);
 	}
 	
 	
