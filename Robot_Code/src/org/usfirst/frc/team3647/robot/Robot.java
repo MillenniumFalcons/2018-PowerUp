@@ -26,10 +26,14 @@ public class Robot extends IterativeRobot {
 	ElevatorLevel eleVader;
 	MotorSafety safety;
 	MotorSafetyHelper safetyChecker;
+	CameraServer server;
+
 
 	@Override
 	public void robotInit() 
 	{
+		server = CameraServer.getInstance();
+		server.startAutomaticCapture("cam0", 0);
 		try
 		{
 			CrashChecker.logRobotInit();
