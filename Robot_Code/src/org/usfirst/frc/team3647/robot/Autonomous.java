@@ -23,6 +23,55 @@ public class Autonomous
 	static int currentState;
 	static double lSSpeed, rSSpeed, speed;
 	
+	public static void shootRight(double lValue, double rValue)
+	{
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.stop();
+				stopWatch.reset();
+				stopWatch.start();
+				IntakeWheels.pickUp(.2);
+				currentState = 1;
+				break;
+			case 1:
+				time = stopWatch.get();
+				if(lValue == 0 && rValue == 0 && time >= 2)
+				{
+					stopWatch.stop();
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					stopWatch.reset();
+					currentState = -1;
+					
+				}
+				else if(lValue == 0 && rValue == 0 && ElevatorLevel.reachedStop())
+				{
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					currentState = 2;
+					stopWatch.stop();
+				}
+				else
+				{
+					Elevator.moveEleVader(-.23);
+					Encoders.resetEncoders();
+				}
+				break;
+			case 2:
+				stopWatch.reset();
+				if(ElevatorLevel.reachedPickUp())
+				{
+					currentState = 3;
+				}
+				else
+				{
+					Elevator.moveEleVader(.4);
+				}
+				break;
+		}
+	}
+	
 	public static void initialize()
 	{
 		stopWatch.reset();

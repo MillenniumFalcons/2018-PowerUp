@@ -1,5 +1,6 @@
 package team3647subsystems;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Timer;
@@ -14,13 +15,14 @@ public class TiltServo
 	{
 		if(leftTrigger > 0)
 		{
-			upDownSRX.set(leftTrigger); 
+			servo.set(.5);
+			Timer.delay(.3);
+			servo.set(0);
+			upDownSRX.set(-leftTrigger); 
 		}
 		else if(rightTrigger > 0)
 		{
-			servo.set(.5);
-			Timer.delay(3);
-			servo.set(0);
+			
 			upDownSRX.set(rightTrigger);
 		}
 		else
