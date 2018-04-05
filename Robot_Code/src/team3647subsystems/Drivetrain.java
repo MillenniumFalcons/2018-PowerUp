@@ -643,7 +643,10 @@ public class Drivetrain
 	
 	public static void enableCurrentLimiting(double amps)
 	{
-		
+		leftSRX.enableCurrentLimit(true);
+		rightSRX.enableCurrentLimit(true);
+		leftSRX.	configPeakCurrentLimit(amps, 10);
+		rightSRX.configPeakCurrentLimit(amps, 10);
 	}
 	
 	public static void setToBrake()

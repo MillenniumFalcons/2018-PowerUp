@@ -174,6 +174,7 @@ public class Robot extends IterativeRobot {
 	
 	public void runDrivetrain()
 	{
+		Drivetrain.enableCurrentLimiting(20);
 		enc.setEncoderValues();
 		if(joy.leftBumper)
 		{
