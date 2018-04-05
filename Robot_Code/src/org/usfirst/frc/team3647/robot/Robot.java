@@ -1,7 +1,5 @@
 package org.usfirst.frc.team3647.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -34,11 +32,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() 
 	{
-		server = CameraServer.getInstance();
-		server.startAutomaticCapture("cam0", 0);
 		try
 		{
 			CrashChecker.logRobotInit();
+//			server = CameraServer.getInstance();
+//			server.startAutomaticCapture("cam0", 0);
 			enc = new Encoders();
 			safetyChecker = new MotorSafetyHelper(safety);
 			joy = new Joysticks();
@@ -110,7 +108,6 @@ public class Robot extends IterativeRobot {
 			runDrivetrain();
 			runElevator();
 			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1,	 false, 0, 0);
-			System.out.println("LEFT SRX: " + Elevator.leftElevator.get());
 			//Encoders.testEncoders();
 		}
 		catch(Throwable t)

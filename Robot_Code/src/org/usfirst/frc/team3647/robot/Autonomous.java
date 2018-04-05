@@ -21,7 +21,63 @@ public class Autonomous
 	//Other variables for auto
 	static double prevLeftEncoder, prevRightEncoder;
 	static int currentState;
-	static double lSSpeed, rSSpeed, speed;
+	static double lSSpeed, rSSpeed, speed, sum;
+	
+	public static void testPID(double lValue, double rValue)
+	{
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.stop();
+				stopWatch.reset();
+				stopWatch.start();
+				IntakeWheels.pickUp(.2);
+				currentState = 1;
+				break;
+			case 1:
+				time = stopWatch.get();
+				if(lValue == 0 && rValue == 0 && time >= 2)
+				{
+					stopWatch.stop();
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					stopWatch.reset();
+					currentState = -1;
+					
+				}
+				else if(lValue == 0 && rValue == 0 && ElevatorLevel.reachedStop())
+				{
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					currentState = 2;
+					stopWatch.stop();
+				}
+				else
+				{
+					Elevator.moveEleVader(-.23);
+					Encoders.resetEncoders();
+				}
+				break;
+			case 2:
+				if(!Drivetrain.reachedDistance(lValue, rValue, 8500))
+				{
+					Drivetrain.tankDrive(.7, .7);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 10000))
+				{
+					Drivetrain.tankDrive(.4, .4);
+				}
+				else
+				{
+					Encoders.testEncoders();
+					currentState = 3;
+				}
+				break;
+			case 3:
+				Drivetrain.stop();
+				break;
+		}
+	}
 	
 	public static void shootRight(double lValue, double rValue)
 	{
@@ -74,6 +130,7 @@ public class Autonomous
 	
 	public static void initialize()
 	{
+		stopWatch.stop();
 		stopWatch.reset();
 		Drivetrain.stop();
 		Forks.lockTheForks();
@@ -372,13 +429,11 @@ public class Autonomous
 		}
 	}
 	
-	public static void rightSwitch(double lValue, double rValue)
+	public static void rightSwitch1Cube(double lValue, double rValue)
 	{
 		switch(currentState)
 		{
 			case 0:
-				stopWatch.stop();
-				stopWatch.reset();
 				stopWatch.start();
 				IntakeWheels.pickUp(.2);
 				currentState = 1;
@@ -407,48 +462,36 @@ public class Autonomous
 				}
 				break;
 			case 2:
+				if(ElevatorLevel.reachedStop())
+				{
+					currentState = 3;
+				}
+				else if(ElevatorLevel.elevatorEncoderValue == 0)
+				{
+					currentState = 3;
+				}
+				else
+				{
+					ElevatorLevel.resetElevatorEncoders();
+				}
+				break;
+			case 3:
 				stopWatch.reset();
 				if(ElevatorLevel.reachedSwitch())
 				{
-					currentState = 3;
+					currentState = 4;
 				}
 				else
 				{
 					Elevator.moveEleVader(Functions.stopToSwitch(ElevatorLevel.elevatorEncoderValue));
 				}
 				break;
-			case 3:
-				ElevatorLevel.maintainSwitchPosition();
-				if(!Drivetrain.reachedDistance(lValue, rValue, 2000))
-				{
-					Drivetrain.driveForw(lValue, rValue, .5);
-				}
-				else if(!Drivetrain.reachedDistance(lValue, rValue, 7000 ))
-				{
-					Drivetrain.driveForw(lValue, rValue, .8);
-				}
-				else if(!Drivetrain.reachedDistance(lValue, rValue, 8500))
-				{
-					Drivetrain.driveForw(lValue, rValue, .5);
-				}
-				else
-				{
-					prevLeftEncoder = lValue;
-					prevRightEncoder = rValue;
-					currentState = 4;
-				}
-				break;
 			case 4:
 				ElevatorLevel.maintainSwitchPosition();
-				rValue -= prevRightEncoder;
-				lValue -= prevLeftEncoder;
-				double dist = 5300;
-				double ratio = 2.3;
-				if(Functions.testCurve(rValue, dist) != 0)
+				if(!Drivetrain.reachedDistance(lValue, rValue, Constants.oneCubeSwitchRightSideStraight))
 				{
-					rSSpeed = Functions.testCurve(rValue, dist);
-					lSSpeed = rSSpeed/ratio;
-					Drivetrain.goStraightLeft(lValue, rValue, ratio, lSSpeed, rSSpeed, .06);
+					sum = (rValue +lValue)/2.0;
+					Drivetrain.driveForw(lValue, rValue, Functions.oneCubeSwitchRightSideStraight(sum, Constants.oneCubeSwitchRightSideStraight));
 				}
 				else
 				{
@@ -458,9 +501,459 @@ public class Autonomous
 				}
 				break;
 			case 5:
+				ElevatorLevel.maintainSwitchPosition();
+				rValue -= prevRightEncoder;
+				lValue -= prevLeftEncoder;
+				if(Functions.oneCubeSwitchRightSideCurve(rValue, Constants.oneCubeSwitchRightSideCurve) != 0)
+				{
+					rSSpeed = Functions.oneCubeSwitchRightSideCurve(rValue, Constants.oneCubeSwitchRightSideCurve);
+					lSSpeed = rSSpeed/Constants.oneCubeSwitchRightSideCurveRatio;
+					Drivetrain.goStraightLeft(lValue, rValue, Constants.oneCubeSwitchRightSideCurveRatio, lSSpeed, rSSpeed, .06);
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					stopWatch.start();
+					currentState = 6;
+				}
+				break;
+			case 6:
 				Drivetrain.stop();
 				ElevatorLevel.maintainSwitchPosition();
-				IntakeWheels.shoot(1);
+				if(stopWatch.get() > 2)
+				{
+					IntakeWheels.manuallyRunIntake(0, 0);
+				}
+				else
+				{
+					IntakeWheels.shoot(1);
+				}
+				break;
+		}
+	}
+	
+	public static void rightSwitch2Cube(double lValue, double rValue)
+	{
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.start();
+				IntakeWheels.pickUp(.2);
+				currentState = 1;
+				break;
+			case 1:
+				time = stopWatch.get();
+				if(lValue == 0 && rValue == 0 && time >= 2)
+				{
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					currentState = 2;
+					stopWatch.stop();
+				}
+				else if(lValue == 0 && rValue == 0 && ElevatorLevel.reachedStop())
+				{
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					currentState = 2;
+					stopWatch.stop();
+				}
+				else
+				{
+					Elevator.moveEleVader(-.23);
+					Encoders.resetEncoders();
+				}
+				break;
+			case 2:
+				if(ElevatorLevel.reachedStop())
+				{
+					currentState = 3;
+				}
+				else if(ElevatorLevel.elevatorEncoderValue == 0)
+				{
+					currentState = 3;
+				}
+				else
+				{
+					ElevatorLevel.resetElevatorEncoders();
+				}
+				break;
+			case 3:
+				stopWatch.reset();
+				if(ElevatorLevel.reachedSwitch())
+				{
+					currentState = 4;
+				}
+				else
+				{
+					Elevator.moveEleVader(Functions.stopToSwitch(ElevatorLevel.elevatorEncoderValue));
+				}
+				break;
+			case 4:
+				ElevatorLevel.maintainSwitchPosition();
+				if(!Drivetrain.reachedDistance(lValue, rValue, Constants.twoCubeSwitchRightSideStraight))
+				{
+					sum = (rValue +lValue)/2.0;
+					Drivetrain.driveForw(lValue, rValue, Functions.twoCubeSwitchRightSideStraight(sum, Constants.twoCubeSwitchRightSideStraight));
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					currentState = 5;
+				}
+				break;
+			case 5:
+				ElevatorLevel.maintainSwitchPosition();
+				rValue -= prevRightEncoder;
+				lValue -= prevLeftEncoder;
+				if(Functions.twoCubeSwitchRightSideCurve(rValue, Constants.twoCubeSwitchRightSideCurve) != 0)
+				{
+					rSSpeed = Functions.twoCubeSwitchRightSideCurve(rValue, Constants.twoCubeSwitchRightSideCurve);
+					lSSpeed = rSSpeed/Constants.twoCubeSwitchRightSideCurveRatio;
+					Drivetrain.goStraightLeft(lValue, rValue, Constants.twoCubeSwitchRightSideCurveRatio, lSSpeed, rSSpeed, .06);
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					stopWatch.start();
+					currentState = 6;
+				}
+				break;
+			case 6:
+				Drivetrain.stop();
+				ElevatorLevel.maintainSwitchPosition();
+				if(stopWatch.get() > 1.2 && lValue == 0 && rValue == 0)
+				{
+					IntakeWheels.manuallyRunIntake(0, 0);
+					stopWatch.stop();
+					stopWatch.reset();
+					currentState = 7;
+				}
+				else
+				{
+					IntakeWheels.manuallyRunIntake(1, .5);
+					Encoders.resetEncoders();
+				}
+				break;
+			case 7:
+				if(stopWatch.get() == 0)
+				{
+					stopWatch.start();
+					currentState = 8;
+				}
+				else
+				{
+					stopWatch.reset();
+				}
+				break;
+			case 8:
+				Intake.openIntake();
+				if(ElevatorLevel.reachedStop() || stopWatch.get() > 2)
+				{
+					Elevator.stopEleVader();
+					stopWatch.stop();
+					stopWatch.reset();
+					currentState = 8;
+				}
+				else
+				{
+					Elevator.moveEleVader(Functions.switchToStop(ElevatorLevel.elevatorEncoderValue));
+				}
+				break;
+			case 9:
+				if(!Drivetrain.reachedDistance(lValue, rValue, 2000))
+				{
+					Drivetrain.driveForw(lValue, rValue, .4);
+					IntakeWheels.pickUp(1);
+				}
+				else
+				{
+					Drivetrain.stop();
+					stopWatch.stop();
+					currentState = 9;
+				}
+				break;
+			case 10:
+				Intake.closeIntake();
+				Encoders.resetEncoders();
+				if(stopWatch.get() > .8)
+				{
+					currentState = 11;
+				}
+				break;
+			case 11:
+				stopWatch.stop();
+				stopWatch.reset();
+				if(!Drivetrain.reachedDistance(lValue, rValue, 1500))
+				{
+					Drivetrain.driveBack(lValue, rValue, -.4);
+					IntakeWheels.pickUp(.2);
+				}
+				else
+				{
+					Drivetrain.stop();
+					currentState = 12;
+				}
+				break;
+			case 12:
+				if(ElevatorLevel.reachedSwitch())
+				{
+					stopWatch.start();
+					currentState = 13;
+				}
+				else
+				{
+					Elevator.moveEleVader(Functions.stopToSwitch(ElevatorLevel.elevatorEncoderValue));
+				}
+				break;
+			case 13:
+				ElevatorLevel.maintainSwitchPosition();
+				if(stopWatch.get() > .4)
+				{
+					IntakeWheels.manuallyRunIntake(1, .5);
+				}
+				else if(stopWatch.get() > .8)
+				{
+					currentState = 14;
+				}
+				break;
+			case 14:
+				ElevatorLevel.maintainSwitchPosition();
+				IntakeWheels.manuallyRunIntake(0, 0);
+				break;
+		}
+	}
+	
+	public static void leftSwitch2Cube(double lValue, double rValue)
+	{
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.start();
+				IntakeWheels.pickUp(.2);
+				currentState = 1;
+				break;
+			case 1:
+				time = stopWatch.get();
+				if(lValue == 0 && rValue == 0 && time >= 2)
+				{
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					currentState = 2;
+					stopWatch.stop();
+				}
+				else if(lValue == 0 && rValue == 0 && ElevatorLevel.reachedStop())
+				{
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					currentState = 2;
+					stopWatch.stop();
+				}
+				else
+				{
+					Elevator.moveEleVader(-.23);
+					Encoders.resetEncoders();
+				}
+				break;
+			case 2:
+				if(ElevatorLevel.reachedStop())
+				{
+					currentState = 3;
+				}
+				else if(ElevatorLevel.elevatorEncoderValue == 0)
+				{
+					currentState = 3;
+				}
+				else
+				{
+					ElevatorLevel.resetElevatorEncoders();
+				}
+				break;
+			case 3:
+				stopWatch.reset();
+				if(ElevatorLevel.reachedSwitch())
+				{
+					currentState = 4;
+				}
+				else
+				{
+					Elevator.moveEleVader(Functions.stopToSwitch(ElevatorLevel.elevatorEncoderValue));
+				}
+				break;
+			case 4:
+				ElevatorLevel.maintainSwitchPosition();
+				if(!Drivetrain.reachedDistance(lValue, rValue, Constants.twoCubeSwitchLeftSideStraight))
+				{
+					sum = (rValue +lValue)/2.0;
+					if(sum < (Constants.twoCubeSwitchLeftSideStraight - 3200))
+					{
+						Drivetrain.driveForw(lValue, rValue, .7);
+					}
+					else
+					{
+						Drivetrain.driveForw(lValue, rValue, .4);
+					}
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					currentState = 5;
+				}
+				break;
+			case 5:
+				ElevatorLevel.maintainSwitchPosition();
+				rValue -= prevRightEncoder;
+				lValue -= prevLeftEncoder;
+				if(Functions.twoCubeSwitchLeftSideFirstCurve(rValue, Constants.twoCubeSwitchLeftSideFirstCurve) != 0)
+				{
+					rSSpeed = Functions.twoCubeSwitchLeftSideFirstCurve(rValue, Constants.twoCubeSwitchLeftSideFirstCurve);
+					lSSpeed = rSSpeed/Constants.twoCubeSwitchLeftSideFirstCurveRatio;
+					Drivetrain.goStraightLeft(lValue, rValue, Constants.twoCubeSwitchLeftSideFirstCurveRatio, lSSpeed, rSSpeed, .06);
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					currentState = 99;
+				}
+				break;
+			case 99:
+				ElevatorLevel.maintainSwitchPosition();
+				rValue -= prevRightEncoder;
+				lValue -= prevLeftEncoder;
+				if(!Drivetrain.reachedDistance(lValue, rValue, Constants.twoCubeSwitchLeftSideStraightCrossField))
+				{
+					sum = (rValue +lValue)/2.0;
+					Drivetrain.driveForw(lValue, rValue, Functions.twoCubeSwitchLeftSideStraightCrossField(sum, Constants.twoCubeSwitchLeftSideStraightCrossField));
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					currentState = 100;
+				}
+				break;
+			case 100:
+				ElevatorLevel.maintainSwitchPosition();
+				rValue -= prevRightEncoder;
+				lValue -= prevLeftEncoder;
+				if(Functions.twoCubeSwitchLeftSideSecondCurve(rValue, Constants.twoCubeSwitchLeftSideSecondCurve) != 0)
+				{
+					rSSpeed = Functions.twoCubeSwitchLeftSideFirstCurve(rValue, Constants.twoCubeSwitchLeftSideSecondCurve);
+					lSSpeed = rSSpeed/Constants.twoCubeSwitchLeftSideSecondCurveRatio;
+					Drivetrain.goStraightLeft(lValue, rValue, Constants.twoCubeSwitchLeftSideSecondCurveRatio, lSSpeed, rSSpeed, .06);
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					currentState = 6;
+				}
+				break;
+			case 6:
+				Drivetrain.stop();
+				ElevatorLevel.maintainSwitchPosition();
+				if(stopWatch.get() > 1.2 && lValue == 0 && rValue == 0)
+				{
+					IntakeWheels.manuallyRunIntake(0, 0);
+					stopWatch.stop();
+					stopWatch.reset();
+					currentState = 7;
+				}
+				else
+				{
+					IntakeWheels.manuallyRunIntake(1, .5);
+					Encoders.resetEncoders();
+				}
+				break;
+			case 7:
+				if(stopWatch.get() == 0)
+				{
+					stopWatch.start();
+					currentState = 8;
+				}
+				else
+				{
+					stopWatch.reset();
+				}
+				break;
+			case 8:
+				Intake.openIntake();
+				if(ElevatorLevel.reachedStop() || stopWatch.get() > 2)
+				{
+					Elevator.stopEleVader();
+					stopWatch.stop();
+					stopWatch.reset();
+					currentState = 8;
+				}
+				else
+				{
+					Elevator.moveEleVader(Functions.switchToStop(ElevatorLevel.elevatorEncoderValue));
+				}
+				break;
+			case 9:
+				if(!Drivetrain.reachedDistance(lValue, rValue, 2000))
+				{
+					Drivetrain.driveForw(lValue, rValue, .4);
+					IntakeWheels.pickUp(1);
+				}
+				else
+				{
+					Drivetrain.stop();
+					stopWatch.stop();
+					currentState = 9;
+				}
+				break;
+			case 10:
+				Intake.closeIntake();
+				Encoders.resetEncoders();
+				if(stopWatch.get() > .8)
+				{
+					currentState = 11;
+				}
+				break;
+			case 11:
+				stopWatch.stop();
+				stopWatch.reset();
+				if(!Drivetrain.reachedDistance(lValue, rValue, 1500))
+				{
+					Drivetrain.driveBack(lValue, rValue, -.4);
+					IntakeWheels.pickUp(.2);
+				}
+				else
+				{
+					Drivetrain.stop();
+					currentState = 12;
+				}
+				break;
+			case 12:
+				if(ElevatorLevel.reachedSwitch())
+				{
+					stopWatch.start();
+					currentState = 13;
+				}
+				else
+				{
+					Elevator.moveEleVader(Functions.stopToSwitch(ElevatorLevel.elevatorEncoderValue));
+				}
+				break;
+			case 13:
+				ElevatorLevel.maintainSwitchPosition();
+				if(stopWatch.get() > .4)
+				{
+					IntakeWheels.manuallyRunIntake(1, .5);
+				}
+				else if(stopWatch.get() > .8)
+				{
+					currentState = 14;
+				}
+				break;
+			case 14:
+				ElevatorLevel.maintainSwitchPosition();
+				IntakeWheels.manuallyRunIntake(0, 0);
 				break;
 		}
 	}

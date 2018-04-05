@@ -35,6 +35,21 @@ public class Constants
 	public static final double scale = 42500;
 	
 	//Auto Constants
+	public static final double oneCubeSwitchRightSideStraight = 8500;
+	public static final double oneCubeSwitchRightSideCurve = 5300;
+	public static final double oneCubeSwitchRightSideCurveRatio = 2.3;
+	
+	public static final double twoCubeSwitchRightSideStraight = 10000;
+	public static final double twoCubeSwitchRightSideCurve = 9000;
+	public static final double twoCubeSwitchRightSideCurveRatio = 2.3;
+	
+	public static final double twoCubeSwitchLeftSideStraight = 10000;
+	public static final double twoCubeSwitchLeftSideFirstCurve = 5300;
+	public static final double twoCubeSwitchLeftSideFirstCurveRatio = 2.3;
+	public static final double twoCubeSwitchLeftSideStraightCrossField = 10000;
+	public static final double twoCubeSwitchLeftSideSecondCurve = 5300;
+	public static final double twoCubeSwitchLeftSideSecondCurveRatio = 2.3;
+	
 	public static final double lrandrrFirstStraightDist = 21936.6;
 	public static final double lrandrrFirstTurnToScaleDist = 5400;
 	public static final double lrandrrFirstTurnToScaleRatio = 3.26;

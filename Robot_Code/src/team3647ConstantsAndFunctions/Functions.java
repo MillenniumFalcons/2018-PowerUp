@@ -324,6 +324,145 @@ public class Functions
 		}
 	}
 	
+	//Competition Stuff
+	public static double oneCubeSwitchRightSideStraight(double sum, double dist)
+	{
+		if(sum < 2000)
+		{
+			return .6;
+		}
+		else if(sum < (dist-1500))
+		{
+			return .8;
+		}
+		else if(sum < dist)
+		{
+			return .4;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+	public static double oneCubeSwitchRightSideCurve(double eValue, double dist)
+	{
+		eValue = Math.abs(eValue);
+		if(eValue < (dist - 1000))
+		{
+			return .6;
+		}
+		else if(eValue < dist)
+		{
+			return .3;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+	public static double twoCubeSwitchRightSideStraight(double sum, double dist)
+	{
+		if(sum < 2000)
+		{
+			return .4;
+		}
+		else if(sum < (dist-1500))
+		{
+			return .7;
+		}
+		else if(sum < dist)
+		{
+			return .3;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+	public static double twoCubeSwitchRightSideCurve(double eValue, double dist)
+	{
+		eValue = Math.abs(eValue);
+		if(eValue < 1500)
+		{
+			return .5;
+		}
+		else if(eValue < (dist - 2000))
+		{
+			return .6;
+		}
+		else if(eValue < dist)
+		{
+			return .3;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+	public static double twoCubeSwitchLeftSideFirstCurve(double eValue, double dist)
+	{
+		if(eValue < (dist - 2000))
+		{
+			return .4;
+		}
+		else if(eValue < (dist))
+		{
+			return .3;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+	public static double twoCubeSwitchLeftSideStraightCrossField(double eValue, double dist)
+	{
+		if(eValue < 3000)
+		{
+			return .5;
+		}
+		else if(eValue < 5000)
+		{
+			return .7;
+		}
+		else if(eValue < (dist-5000))
+		{
+			return .9;
+		}
+		else if(eValue < (dist-1500))
+		{
+			return .7;
+		}
+		else if(eValue < (dist))
+		{
+			return .4;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
+	public static double twoCubeSwitchLeftSideSecondCurve(double eValue, double dist)
+	{
+		if(eValue < (dist - 2000))
+		{
+			return .4;
+		}
+		else if(eValue < (dist))
+		{
+			return .3;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	
 	public static void lrandrrElevatorForFirstScale(double lValue, double rValue, double eValue, double step)
 	{
 		if(step == 1)

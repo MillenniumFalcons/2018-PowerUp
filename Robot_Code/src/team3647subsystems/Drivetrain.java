@@ -641,6 +641,11 @@ public class Drivetrain
 		System.out.println("Right speed:" + rightSRX.get());
 	}
 	
+	public static void enableCurrentLimiting(double amps)
+	{
+		
+	}
+	
 	public static void setToBrake()
 	{
 		leftSRX.setNeutralMode(NeutralMode.Brake);
