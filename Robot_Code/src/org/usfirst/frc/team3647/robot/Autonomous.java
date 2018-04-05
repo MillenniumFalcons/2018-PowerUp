@@ -162,6 +162,7 @@ public class Autonomous
 				}
 				else
 				{
+					//120 inches
 					Encoders.testEncoders();
 					currentState = 3;
 				}
