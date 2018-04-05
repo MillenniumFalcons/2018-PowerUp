@@ -53,7 +53,7 @@ public class Drivetrain
 	
 	public static void tankDrive(double lYValue, double rYValue)
 	{
-		drive.tankDrive(lYValue, rYValue * .895, false);
+		drive.tankDrive(lYValue *.98, rYValue, false);
 	}
 	
 	public static void driveForw(double lValue, double rValue, double speed)

@@ -42,7 +42,7 @@ public class Autonomous
 					Elevator.stopEleVader();
 					ElevatorLevel.resetElevatorEncoders();
 					stopWatch.reset();
-					currentState = -1;
+					currentState = 2;
 					
 				}
 				else if(lValue == 0 && rValue == 0 && ElevatorLevel.reachedStop())
