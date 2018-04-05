@@ -368,9 +368,13 @@ public class Functions
 		{
 			return .4;
 		}
+		else if(sum < (dist-2500))
+		{
+			return .6;
+		}
 		else if(sum < (dist-1500))
 		{
-			return .7;
+			return .45;
 		}
 		else if(sum < dist)
 		{

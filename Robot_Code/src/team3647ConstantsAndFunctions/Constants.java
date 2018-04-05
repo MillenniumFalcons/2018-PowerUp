@@ -39,7 +39,7 @@ public class Constants
 	public static final double oneCubeSwitchRightSideCurve = 5300;
 	public static final double oneCubeSwitchRightSideCurveRatio = 2.3;
 	
-	public static final double twoCubeSwitchRightSideStraight = 10000;
+	public static final double twoCubeSwitchRightSideStraight = 11000;
 	public static final double twoCubeSwitchRightSideCurve = 9000;
 	public static final double twoCubeSwitchRightSideCurveRatio = 2.3;
 	

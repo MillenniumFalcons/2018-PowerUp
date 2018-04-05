@@ -607,16 +607,61 @@ public class Autonomous
 				ElevatorLevel.maintainSwitchPosition();
 				rValue -= prevRightEncoder;
 				lValue -= prevLeftEncoder;
-				if(Functions.twoCubeSwitchRightSideCurve(rValue, Constants.twoCubeSwitchRightSideCurve) != 0)
+//				if(Functions.twoCubeSwitchRightSideCurve(rValue, Constants.twoCubeSwitchRightSideCurve) != 0)
+//				{
+//					rSSpeed = Functions.twoCubeSwitchRightSideCurve(rValue, Constants.twoCubeSwitchRightSideCurve);
+//					lSSpeed = rSSpeed/Constants.twoCubeSwitchRightSideCurveRatio;
+//					Drivetrain.goStraightLeft(lValue, rValue, Constants.twoCubeSwitchRightSideCurveRatio, lSSpeed, rSSpeed, .06);
+//				}
+//				else
+//				{
+//					prevLeftEncoder = lValue;
+//					prevRightEncoder = rValue;
+//					stopWatch.start();
+//					currentState = 6;
+//				}
+				if(rValue < 9000 && lValue < 2800)
 				{
-					rSSpeed = Functions.twoCubeSwitchRightSideCurve(rValue, Constants.twoCubeSwitchRightSideCurve);
-					lSSpeed = rSSpeed/Constants.twoCubeSwitchRightSideCurveRatio;
-					Drivetrain.goStraightLeft(lValue, rValue, Constants.twoCubeSwitchRightSideCurveRatio, lSSpeed, rSSpeed, .06);
+					if(rValue < 3000)
+					{
+						rSSpeed = .5;
+					}
+					else if (rValue < 6000)
+					{
+						rSSpeed = .8;
+					}
+					else
+					{
+						rSSpeed = .4;
+					}
+					if(lValue < 930)
+					{
+						lSSpeed = .16;
+					}
+					else if (lValue < 1860)
+					{
+						lSSpeed = .27;
+					}
+					else
+					{
+						lSSpeed = .16;
+					}
+					Drivetrain.tankDrive(lSSpeed, rSSpeed);
+				}
+				else if(rValue > 9000 && lValue < 2800)
+				{
+					rSSpeed = 0;
+					lSSpeed = .27;
+					Drivetrain.tankDrive(lSSpeed, rSSpeed);
+				}
+				else if(rValue < 9000 && lValue > 2800)
+				{
+					rSSpeed = .4;
+					lSSpeed = 0;
+					Drivetrain.tankDrive(lSSpeed, rSSpeed);
 				}
 				else
 				{
-					prevLeftEncoder = lValue;
-					prevRightEncoder = rValue;
 					stopWatch.start();
 					currentState = 6;
 				}
