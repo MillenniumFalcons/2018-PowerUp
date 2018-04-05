@@ -23,6 +23,99 @@ public class Autonomous
 	static int currentState;
 	static double lSSpeed, rSSpeed, speed, sum;
 	
+	public static void testCurve(double lValue, double rValue)
+	{
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.stop();
+				stopWatch.reset();
+				stopWatch.start();
+				IntakeWheels.pickUp(.2);
+				currentState = 1;
+				break;
+			case 1:
+				time = stopWatch.get();
+				if(lValue == 0 && rValue == 0 && time >= 2)
+				{
+					stopWatch.stop();
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					stopWatch.reset();
+					currentState = 2;
+					
+				}
+				else if(lValue == 0 && rValue == 0 && ElevatorLevel.reachedStop())
+				{
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					currentState = 2;
+					stopWatch.stop();
+				}
+				else
+				{
+					Elevator.moveEleVader(-.23);
+					Encoders.resetEncoders();
+				}
+				break;
+			case 2:
+				if(!Drivetrain.reachedDistance(lValue, rValue, 5000))
+				{
+					Drivetrain.driveForw(lValue, rValue, .7);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 8200))
+				{
+					Drivetrain.driveForw(lValue, rValue, .4);
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					currentState = 3;
+				}
+				break;
+			case 3:
+				rValue -= prevRightEncoder;
+				lValue -= prevLeftEncoder;
+				if(Functions.twoCubeSwitchLeftSideFirstCurve(rValue, Constants.twoCubeSwitchLeftSideFirstCurve) != 0)
+				{
+					rSSpeed = Functions.twoCubeSwitchLeftSideFirstCurve(rValue, Constants.twoCubeSwitchLeftSideFirstCurve);
+					lSSpeed = rSSpeed/Constants.twoCubeSwitchLeftSideFirstCurveRatio;
+					Drivetrain.goStraightLeft(lValue, rValue, Constants.twoCubeSwitchLeftSideFirstCurveRatio, lSSpeed, rSSpeed, .06);
+				}
+				else
+				{
+					prevLeftEncoder = lValue;
+					prevRightEncoder = rValue;
+					currentState = 4;
+				}
+				break;
+			case 4:
+				rValue -= prevRightEncoder;
+				lValue -= prevLeftEncoder;
+				if(!Drivetrain.reachedDistance(lValue, rValue, 3000))
+				{
+					Drivetrain.driveForw(lValue, rValue, .5);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 6000))
+				{
+					Drivetrain.driveForw(lValue, rValue, .7);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 7500))
+				{
+					Drivetrain.driveForw(lValue, rValue, .4);
+				}
+				else
+				{
+					currentState = 5;
+				}
+				break;
+			case 5:
+				Drivetrain.stop();
+				break;
+		}
+	}
+	
 	public static void testPID(double lValue, double rValue)
 	{
 		switch(currentState)
@@ -628,7 +721,7 @@ public class Autonomous
 					}
 					else if (rValue < 6000)
 					{
-						rSSpeed = .8;
+						rSSpeed = .6;
 					}
 					else
 					{
@@ -640,7 +733,7 @@ public class Autonomous
 					}
 					else if (lValue < 1860)
 					{
-						lSSpeed = .27;
+						lSSpeed = .2;
 					}
 					else
 					{

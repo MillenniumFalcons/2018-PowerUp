@@ -16,6 +16,7 @@ import team3647pistons.Shifter;
 import team3647subsystems.Drivetrain;
 import team3647subsystems.Encoders;
 import team3647subsystems.Joysticks;
+import team3647subsystems.Lights;
 import team3647subsystems.TiltServo;
 
 
@@ -78,6 +79,7 @@ public class Robot extends IterativeRobot {
 			eleVader.setElevatorEncoder();
 			//System.out.println(Autonomous.currentState);
 			Autonomous.rrScaleFirstSwitchSecond(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
+			Lights.runLights();
 		}
 	}
 	
@@ -104,10 +106,11 @@ public class Robot extends IterativeRobot {
 			CrashChecker.logTeleopPeriodic();
 			updateJoysticks();
 			runMotorSafety();
-			runPistons();
+			runPistonsandForks();
 			runDrivetrain();
 			runElevator();
-			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1,	 false, 0, 0);
+			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
+			Lights.runLights();
 			//Encoders.testEncoders();
 		}
 		catch(Throwable t)
@@ -164,11 +167,12 @@ public class Robot extends IterativeRobot {
 		}
 	}
 
-	public void runPistons()
+	public void runPistonsandForks()
 	{
 		Intake.runIntake(joy.rightBumper1);
 		Forks.runPiston(joy.buttonX);
 		Shifter.runPiston(joy.buttonY);
+		TiltServo.PullForks(joy.leftTrigger, joy.rightTrigger);
 		//Compressor007.runCompressor();
 	}
 	
