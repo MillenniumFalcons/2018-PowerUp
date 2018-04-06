@@ -851,8 +851,8 @@ public class Autonomous
 				if(Functions.oneCubeSwitchRightSideCurve(rValue, Constants.oneCubeSwitchRightSideCurve) != 0)
 				{
 					rSSpeed = Functions.oneCubeSwitchRightSideCurve(rValue, Constants.oneCubeSwitchRightSideCurve);
-					lSSpeed = rSSpeed/Constants.oneCubeSwitchRightSideCurveRatio;
-					Drivetrain.goStraightLeft(lValue, rValue, Constants.oneCubeSwitchRightSideCurveRatio, lSSpeed, rSSpeed, .06);
+					lSSpeed = rSSpeed/2.5;
+					Drivetrain.goStraightLeft(lValue, rValue, 2.5, lSSpeed, rSSpeed, .06);
 				}
 				else
 				{
@@ -871,7 +871,7 @@ public class Autonomous
 				}
 				else
 				{
-					IntakeWheels.shoot(1);
+					IntakeWheels.shoot(.5);
 				}
 				break;
 		}
