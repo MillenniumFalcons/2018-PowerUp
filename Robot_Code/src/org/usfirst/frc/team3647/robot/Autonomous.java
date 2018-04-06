@@ -790,11 +790,12 @@ public class Autonomous
 				time = stopWatch.get();
 				if(lValue == 0 && rValue == 0 && time >= 2)
 				{
-					
 					Elevator.stopEleVader();
 					ElevatorLevel.resetElevatorEncoders();
 					currentState = 2;
 					stopWatch.stop();
+					stopWatch.reset();
+					stopWatch.start();
 				}
 				else if(lValue == 0 && rValue == 0 && ElevatorLevel.reachedStop())
 				{
@@ -802,6 +803,8 @@ public class Autonomous
 					ElevatorLevel.resetElevatorEncoders();
 					currentState = 2;
 					stopWatch.stop();
+					stopWatch.reset();
+					stopWatch.start();
 				}
 				else
 				{
@@ -810,7 +813,7 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				if(ElevatorLevel.elevatorEncoderValue == 0)
+				if(ElevatorLevel.elevatorEncoderValue == 0 && stopWatch.get() > .5)
 				{
 					currentState = 3;
 				}
@@ -1236,6 +1239,8 @@ public class Autonomous
 					ElevatorLevel.resetElevatorEncoders();
 					currentState = 2;
 					stopWatch.stop();
+					stopWatch.reset();
+					stopWatch.start();
 				}
 				else if(lValue == 0 && rValue == 0 && ElevatorLevel.reachedStop())
 				{
@@ -1243,6 +1248,8 @@ public class Autonomous
 					ElevatorLevel.resetElevatorEncoders();
 					currentState = 2;
 					stopWatch.stop();
+					stopWatch.reset();
+					stopWatch.start();
 				}
 				else
 				{
@@ -1251,7 +1258,7 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				if(ElevatorLevel.elevatorEncoderValue == 0)
+				if(ElevatorLevel.elevatorEncoderValue == 0 && stopWatch.get() > .5)
 				{
 					currentState = 3;
 				}
@@ -1299,8 +1306,8 @@ public class Autonomous
 				if(Functions.twoCubeSwitchLeftSideFirstCurve(rValue, Constants.twoCubeSwitchLeftSideFirstCurve) != 0)
 				{
 					rSSpeed = Functions.twoCubeSwitchLeftSideFirstCurve(rValue, Constants.twoCubeSwitchLeftSideFirstCurve);
-					lSSpeed = rSSpeed/Constants.twoCubeSwitchLeftSideFirstCurveRatio;
-					Drivetrain.goStraightLeft(lValue, rValue, Constants.twoCubeSwitchLeftSideFirstCurveRatio, lSSpeed, rSSpeed, .06);
+					lSSpeed = rSSpeed/2.45;
+					Drivetrain.goStraightLeft(lValue, rValue, 2.45, lSSpeed, rSSpeed, .06);
 				}
 				else
 				{
@@ -2260,11 +2267,12 @@ public class Autonomous
 				time = stopWatch.get();
 				if(lValue == 0 && rValue == 0 && time >= 2)
 				{
-					
 					Elevator.stopEleVader();
 					ElevatorLevel.resetElevatorEncoders();
 					currentState = 2;
 					stopWatch.stop();
+					stopWatch.reset();
+					stopWatch.start();
 				}
 				else if(lValue == 0 && rValue == 0 && ElevatorLevel.reachedStop())
 				{
@@ -2272,6 +2280,8 @@ public class Autonomous
 					ElevatorLevel.resetElevatorEncoders();
 					currentState = 2;
 					stopWatch.stop();
+					stopWatch.reset();
+					stopWatch.start();
 				}
 				else
 				{
@@ -2280,7 +2290,7 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				if(ElevatorLevel.elevatorEncoderValue == 0)
+				if(ElevatorLevel.elevatorEncoderValue == 0 && stopWatch.get() > .5)
 				{
 					currentState = 254;
 				}
@@ -2622,11 +2632,12 @@ public class Autonomous
 				time = stopWatch.get();
 				if(lValue == 0 && rValue == 0 && time >= 2)
 				{
-					
 					Elevator.stopEleVader();
 					ElevatorLevel.resetElevatorEncoders();
 					currentState = 2;
 					stopWatch.stop();
+					stopWatch.reset();
+					stopWatch.start();
 				}
 				else if(lValue == 0 && rValue == 0 && ElevatorLevel.reachedStop())
 				{
@@ -2634,6 +2645,8 @@ public class Autonomous
 					ElevatorLevel.resetElevatorEncoders();
 					currentState = 2;
 					stopWatch.stop();
+					stopWatch.reset();
+					stopWatch.start();
 				}
 				else
 				{
@@ -2642,7 +2655,7 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				if(ElevatorLevel.elevatorEncoderValue == 0)
+				if(ElevatorLevel.elevatorEncoderValue == 0 && stopWatch.get() > .5)
 				{
 					currentState = 254;
 				}
