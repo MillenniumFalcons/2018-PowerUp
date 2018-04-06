@@ -78,7 +78,7 @@ public class Robot extends IterativeRobot {
 			enc.setEncoderValues();
 			eleVader.setElevatorEncoder();
 			//System.out.println(Autonomous.currentState);
-			Drivetrain.stop();
+			Autonomous.runAuto(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
 		//	Lights.runLights();
 		}
 	}
@@ -186,7 +186,7 @@ public class Robot extends IterativeRobot {
 		enc.setEncoderValues();
 		if(joy.leftBumper)
 		{
-			Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky * .65, joy.rightJoyStickx * .65);
+			Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky * .45, joy.rightJoyStickx * .5);
 		}
 		else
 		{
