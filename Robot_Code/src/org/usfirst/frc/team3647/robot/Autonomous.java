@@ -115,11 +115,11 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				if(!Drivetrain.reachedDistance(lValue, rValue, 10000))
+				if(!Drivetrain.reachedDistance(lValue, rValue, 8500))
 				{
 					Drivetrain.driveForw(lValue, rValue, .74);
 				}
-				else if(!Drivetrain.reachedDistance(lValue, rValue, 11000))
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 9500))
 				{
 					Drivetrain.driveForw(lValue, rValue, .3);
 				}
@@ -805,16 +805,12 @@ public class Autonomous
 				}
 				else
 				{
-					Elevator.moveEleVader(-.23);
+					Elevator.moveEleVader(-.2);
 					Encoders.resetEncoders();
 				}
 				break;
 			case 2:
-				if(ElevatorLevel.reachedStop())
-				{
-					currentState = 3;
-				}
-				else if(ElevatorLevel.elevatorEncoderValue == 0)
+				if(ElevatorLevel.elevatorEncoderValue == 0)
 				{
 					currentState = 3;
 				}
@@ -1250,16 +1246,12 @@ public class Autonomous
 				}
 				else
 				{
-					Elevator.moveEleVader(-.23);
+					Elevator.moveEleVader(-.2);
 					Encoders.resetEncoders();
 				}
 				break;
 			case 2:
-				if(ElevatorLevel.reachedStop())
-				{
-					currentState = 3;
-				}
-				else if(ElevatorLevel.elevatorEncoderValue == 0)
+				if(ElevatorLevel.elevatorEncoderValue == 0)
 				{
 					currentState = 3;
 				}
@@ -2283,16 +2275,12 @@ public class Autonomous
 				}
 				else
 				{
-					Elevator.moveEleVader(-.23);
+					Elevator.moveEleVader(-.2);
 					Encoders.resetEncoders();
 				}
 				break;
 			case 2:
-				if(ElevatorLevel.reachedStop())
-				{
-					currentState = 254;
-				}
-				else if(ElevatorLevel.elevatorEncoderValue == 0)
+				if(ElevatorLevel.elevatorEncoderValue == 0)
 				{
 					currentState = 254;
 				}
@@ -2649,16 +2637,12 @@ public class Autonomous
 				}
 				else
 				{
-					Elevator.moveEleVader(-.23);
+					Elevator.moveEleVader(-.2);
 					Encoders.resetEncoders();
 				}
 				break;
 			case 2:
-				if(ElevatorLevel.reachedStop())
-				{
-					currentState = 254;
-				}
-				else if(ElevatorLevel.elevatorEncoderValue == 0)
+				if(ElevatorLevel.elevatorEncoderValue == 0)
 				{
 					currentState = 254;
 				}
