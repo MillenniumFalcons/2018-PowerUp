@@ -32,7 +32,7 @@ public class Constants
 	public static final double pickUp = 3000;
 	public static final double sWitch = 13000;
 	public static final double lowerScale = 36300;
-	public static final double scale = 42500;
+	public static final double scale = 41500;
 	
 	//Auto Constants
 	public static final double oneCubeSwitchRightSideStraight = 8500;

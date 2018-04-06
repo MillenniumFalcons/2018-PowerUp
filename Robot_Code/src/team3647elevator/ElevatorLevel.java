@@ -142,19 +142,19 @@ public class ElevatorLevel
 	
 	public static void maintainLowerScalePosition()
 	{
-		if(reachedScale())
+		if(reachedLowerScale())
 		{
-			Elevator.moveEleVader(.13);
+			Elevator.moveEleVader(.09);
 		}
 		else
 		{
-			if(elevatorEncoderValue > Constants.scale)
+			if(elevatorEncoderValue > Constants.lowerScale)
 			{
 				Elevator.moveEleVader(-.2);
 			}
 			else
 			{
-				Elevator.moveEleVader(Functions.lowerScaleToScale(elevatorEncoderValue));
+				Elevator.moveEleVader(Functions.switchToLowerScale(elevatorEncoderValue));
 			}
 		}
 	}

@@ -29,11 +29,11 @@ public class Lights
 		{
 			LightOutput(false, true, false);
 		}
-		else if(DriverStation.getAlliance() == DriverStation.Alliance.Blue)
+		else if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue)
 		{
 			LightOutput(false, false, true);
 		}
-		else if(DriverStation.getAlliance() == DriverStation.Alliance.Red)
+		else if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Red)
 		{
 			LightOutput(true, true, false);
 		}

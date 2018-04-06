@@ -68,6 +68,6 @@ public class IntakeWheels
 	
 	public static boolean getIntakeBannerSenor()
 	{
-		return !bannerSensor.get();
+		return bannerSensor.get();
 	}
 }

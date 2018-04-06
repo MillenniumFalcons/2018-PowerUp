@@ -53,7 +53,8 @@ public class Drivetrain
 	
 	public static void tankDrive(double lYValue, double rYValue)
 	{
-		drive.tankDrive(lYValue *.98, rYValue, false);
+		drive.tankDrive(lYValue *.96, rYValue, false);
+		//drive.tankDrive(lYValue, rYValue, false);
 	}
 	
 	public static void driveForw(double lValue, double rValue, double speed)
@@ -402,7 +403,7 @@ public class Drivetrain
 	 	switch(movingStatus)
 	 	{
 	 		case 1:
-	 			if(yValue < .3)
+	 			if(yValue < .15)
 	 			{
 	 				tankDrive(yValue, yValue);
 	 				Encoders.resetEncoders();
@@ -414,7 +415,7 @@ public class Drivetrain
 	 			
 	 			break;
 	 		case 2:
-	 			if(yValue > -.3)
+	 			if(yValue > -.15)
 	 			{
 		 			tankDrive(yValue, yValue);
 	 				Encoders.resetEncoders();
@@ -637,16 +638,16 @@ public class Drivetrain
 	
 	public static void testSpeed()
 	{
-		System.out.println("Left speed: " + leftSRX.get());
-		System.out.println("Right speed:" + rightSRX.get());
+		System.out.println("Left speed: " + leftSRX.getOutputCurrent());
+		System.out.println("Right speed:" + rightSRX.getOutputCurrent());
 	}
 	
 	public static void enableCurrentLimiting(double amps)
 	{
 		leftSRX.enableCurrentLimit(true);
 		rightSRX.enableCurrentLimit(true);
-		leftSRX.	configPeakCurrentLimit(amps, 10);
-		rightSRX.configPeakCurrentLimit(amps, 10);
+//		leftSRX.configPeakCurrentLimit(amps, 10);
+//		rightSRX.configPeakCurrentLimit(amps, 10);
 	}
 	
 	public static void setToBrake()

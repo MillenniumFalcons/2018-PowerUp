@@ -78,8 +78,8 @@ public class Robot extends IterativeRobot {
 			enc.setEncoderValues();
 			eleVader.setElevatorEncoder();
 			//System.out.println(Autonomous.currentState);
-			Autonomous.rrScaleFirstSwitchSecond(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
-			Lights.runLights();
+			Drivetrain.stop();
+		//	Lights.runLights();
 		}
 	}
 	
@@ -140,9 +140,12 @@ public class Robot extends IterativeRobot {
 		}
 		enc.setEncoderValues();
 		//Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
-		Encoders.testEncoders();
+		//Encoders.testEncoders();
+		
 		//Autonomous.testTimer(joy.buttonA);
 		TiltServo.PullForks(joy.leftTrigger, joy.rightTrigger);
+		Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
+		Encoders.resetEncoders();
 	}
 	
 	
@@ -178,7 +181,8 @@ public class Robot extends IterativeRobot {
 	
 	public void runDrivetrain()
 	{
-		Drivetrain.enableCurrentLimiting(20);
+		//Drivetrain.enableCurrentLimiting(20);
+		//Drivetrain.testSpeed();
 		enc.setEncoderValues();
 		if(joy.leftBumper)
 		{
