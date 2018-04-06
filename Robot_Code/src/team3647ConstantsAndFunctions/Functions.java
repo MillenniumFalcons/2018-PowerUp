@@ -502,9 +502,9 @@ public class Functions
 		{
 			return .9;
 		}
-		else if(avg < (dist -2000))
+		else if(avg < (dist -1200))
 		{
-			return .74;
+			return .7;
 		}
 		else if(avg < dist)
 		{
