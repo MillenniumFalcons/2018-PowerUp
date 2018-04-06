@@ -429,14 +429,6 @@ public class Functions
 		{
 			return .5;
 		}
-		else if(eValue < 5000)
-		{
-			return .7;
-		}
-		else if(eValue < (dist-5000))
-		{
-			return .9;
-		}
 		else if(eValue < (dist-1500))
 		{
 			return .7;

@@ -61,6 +61,10 @@ public class Autonomous
 		{
 			rightSwitch1Cube(lValue, rValue);
 		}
+		else if(gameData.charAt(0) == 'L')
+		{
+			leftSwitch2Cube(lValue, rValue);
+		}
 //		if(gameData.charAt(1) == 'R')
 //		{
 //			rightScale(lValue, rValue);
@@ -851,8 +855,8 @@ public class Autonomous
 				if(Functions.oneCubeSwitchRightSideCurve(rValue, Constants.oneCubeSwitchRightSideCurve) != 0)
 				{
 					rSSpeed = Functions.oneCubeSwitchRightSideCurve(rValue, Constants.oneCubeSwitchRightSideCurve);
-					lSSpeed = rSSpeed/2.5;
-					Drivetrain.goStraightLeft(lValue, rValue, 2.5, lSSpeed, rSSpeed, .06);
+					lSSpeed = rSSpeed/Constants.oneCubeSwitchRightSideCurveRatio;
+					Drivetrain.goStraightLeft(lValue, rValue, Constants.oneCubeSwitchRightSideCurveRatio, lSSpeed, rSSpeed, .06);
 				}
 				else
 				{
@@ -1176,7 +1180,7 @@ public class Autonomous
 				if(!Drivetrain.reachedDistance(lValue, rValue, Constants.twoCubeSwitchLeftSideStraight))
 				{
 					sum = (rValue +lValue)/2.0;
-					if(sum < (Constants.twoCubeSwitchLeftSideStraight - 3200))
+					if(sum < (Constants.twoCubeSwitchLeftSideStraight - 1400))
 					{
 						Drivetrain.driveForw(lValue, rValue, .7);
 					}
@@ -1204,6 +1208,8 @@ public class Autonomous
 				}
 				else
 				{
+					lValue+=prevLeftEncoder;
+					rValue+=prevRightEncoder;
 					prevLeftEncoder = lValue;
 					prevRightEncoder = rValue;
 					currentState = 99;
@@ -1220,6 +1226,8 @@ public class Autonomous
 				}
 				else
 				{
+					lValue+=prevLeftEncoder;
+					rValue+=prevRightEncoder;
 					prevLeftEncoder = lValue;
 					prevRightEncoder = rValue;
 					currentState = 100;
@@ -1237,6 +1245,8 @@ public class Autonomous
 				}
 				else
 				{
+					lValue+=prevLeftEncoder;
+					rValue+=prevRightEncoder;
 					prevLeftEncoder = lValue;
 					prevRightEncoder = rValue;
 					currentState = 6;
@@ -1254,7 +1264,7 @@ public class Autonomous
 				}
 				else
 				{
-					IntakeWheels.manuallyRunIntake(1, .5);
+					IntakeWheels.manuallyRunIntake(.3, .7);
 					Encoders.resetEncoders();
 				}
 				break;
@@ -1333,7 +1343,7 @@ public class Autonomous
 				ElevatorLevel.maintainSwitchPosition();
 				if(stopWatch.get() > .4)
 				{
-					IntakeWheels.manuallyRunIntake(1, .5);
+					IntakeWheels.manuallyRunIntake(.5, 1);
 				}
 				else if(stopWatch.get() > .8)
 				{
