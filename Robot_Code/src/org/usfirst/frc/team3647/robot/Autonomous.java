@@ -45,26 +45,22 @@ public class Autonomous
 //		{
 //			rightScale(lValue, rValue);
 //		}
-//		if(gameData.charAt(1) == 'R' && gameData.charAt(1) == 'R')
-//		{lrScaleFirstSwitchSecond
-//			if(gameData.charAt(0) == 'R')
-//			{
-//				b =1;
-//			}
-//			else
-//			{
-//				b = 0;
-//			}
-//			rrScaleFirstSwitchSecond(lValue, rValue);
-//		}
-//		else if(gameData.charAt(0) == 'R')
-//		{
-//			rightSwitch1Cube(lValue, rValue);
-//		}
-//		else if(gameData.charAt(0) == 'L')
-//		{
-//			leftSwitch2Cube(lValue, rValue);
-//		}
+		if(gameData.charAt(1) == 'R' && gameData.charAt(0) == 'R')
+		{
+			rrScaleFirstSwitchSecond(lValue, rValue);
+		}
+		else if(gameData.charAt(1) == 'R' && gameData.charAt(0) == 'L')
+		{
+			lrScaleFirstSwitchSecond(lValue, rValue);
+		}
+		else if(gameData.charAt(0) == 'R')
+		{
+			rightSwitch1Cube(lValue, rValue);
+		}
+		else if(gameData.charAt(0) == 'L')
+		{
+			leftSwitch2Cube(lValue, rValue);
+		}
 //		if(gameData.charAt(1) == 'R')
 //		{
 //			rightScale(lValue, rValue);
@@ -73,10 +69,10 @@ public class Autonomous
 //		{
 //			rightSwicth(lValue, rValue);
 //		}
-		if(gameData.charAt(0) == 'L')
-		{
-			leftSwitch1Cube(lValue, rValue);
-		}
+//		if(gameData.charAt(0) == 'L')
+//		{
+//			leftSwitch1Cube(lValue, rValue);
+//		}
 		else
 		{
 			cross(lValue, rValue);
@@ -2313,7 +2309,7 @@ public class Autonomous
 				}
 				else
 				{
-					Elevator.moveEleVader(.4);
+					Elevator.moveEleVader(.23);
 				}
 				break;
 			case 3:
@@ -2407,16 +2403,13 @@ public class Autonomous
 				{
 					stopWatch.stop();
 					stopWatch.reset();
+					lValue+= prevLeftEncoder;
+					rValue+= prevLeftEncoder;
 					prevLeftEncoder = lValue;
 					prevRightEncoder = rValue;
-					if(b==1)
-					{
-						currentState = 8;
-					}
-					else
-					{
-						currentState = 15;
-					}
+					
+					currentState = 8;
+	
 				}
 				break;
 			case 8:
@@ -2682,7 +2675,7 @@ public class Autonomous
 				}
 				else
 				{
-					Elevator.moveEleVader(.4);
+					Elevator.moveEleVader(.23);
 				}
 				break;
 			case 3:
@@ -2776,16 +2769,12 @@ public class Autonomous
 				{
 					stopWatch.stop();
 					stopWatch.reset();
+					lValue+= prevLeftEncoder;
+					rValue+= prevLeftEncoder;
 					prevLeftEncoder = lValue;
 					prevRightEncoder = rValue;
-					if(b==1)
-					{
-						currentState = 8;
-					}
-					else
-					{
-						currentState = 15;
-					}
+					currentState = 8;
+					
 				}
 				break;
 			case 8:
