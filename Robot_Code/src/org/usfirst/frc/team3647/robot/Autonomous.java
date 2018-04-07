@@ -810,6 +810,9 @@ public class Autonomous
 			case 2:
 				if(ElevatorLevel.elevatorEncoderValue == 0 && stopWatch.get() > .5)
 				{
+					stopWatch.stop();
+					stopWatch.reset();
+					stopWatch.start();
 					currentState = 3;
 				}
 				else
@@ -818,14 +821,33 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				stopWatch.reset();
 				if(ElevatorLevel.reachedSwitch())
 				{
 					currentState = 4;
+					stopWatch.stop();
+					stopWatch.reset();
+				}
+				else if(stopWatch.get() > 5)
+				{
+					currentState = 9999;
 				}
 				else
 				{
 					Elevator.moveEleVader(Functions.stopToSwitch(ElevatorLevel.elevatorEncoderValue));
+				}
+				break;
+			case 9999:
+				if(!Drivetrain.reachedDistance(lValue, rValue, 8500))
+				{
+					Drivetrain.driveForw(lValue, rValue, .74);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 9500))
+				{
+					Drivetrain.driveForw(lValue, rValue, .3);
+				}
+				else
+				{
+					Drivetrain.stop();
 				}
 				break;
 			case 4:
@@ -1255,6 +1277,9 @@ public class Autonomous
 			case 2:
 				if(ElevatorLevel.elevatorEncoderValue == 0 && stopWatch.get() > .5)
 				{
+					stopWatch.stop();
+					stopWatch.reset();
+					stopWatch.start();
 					currentState = 3;
 				}
 				else
@@ -1263,14 +1288,33 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				stopWatch.reset();
 				if(ElevatorLevel.reachedSwitch())
 				{
+					stopWatch.stop();
+					stopWatch.reset();
 					currentState = 4;
+				}
+				else if(stopWatch.get() > 5)
+				{
+					currentState = 9999;
 				}
 				else
 				{
 					Elevator.moveEleVader(Functions.stopToSwitch(ElevatorLevel.elevatorEncoderValue));
+				}
+				break;
+			case 9999:
+				if(!Drivetrain.reachedDistance(lValue, rValue, 8500))
+				{
+					Drivetrain.driveForw(lValue, rValue, .74);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 9500))
+				{
+					Drivetrain.driveForw(lValue, rValue, .3);
+				}
+				else
+				{
+					Drivetrain.stop();
 				}
 				break;
 			case 4:
@@ -2287,6 +2331,9 @@ public class Autonomous
 			case 2:
 				if(ElevatorLevel.elevatorEncoderValue == 0 && stopWatch.get() > .5)
 				{
+					stopWatch.stop();
+					stopWatch.reset();
+					stopWatch.start();
 					currentState = 254;
 				}
 				else
@@ -2295,14 +2342,33 @@ public class Autonomous
 				}
 				break;
 			case 254:
-				stopWatch.reset();
 				if(ElevatorLevel.reachedPickUp())
 				{
+					stopWatch.stop();
+					stopWatch.reset();
 					currentState = 3;
+				}
+				else if(stopWatch.get() > 5)
+				{
+					currentState = 9999;
 				}
 				else
 				{
 					Elevator.moveEleVader(.23);
+				}
+				break;
+			case 9999:
+				if(!Drivetrain.reachedDistance(lValue, rValue, 8500))
+				{
+					Drivetrain.driveForw(lValue, rValue, .74);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 9500))
+				{
+					Drivetrain.driveForw(lValue, rValue, .3);
+				}
+				else
+				{
+					Drivetrain.stop();
 				}
 				break;
 			case 3:
@@ -2650,6 +2716,9 @@ public class Autonomous
 			case 2:
 				if(ElevatorLevel.elevatorEncoderValue == 0 && stopWatch.get() > .5)
 				{
+					stopWatch.stop();
+					stopWatch.reset();
+					stopWatch.start();
 					currentState = 254;
 				}
 				else
@@ -2658,14 +2727,33 @@ public class Autonomous
 				}
 				break;
 			case 254:
-				stopWatch.reset();
 				if(ElevatorLevel.reachedPickUp())
 				{
+					stopWatch.stop();
+					stopWatch.reset();
 					currentState = 3;
+				}
+				else if(stopWatch.get() > 5)
+				{
+					currentState = 9999;
 				}
 				else
 				{
 					Elevator.moveEleVader(.23);
+				}
+				break;
+			case 9999:
+				if(!Drivetrain.reachedDistance(lValue, rValue, 8500))
+				{
+					Drivetrain.driveForw(lValue, rValue, .74);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 9500))
+				{
+					Drivetrain.driveForw(lValue, rValue, .3);
+				}
+				else
+				{
+					Drivetrain.stop();
 				}
 				break;
 			case 3:
