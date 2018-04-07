@@ -43,10 +43,10 @@ public class Constants
 	public static final double twoCubeSwitchRightSideCurve = 9000;
 	public static final double twoCubeSwitchRightSideCurveRatio = 2.3;
 	
-	public static final double twoCubeSwitchLeftSideStraight = 13000;
+	public static final double twoCubeSwitchLeftSideStraight = 16000;
 	public static final double twoCubeSwitchLeftSideFirstCurve = 5300;
 	public static final double twoCubeSwitchLeftSideFirstCurveRatio = 2.5;
-	public static final double twoCubeSwitchLeftSideStraightCrossField = 9785;
+	public static final double twoCubeSwitchLeftSideStraightCrossField = 12785;
 	public static final double twoCubeSwitchLeftSideSecondCurve = 5300;
 	public static final double twoCubeSwitchLeftSideSecondCurveRatio = 2.5;
 	

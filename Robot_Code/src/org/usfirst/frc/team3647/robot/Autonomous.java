@@ -29,50 +29,45 @@ public class Autonomous
 	{
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
-//		if(gameData.charAt(0) == 'L' && gameData.charAt(1) == 'L')
-//		{
-//			crossBaseline(lValue, rValue);
-//		}
-//		else if(gameData.charAt(0) == 'R' && gameData.charAt(1) == 'L')
-//		{
-//			rightSwicth(lValue, rValue);
-//		}
-//		else if(gameData.charAt(0) == 'R' && gameData.charAt(1) == 'R')
-//		{
-//			rightScale(lValue, rValue);
-//		}
-//		else if(gameData.charAt(0) == 'L' && gameData.charAt(1) == 'R')
-//		{
-//			rightScale(lValue, rValue);
-//		}
-		if(gameData.charAt(1) == 'R' && gameData.charAt(0) == 'R')
+		int auto = 1; //1 is switch, 2 is scale
+		if(auto == 1)
 		{
-			rrScaleFirstSwitchSecond(lValue, rValue);
+			if(gameData.charAt(0) == 'R')
+			{
+				rightSwitch1Cube(lValue, rValue);
+			}
+			else if(gameData.charAt(0) == 'L')
+			{
+				leftSwitch2Cube(lValue, rValue);
+			}
+			else
+			{
+				cross(lValue, rValue);
+			}
 		}
-		else if(gameData.charAt(1) == 'R' && gameData.charAt(0) == 'L')
+		else if(auto == 2)
 		{
-			lrScaleFirstSwitchSecond(lValue, rValue);
+			if(gameData.charAt(1) == 'R' && gameData.charAt(0) == 'L')
+			{
+				lrScaleFirstSwitchSecond(lValue, rValue);
+			}
+			else if(gameData.charAt(1) == 'R' && gameData.charAt(0) == 'R')
+			{
+				rrScaleFirstSwitchSecond(lValue, rValue);
+			}
+			else if(gameData.charAt(1) == 'L' && gameData.charAt(0) == 'R')
+			{
+				rightSwitch1Cube(lValue, rValue);
+			}
+			else if(gameData.charAt(1) == 'L' && gameData.charAt(0) == 'L')
+			{
+				leftSwitch2Cube(lValue, rValue);
+			}
+			else
+			{
+				cross(lValue, rValue);
+			}
 		}
-		else if(gameData.charAt(0) == 'R')
-		{
-			rightSwitch1Cube(lValue, rValue);
-		}
-		else if(gameData.charAt(0) == 'L')
-		{
-			leftSwitch2Cube(lValue, rValue);
-		}
-//		if(gameData.charAt(1) == 'R')
-//		{
-//			rightScale(lValue, rValue);
-//		}
-//		else if(gameData.charAt(0) == 'R')
-//		{
-//			rightSwicth(lValue, rValue);
-//		}
-//		if(gameData.charAt(0) == 'L')
-//		{
-//			leftSwitch1Cube(lValue, rValue);
-//		}
 		else
 		{
 			cross(lValue, rValue);
@@ -1306,8 +1301,8 @@ public class Autonomous
 				if(Functions.twoCubeSwitchLeftSideFirstCurve(rValue, Constants.twoCubeSwitchLeftSideFirstCurve) != 0)
 				{
 					rSSpeed = Functions.twoCubeSwitchLeftSideFirstCurve(rValue, Constants.twoCubeSwitchLeftSideFirstCurve);
-					lSSpeed = rSSpeed/2.45;
-					Drivetrain.goStraightLeft(lValue, rValue, 2.45, lSSpeed, rSSpeed, .06);
+					lSSpeed = rSSpeed/2.5;
+					Drivetrain.goStraightLeft(lValue, rValue, 2.5, lSSpeed, rSSpeed, .06);
 				}
 				else
 				{
