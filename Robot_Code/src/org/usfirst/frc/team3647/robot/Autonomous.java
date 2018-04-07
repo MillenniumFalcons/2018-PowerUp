@@ -29,7 +29,7 @@ public class Autonomous
 	{
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		int auto = 1; //1 is switch, 2 is scale
+		int auto = 2; //1 is switch, 2 is scale
 		if(auto == 1)
 		{
 			if(gameData.charAt(0) == 'R')
@@ -2371,7 +2371,7 @@ public class Autonomous
 				rValue -= prevRightEncoder;
 				lSSpeed = Drivetrain.keepMotorInPlace(prevLeftEncoder, lValue);
 				rSSpeed = -.7;
-				dist = 2700;
+				dist = 1500;
 				rValue = Math.abs(rValue);
 				if(rValue < dist)
 				{
@@ -2396,10 +2396,8 @@ public class Autonomous
 				{
 					stopWatch.stop();
 					stopWatch.reset();
-					lValue+= prevLeftEncoder;
-					rValue+= prevLeftEncoder;
-					prevLeftEncoder = lValue;
-					prevRightEncoder = rValue;
+					prevLeftEncoder = Encoders.leftEncoderValue;
+					prevRightEncoder = Encoders.rightEncoderValue;
 					
 					currentState = 8;
 	
@@ -2736,7 +2734,7 @@ public class Autonomous
 				rValue -= prevRightEncoder;
 				lSSpeed = Drivetrain.keepMotorInPlace(prevLeftEncoder, lValue);
 				rSSpeed = -.7;
-				dist = 2700;
+				dist = 1500;
 				rValue = Math.abs(rValue);
 				if(rValue < dist)
 				{
@@ -2761,10 +2759,8 @@ public class Autonomous
 				{
 					stopWatch.stop();
 					stopWatch.reset();
-					lValue+= prevLeftEncoder;
-					rValue+= prevLeftEncoder;
-					prevLeftEncoder = lValue;
-					prevRightEncoder = rValue;
+					prevLeftEncoder = Encoders.leftEncoderValue;
+					prevRightEncoder =  Encoders.rightEncoderValue;
 					currentState = 8;
 					
 				}

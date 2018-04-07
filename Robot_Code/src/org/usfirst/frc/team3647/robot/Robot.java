@@ -137,6 +137,7 @@ public class Robot extends IterativeRobot {
 		if(joy.buttonA)
 		{
 			Encoders.resetEncoders();
+			Lights.LightOutput(true, false, false);
 		}
 		enc.setEncoderValues();
 		//Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
