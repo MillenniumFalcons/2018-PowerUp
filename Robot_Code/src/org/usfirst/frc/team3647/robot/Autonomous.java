@@ -242,7 +242,7 @@ public class Autonomous
 				lValue -= prevLeftEncoder;
 				rSSpeed = Drivetrain.keepMotorInPlace(prevRightEncoder, rValue);
 				lSSpeed = -.5;
-				dist = 4780;
+				dist = 4480;
 				lValue = Math.abs(lValue);
 				if(lValue < dist)
 				{
@@ -2421,7 +2421,7 @@ public class Autonomous
 				ElevatorLevel.maintainScalePosition();
 				if(stopWatch.get() < .6)
 				{
-					IntakeWheels.shoot(.7);
+					IntakeWheels.shoot(.9);
 				}
 				else
 				{
@@ -2474,7 +2474,7 @@ public class Autonomous
 				lValue -= prevLeftEncoder;
 				rSSpeed = Drivetrain.keepMotorInPlace(prevRightEncoder, rValue);
 				lSSpeed = -.5;
-				dist = 4780;
+				dist = 4480;
 				stopWatch.stop();
 				stopWatch.reset();
 				lValue = Math.abs(lValue);
@@ -2806,7 +2806,7 @@ public class Autonomous
 				ElevatorLevel.maintainScalePosition();
 				if(stopWatch.get() < .6)
 				{
-					IntakeWheels.shoot(.7);
+					IntakeWheels.shoot(.9);
 				}
 				else
 				{
