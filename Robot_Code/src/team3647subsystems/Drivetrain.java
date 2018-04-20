@@ -636,10 +636,10 @@ public class Drivetrain
 		tankDrive(0,0);
 	}
 	
-	public static void testSpeed()
+	public static void testDrivetrainCurrent()
 	{
-		System.out.println("Left speed: " + leftSRX.getOutputCurrent());
-		System.out.println("Right speed:" + rightSRX.getOutputCurrent());
+		System.out.println("Left Motor Current: " + leftSRX.getOutputCurrent());
+		System.out.println("Right Motor Current:" + rightSRX.getOutputCurrent());
 	}
 	
 	public static void enableCurrentLimiting(double amps)

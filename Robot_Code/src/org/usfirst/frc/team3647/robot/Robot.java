@@ -20,8 +20,9 @@ import team3647subsystems.Lights;
 import team3647subsystems.TiltServo;
 
 
-public class Robot extends IterativeRobot {
-
+public class Robot extends IterativeRobot 
+{
+	//Objects
 	Encoders enc;
 	Joysticks joy;
 	ElevatorLevel eleVader;
@@ -29,6 +30,8 @@ public class Robot extends IterativeRobot {
 	MotorSafetyHelper safetyChecker;
 	CameraServer server;
 
+	//Test Variables
+	boolean driveEncoders, driveCurrent, elevatorCurrent, elevatorEncoder, bannerSensor, currentState;
 
 	@Override
 	public void robotInit() 
@@ -45,13 +48,23 @@ public class Robot extends IterativeRobot {
 			Encoders.resetEncoders();
 			ElevatorLevel.resetElevatorEncoders();
 			Drivetrain.drivetrainInitialization();
-			Autonomous.stopWatch.start();
+			setTests();
 		}
 		catch(Throwable t)
 		{
 			CrashChecker.logThrowableCrash(t);
 			throw t;
 		}
+	}
+	
+	public void setTests()
+	{
+		driveEncoders = false;
+		driveCurrent = false;
+		elevatorCurrent = false;
+		elevatorEncoder = false;
+		bannerSensor = false;
+		currentState = false;
 	}
 	
 	@Override
@@ -77,9 +90,8 @@ public class Robot extends IterativeRobot {
 			runMotorSafety();
 			enc.setEncoderValues();
 			eleVader.setElevatorEncoder();
-			//System.out.println(Autonomous.currentState);
 			Autonomous.runAuto(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
-		//	Lights.runLights();
+			runTests();
 		}
 	}
 	
@@ -111,7 +123,7 @@ public class Robot extends IterativeRobot {
 			runElevator();
 			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
 			Lights.runLights();
-			//Encoders.testEncoders();
+			runTests();
 		}
 		catch(Throwable t)
 		{
@@ -124,29 +136,14 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() 
 	{
 		updateJoysticks();
-//		eleVader.setElevatorEncoder();
-//		Shifter.runPiston(joy.buttonY);
-//		runDrivetrain();
-//		Elevator.moveEleVader(joy.rightJoySticky * .4);
-//		ElevatorLevel.testElevatorEncoders();
-//		ElevatorLevel.testBannerSensor();
-//		Encoders.testEncoders();
-//		runDrivetrain();
-		//Intake.runIntake(joy.rightBumper1);
-		//IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
-		if(joy.buttonA)
-		{
-			Encoders.resetEncoders();
-			Lights.LightOutput(true, false, false);
-		}
 		enc.setEncoderValues();
-		//Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
-		//Encoders.testEncoders();
-		
-		//Autonomous.testTimer(joy.buttonA);
-		TiltServo.PullForks(joy.leftTrigger, joy.rightTrigger);
+		eleVader.setElevatorEncoder();
+		runPistonsandForks();
+		IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
+		Elevator.moveEleVader(joy.rightJoySticky * .4);
 		Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
-		Encoders.resetEncoders();
+		Lights.runLights();
+		runTests();
 	}
 	
 	
@@ -182,8 +179,6 @@ public class Robot extends IterativeRobot {
 	
 	public void runDrivetrain()
 	{
-		//Drivetrain.enableCurrentLimiting(20);
-		//Drivetrain.testSpeed();
 		enc.setEncoderValues();
 		if(joy.leftBumper)
 		{
@@ -198,5 +193,33 @@ public class Robot extends IterativeRobot {
 	public void runMotorSafety()
 	{
 		safetyChecker.setSafetyEnabled(false);
+	}
+	
+	public void runTests()
+	{
+		if(driveEncoders)
+		{
+			Encoders.testEncoders();
+		}
+		if(driveCurrent)
+		{
+			Drivetrain.testDrivetrainCurrent();
+		}
+		if(elevatorCurrent)
+		{
+			Elevator.testElevatorCurrent();
+		}
+		if(bannerSensor)
+		{
+			ElevatorLevel.testBannerSensor();
+		}
+		if(currentState)
+		{
+			System.out.println(Autonomous.currentState);
+		}
+		if(elevatorEncoder)
+		{
+			ElevatorLevel.testElevatorEncoders();
+		}
 	}
 }

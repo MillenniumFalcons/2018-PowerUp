@@ -40,6 +40,12 @@ public class Elevator
 		rightElevatorSPX.follow(rightElevator);
 	}
 	
+	public static void testElevatorCurrent()
+	{
+		System.out.println("Left Elevator Current: " + leftElevator.getOutputCurrent());
+		System.out.println("Right Elevator Current:" + rightElevator.getOutputCurrent());
+	}
+	
 	public static void stopEleVader()
 	{
 		moveEleVader(0);
