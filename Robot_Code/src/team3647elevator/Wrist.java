@@ -9,7 +9,7 @@ public class Wrist
 	 */
 
 	public static boolean start, flat, sixtyDegrees, up, manualOverride, originalPositionButton;
-	public static double overrideValue, speed;
+	public static double overrideValue, speed, wristEncoder; 
 
 	//Insert step 1 code below
 	

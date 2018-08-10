@@ -33,6 +33,11 @@ public class Constants
 	public static final double sWitch = 13000;
 	public static final double lowerScale = 36300;
 	public static final double scale = 41500;
+
+	//Wrist
+	public final static int flat = 0;
+	public final static int sixtyDegrees = 0;
+	public final static int up = 0;
 	
 	//Auto Constants
 	public static final double oneCubeSwitchRightSideStraight = 8500;
