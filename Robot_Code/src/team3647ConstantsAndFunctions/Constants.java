@@ -38,8 +38,10 @@ public class Constants
 
 	//Wrist
 	public final static int flat = 0;
-	public final static int sixtyDegrees = 0;
-	public final static int up = 0;
+	public final static int aim = 130;
+	public final static int idle = 190;
+	public final static int wristPin = 0;
+	public final static int wristLimitSwitch = 5;
 	
 	//Auto Constants
 	public static final double oneCubeSwitchRightSideStraight = 8500;
