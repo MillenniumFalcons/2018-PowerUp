@@ -4,6 +4,7 @@ import team3647ConstantsAndFunctions.Functions;
 
 public class Wrist 
 {
+	public static int elevatorState, aimedElevatorState;
 	public static int wristState, aimedWristState;
 	/*
 	 * 0. Surya Big Gay
@@ -16,11 +17,12 @@ public class Wrist
 	public static double overrideValue, speed, wristEncoder; 
 	public static WPI_TalonSRX wristMotor = new WPI_TalonSRX(Constants.wristPin);
 	static DigitalInput limitSwitch = new DigitalInput(Constants.wristLimitSwitch); 
-	public static double wristEncoderValue;
+	public static double wristEncoderValue = 185;
+	
 
 	public static void testWristCurrent()
 	{
-		System.out.println("Wrist Current: " + wrist.getOutputCurrent());
+		System.out.println("Wrist Current: " + wristMotor.getOutputCurrent());
 	}
 	//Insert step 1 code below
 	
@@ -63,6 +65,15 @@ public class Wrist
 	public static void resetWristEncoder()
 	{
 		wristMotor.getSensorCollection().setQuadraturePosition(0, 10);
+	}
+	
+	public void setElevatorEncoder()
+	{
+		if(reachedFlat())
+		{
+			resetWristEncoder();
+		}
+		wristEncoderValue = wristMotor.getSensorCollection().getQuadraturePosition();
 	}
 	
 	public static boolean reachedFlat(){
@@ -113,8 +124,7 @@ public class Wrist
 	
 	public static void runWrist(){
 		switch(wristState){
-			case 0://surya's big gay start (you dont need this omegalul)
-				wristEncoderValue = 185;
+			case 0://starting code? big gay
 			case 1://flat
 				if(manualOverride){
 				wristState = -1;
@@ -146,15 +156,70 @@ public class Wrist
 						} else{
 							moveWrist(.2);
 						}
-			}
-		}
-
+				}
+			case 2://aim
+				if(manualOverride){
+					wristState = -1;
+					} else if(flat){
+					aimedWristState = 1;
+					} else if(aim){
+					aimedWristState = 2;
+					} else if(idle){
+					aimedWristState = 3;
+					}
+					switch(aimedWristState){
+						case 1:
+							if(reachedFlat()){
+								stopWrist();
+							} else{
+								moveWrist(-.2);
+							}
+						case 2:
+								maintainAimPosition();
+						case 3:
+							if(reachedIdle()){
+								maintainIdlePosition();
+								wristState = 3;
+							} else{
+								moveWrist(.2);
+							}
+					}
+			case 3://idle
+				if(manualOverride){
+					wristState = -1;
+					} else if(flat){
+					aimedWristState = 1;
+					} else if(aim){
+					aimedWristState = 2;
+					} else if(idle){
+					aimedWristState = 3;
+					}
+					switch(aimedWristState){
+						case 1:
+							if(reachedFlat()){
+								stopWrist();
+							} else{
+								moveWrist(-.2);
+							}
+						case 2:
+							if(reachedAim()){
+								maintainAimPosition();
+								wristState = 2;
+							} else{
+								moveWrist(.2);
+							}
+						case 3:
+							maintainIdlePosition();
+							}
+					}
+						
+				
 	}
+		
 
 
 	//Insert step 3 code below
-	public static void setLimitSwitch()
-	{
-		flat = limitSwitch.get();
+	public static void setLimitSwitch(){
+		
 	}
 }

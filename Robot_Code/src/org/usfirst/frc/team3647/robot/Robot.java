@@ -122,6 +122,7 @@ public class Robot extends IterativeRobot
 			runPistonsandForks();
 			runDrivetrain();
 			runElevator();
+			runWrist();
 			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
 			Lights.runLights();
 			runTests();
@@ -190,6 +191,10 @@ public class Robot extends IterativeRobot
 		{
 			Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky, joy.rightJoyStickx);
 		}
+	}
+	
+	public void runWrist(){
+		Wrist.setWristButtons();
 	}
 	
 	public void runMotorSafety()

@@ -26,8 +26,8 @@ public class IntakeWheels
 			}
 			else if(rTrigger > 0)//shoot
 			{
-				rightIntakeMotor.set(ControlMode.PercentOutput, -rTrigger*.5);
-				leftIntakeMotor.set(ControlMode.PercentOutput, -rTrigger*.5);
+				rightIntakeMotor.set(ControlMode.PercentOutput, -rTrigger);
+				leftIntakeMotor.set(ControlMode.PercentOutput, -rTrigger);
 			}
 			else
 			{
