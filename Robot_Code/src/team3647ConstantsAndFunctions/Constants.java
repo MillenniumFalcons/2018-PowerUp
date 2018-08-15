@@ -17,8 +17,6 @@ public class Constants
 	public final static int intakePinSourceB = 3;
 	public final static int shifterPinSourceA = 1;
 	public final static int shifterPinSourceB = 0;
-	public final static int lockPinSourceA = 1;
-	public final static int lockPinSourceB = 0;
 	
 	//Elevator
 	public final static int rightIntakePin = 56;

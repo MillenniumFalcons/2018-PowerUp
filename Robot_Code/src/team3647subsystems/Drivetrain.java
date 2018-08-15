@@ -53,7 +53,7 @@ public class Drivetrain
 	
 	public static void tankDrive(double lYValue, double rYValue)
 	{
-		drive.tankDrive(lYValue, rYValue, false);
+		drive.tankDrive(lYValue *.96, rYValue, false);
 		//drive.tankDrive(lYValue, rYValue, false);
 	}
 	
@@ -61,7 +61,7 @@ public class Drivetrain
 	{
 		if(Math.abs(lValue - rValue) < 40)
 		{
-			tankDrive(speed, speed);
+			tankDrive(speed, (speed - initialCorrection));
 		}
 		else if(rValue > lValue)
 		{
