@@ -9,7 +9,7 @@ public class Joysticks
 	public Joystick coController = new Joystick(1);
 	public GenericHID dPad = new Joystick(1);
 	
-	// Main controller Variables
+	// Main contoller Variables
 	public double leftTrigger, rightTrigger, leftJoySticky, leftJoyStickx, rightJoySticky, rightJoyStickx;
 	public boolean rightBumper, leftBumper, buttonA, buttonB, buttonY, buttonX;
 	

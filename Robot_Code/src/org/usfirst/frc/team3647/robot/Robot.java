@@ -10,6 +10,7 @@ import team3647elevator.Elevator;
 import team3647elevator.ElevatorLevel;
 import team3647elevator.IntakeWheels;
 import team3647pistons.Intake;
+import team3647pistons.Lock;
 import team3647pistons.Compressor007;
 import team3647pistons.Forks;
 import team3647pistons.Shifter;
@@ -121,7 +122,6 @@ public class Robot extends IterativeRobot
 			runPistonsandForks();
 			runDrivetrain();
 			runElevator();
-			runWrist();
 			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
 			Lights.runLights();
 			runTests();
@@ -175,6 +175,7 @@ public class Robot extends IterativeRobot
 		Forks.runPiston(joy.buttonX);
 		Shifter.runPiston(joy.buttonY);
 		TiltServo.PullForks(joy.leftTrigger, joy.rightTrigger);
+		Lock.runPiston(joyvalue);
 		//Compressor007.runCompressor();
 	}
 	
@@ -189,10 +190,6 @@ public class Robot extends IterativeRobot
 		{
 			Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky, joy.rightJoyStickx);
 		}
-	}
-	
-	public void runWrist(){
-		Wrist.setWristButtons();
 	}
 	
 	public void runMotorSafety()

@@ -4,16 +4,16 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Timer;
 import team3647ConstantsAndFunctions.Constants;
 
-public class Lock
+public class Forks
 {
-	public static DoubleSolenoid piston = new DoubleSolenoid(Constants.lockPinSourceA, Constants.lockPinSourceB);
+	public static DoubleSolenoid piston = new DoubleSolenoid(Constants.forksPinSourceA, Constants.forksPinSourceB);
 	
-	public static void lock() 
+	public static void deployForks() 
 	{
 		piston.set(DoubleSolenoid.Value.kForward);
 	}
 	
-	public static void unlock() 
+	public static void lockTheForks() 
 	{
 		piston.set(DoubleSolenoid.Value.kReverse);
 	}
@@ -35,3 +35,4 @@ public class Lock
 		}
 	}
 }
+
