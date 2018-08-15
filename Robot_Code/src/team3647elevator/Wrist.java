@@ -1,20 +1,20 @@
-import edu.wpi.first.wpilibj.DigitalInput;
-import team3647ConstantsAndFunctions.Constants;
-import team3647ConstantsAndFunctions.Functions;
-
 public class Wrist 
 {
 	public static int elevatorState, aimedElevatorState;
+<<<<<<< HEAD
 	public static int wristState, aimedWristState;
+=======
+>>>>>>> 3c6e6eeebb765fcf98c26689e0a6054304b7c792
 	/*
-	 * 0. Surya Big Gay
+	 * 0. Start
 	 * 1. Flat
-	 * 2. Aim
-	 * 3. Idle
+	 * 2. Sixty-Degrees
+	 * 3. Facing Up
 	 */
 
-	public static boolean flat, aim, idle, suryaBigGay, manualOverride, originalPositionButton;
+	public static boolean start, flat, sixtyDegrees, up, manualOverride, originalPositionButton;
 	public static double overrideValue, speed, wristEncoder; 
+<<<<<<< HEAD
 	public static WPI_TalonSRX wristMotor = new WPI_TalonSRX(Constants.wristPin);
 	static DigitalInput limitSwitch = new DigitalInput(Constants.wristLimitSwitch); 
 	public static double wristEncoderValue = 185;
@@ -217,6 +217,11 @@ public class Wrist
 	}
 		
 
+=======
+
+	//Insert step 1 code below
+	
+>>>>>>> 3c6e6eeebb765fcf98c26689e0a6054304b7c792
 
 	//Insert step 3 code below
 	public static void setLimitSwitch(){
