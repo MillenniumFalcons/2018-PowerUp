@@ -24,12 +24,12 @@ public class Lock
 		{
 			if(piston.get() == DoubleSolenoid.Value.kReverse)
 			{
-				deployForks();
+				//deployForks();
 				Timer.delay(.75);
 			}
 			else
 			{
-				lockTheForks();
+				//lockTheForks();
 				Timer.delay(.75);
 			}
 		}

@@ -36,7 +36,7 @@ public class Drivetrain
 	
 	public static void drivetrainInitialization()
 	{
-		tankDrive(0,0);
+		//tankDrive(0,0);
 		leftSPX1.follow(leftSRX);
 		leftSPX2.follow(leftSRX);    
 		rightSPX1.follow(rightSRX);

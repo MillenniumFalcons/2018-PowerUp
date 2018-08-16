@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot
 	
 	public void setTests()
 	{
-		driveEncoders = false;
+		driveEncoders = true;
 		driveCurrent = false;
 		elevatorCurrent = false;
 		elevatorEncoder = false;
@@ -88,11 +88,13 @@ public class Robot extends IterativeRobot
 	{
 		while(DriverStation.getInstance().isAutonomous() && !DriverStation.getInstance().isDisabled())
 		{
-			runMotorSafety();
+			//runMotorSafety();
+			updateJoysticks();
 			enc.setEncoderValues();
 			eleVader.setElevatorEncoder();
-			Autonomous.runAuto(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
-			runTests();
+			Autonomous.test(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.buttonA);
+			//Autonomous.runAuto(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
+			//runTests();
 		}
 	}
 	
@@ -119,10 +121,10 @@ public class Robot extends IterativeRobot
 			CrashChecker.logTeleopPeriodic();
 			updateJoysticks();
 			runMotorSafety();
-			runPistonsandForks();
+			//runPistonsandForks();
 			runDrivetrain();
-			runElevator();
-			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
+			//runElevator();
+			//IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
 			Lights.runLights();
 			runTests();
 		}
@@ -134,17 +136,39 @@ public class Robot extends IterativeRobot
 	}
 
 	@Override
+	public void testInit()
+	{
+		try 
+		{
+			CrashChecker.logAutoInit();
+			Autonomous.initialize();
+		}
+		catch(Throwable t)
+		{
+			CrashChecker.logThrowableCrash(t);
+			throw t;
+		}	
+	}
+	
+	@Override
 	public void testPeriodic() 
 	{
+//		updateJoysticks();
+//		enc.setEncoderValues();
+//		eleVader.setElevatorEncoder();
+//		runPistonsandForks();
+//		IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
+//		Elevator.moveEleVader(joy.rightJoySticky * .4);
+//		Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
+//		Lights.runLights();
+//		runTests();
+		runMotorSafety();
 		updateJoysticks();
 		enc.setEncoderValues();
 		eleVader.setElevatorEncoder();
-		runPistonsandForks();
-		IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
-		Elevator.moveEleVader(joy.rightJoySticky * .4);
-		Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
-		Lights.runLights();
-		runTests();
+		Autonomous.test(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.buttonA);
+//		Elevator.moveEleVader(joy.rightJoySticky * 1);
+//		Shifter.runPiston(joy.buttonY);
 	}
 	
 	
@@ -175,7 +199,7 @@ public class Robot extends IterativeRobot
 		Forks.runPiston(joy.buttonX);
 		Shifter.runPiston(joy.buttonY);
 		TiltServo.PullForks(joy.leftTrigger, joy.rightTrigger);
-		Lock.runPiston(joyvalue);
+		//Lock.runPiston(joyvalue);
 		//Compressor007.runCompressor();
 	}
 	
@@ -188,7 +212,8 @@ public class Robot extends IterativeRobot
 		}
 		else
 		{
-			Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky, joy.rightJoyStickx);
+			//Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky, joy.rightJoyStickx);
+			Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
 		}
 	}
 	

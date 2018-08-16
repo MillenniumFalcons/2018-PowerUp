@@ -25,6 +25,46 @@ public class Autonomous
 	static double lSSpeed, rSSpeed, speed, sum;
 	static int b;
 	
+	static int [] differences = new int[10];
+	
+	public static void test(double lValue, double rValue, boolean button)
+	{
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.stop();
+				stopWatch.reset();
+				if(lValue == 0 && rValue == 0)
+				{
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					stopWatch.start();
+					currentState = 1;
+				}
+				else
+				{
+					Encoders.resetEncoders();
+				}
+				break;
+			case 1:
+				if(!button)
+				{
+					Drivetrain.tankDrive(.35, .35);
+					Encoders.testEncoders();
+					System.out.println(stopWatch.get());
+				}
+				else
+				{
+					Drivetrain.stop();
+					currentState = 2;
+				}
+				break;
+			case 2:
+				Drivetrain.stop();
+				break;
+		}
+	}
+	
 	public static void runAuto(double lValue, double rValue)
 	{
 		String gameData;
@@ -488,6 +528,7 @@ public class Autonomous
 		prevRightEncoder = 0;
 		currentState = 0;
 		time = 0;
+		stopWatch.start();
 	}
 	
 	public static void testTurnLeft(double lValue, double rValue)

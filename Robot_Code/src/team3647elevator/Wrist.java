@@ -1,3 +1,5 @@
+package team3647elevator;
+
 public class Wrist 
 {
 	public static int elevatorState, aimedElevatorState;
@@ -17,6 +19,6 @@ public class Wrist
 	//Insert step 3 code below
 	public static void setLimitSwitch()
 	{
-		flat = limitSwitch.get();
+		//flat = limitSwitch.get();
 	}
 }

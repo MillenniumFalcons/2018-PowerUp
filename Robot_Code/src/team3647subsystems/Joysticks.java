@@ -1,5 +1,6 @@
 package team3647subsystems;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import team3647ConstantsAndFunctions.Constants;
 
