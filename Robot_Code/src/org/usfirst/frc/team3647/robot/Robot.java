@@ -30,6 +30,8 @@ public class Robot extends IterativeRobot
 	MotorSafety safety;
 	MotorSafetyHelper safetyChecker;
 	CameraServer server;
+	
+	boolean broke = true;
 
 	//Test Variables
 	boolean driveEncoders, driveCurrent, elevatorCurrent, elevatorEncoder, bannerSensor, currentState;
@@ -213,7 +215,15 @@ public class Robot extends IterativeRobot
 		else
 		{
 			//Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky, joy.rightJoyStickx);
-			Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
+			if(broke)
+			{
+				Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
+			}
+			else
+			{
+				Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky, joy.rightJoyStickx);
+			}
+			
 		}
 	}
 	

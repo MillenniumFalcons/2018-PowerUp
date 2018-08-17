@@ -29,6 +29,7 @@ public class Autonomous
 	
 	public static void test(double lValue, double rValue, boolean button)
 	{
+		speed = .35;
 		switch(currentState)
 		{
 			case 0:
@@ -49,7 +50,7 @@ public class Autonomous
 			case 1:
 				if(!button)
 				{
-					Drivetrain.tankDrive(.35, .35);
+					Drivetrain.tankDrive(speed, speed);
 					Encoders.testEncoders();
 					System.out.println(stopWatch.get());
 				}
