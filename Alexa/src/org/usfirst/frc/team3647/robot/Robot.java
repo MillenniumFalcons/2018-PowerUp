@@ -11,10 +11,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.MotorSafetyHelper;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import team3647elevator.ElevatorLevel;
-import team3647subsystems.Drivetrain;
-import team3647subsystems.Encoders;
-import team3647subsystems.Joysticks;
 
 
 /**
