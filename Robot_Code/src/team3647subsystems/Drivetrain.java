@@ -53,7 +53,7 @@ public class Drivetrain
 	
 	public static void tankDrive(double lYValue, double rYValue)
 	{
-		drive.tankDrive(lYValue, rYValue, false);
+		drive.tankDrive(lYValue * .986, rYValue, false);
 		//drive.tankDrive(lYValue, rYValue, false);
 	}
 	
@@ -353,6 +353,22 @@ public class Drivetrain
 //		}
 //	}
 
+	public static void newArcadeDrive(double yValue, double xValue)
+	{
+		if(yValue != 0 && xValue == 0)
+	 	{
+			Drivetrain.tankDrive(yValue, yValue);
+	 	}
+		else if(yValue == 0 && xValue == 0)
+		{
+			tankDrive(0, 0);
+		}
+		else
+		{
+			FRCarcadedrive(yValue, xValue);
+		}
+	}
+	
 	static double drift;
 	static int movingStatus, driftStatus;
 	public static void arcadeDrive(double leftEnc, double rightEnc, double yValue, double xValue)

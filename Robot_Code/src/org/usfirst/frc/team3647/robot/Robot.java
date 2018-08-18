@@ -62,7 +62,7 @@ public class Robot extends IterativeRobot
 	
 	public void setTests()
 	{
-		driveEncoders = true;
+		driveEncoders = false;
 		driveCurrent = false;
 		elevatorCurrent = false;
 		elevatorEncoder = false;
@@ -123,10 +123,10 @@ public class Robot extends IterativeRobot
 			CrashChecker.logTeleopPeriodic();
 			updateJoysticks();
 			runMotorSafety();
-			//runPistonsandForks();
+			runPistonsandForks();
 			runDrivetrain();
 			//runElevator();
-			//IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
+			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
 			Lights.runLights();
 			runTests();
 		}
@@ -144,6 +144,7 @@ public class Robot extends IterativeRobot
 		{
 			CrashChecker.logAutoInit();
 			Autonomous.initialize();
+			
 		}
 		catch(Throwable t)
 		{
@@ -207,22 +208,22 @@ public class Robot extends IterativeRobot
 	
 	public void runDrivetrain()
 	{
-		enc.setEncoderValues();
+		//enc.setEncoderValues();
 		if(joy.leftBumper)
 		{
 			Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky * .45, joy.rightJoyStickx * .5);
 		}
 		else
 		{
-			//Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky, joy.rightJoyStickx);
-			if(broke)
-			{
-				Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
-			}
-			else
-			{
-				Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky, joy.rightJoyStickx);
-			}
+			Drivetrain.newArcadeDrive(joy.leftJoySticky, joy.rightJoyStickx);
+//			if(broke)
+//			{
+//				Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
+//			}
+//			else
+//			{
+//				Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky, joy.rightJoyStickx);
+//			}
 			
 		}
 	}

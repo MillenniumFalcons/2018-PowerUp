@@ -22,27 +22,27 @@ public class IntakeWheels
 			if(lTrigger > 0)//pickUp
 			{	
 				rightIntakeMotor.set(ControlMode.PercentOutput, lTrigger *.75);
-				leftIntakeMotor.set(ControlMode.PercentOutput, lTrigger *.75);
+				leftIntakeMotor.set(ControlMode.PercentOutput, lTrigger *.65);
 			}
 			else if(rTrigger > 0)//shoot
 			{
-				rightIntakeMotor.set(ControlMode.PercentOutput, -rTrigger*.5);
-				leftIntakeMotor.set(ControlMode.PercentOutput, -rTrigger*.5);
+				rightIntakeMotor.set(ControlMode.PercentOutput, -rTrigger*1);
+				leftIntakeMotor.set(ControlMode.PercentOutput, -rTrigger*1);
 			}
-			else
-			{
-				if(getIntakeBannerSenor() || Intake.piston.get() == DoubleSolenoid.Value.kForward)
-				{
-					rightIntakeMotor.set(ControlMode.PercentOutput, 0);
-					leftIntakeMotor.set(ControlMode.PercentOutput, 0);
-				}
-				else
-				{
-					rightIntakeMotor.set(ControlMode.PercentOutput, -.2);
-					leftIntakeMotor.set(ControlMode.PercentOutput, -.2);
-				}
-				
-			}
+//			else
+//			{
+//				if(getIntakeBannerSenor() || Intake.piston.get() == DoubleSolenoid.Value.kForward)
+//				{
+//					rightIntakeMotor.set(ControlMode.PercentOutput, 0);
+//					leftIntakeMotor.set(ControlMode.PercentOutput, 0);
+//				}
+//				else
+//				{
+//					rightIntakeMotor.set(ControlMode.PercentOutput, -.2);
+//					leftIntakeMotor.set(ControlMode.PercentOutput, -.2);
+//				}
+//				
+//			}
 		}
 		else
 		{

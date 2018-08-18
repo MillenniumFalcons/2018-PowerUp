@@ -29,7 +29,7 @@ public class Autonomous
 	
 	public static void test(double lValue, double rValue, boolean button)
 	{
-		speed = .35;
+		speed = 1;
 		switch(currentState)
 		{
 			case 0:
@@ -39,7 +39,7 @@ public class Autonomous
 				{
 					Elevator.stopEleVader();
 					ElevatorLevel.resetElevatorEncoders();
-					stopWatch.start();
+					//stopWatch.start();
 					currentState = 1;
 				}
 				else
@@ -51,17 +51,19 @@ public class Autonomous
 				if(!button)
 				{
 					Drivetrain.tankDrive(speed, speed);
-					Encoders.testEncoders();
-					System.out.println(stopWatch.get());
+					//Encoders.testEncoders();
+					//System.out.println(stopWatch.get());
 				}
 				else
 				{
+					Encoders.testEncoders();
 					Drivetrain.stop();
 					currentState = 2;
 				}
 				break;
 			case 2:
 				Drivetrain.stop();
+				
 				break;
 		}
 	}
