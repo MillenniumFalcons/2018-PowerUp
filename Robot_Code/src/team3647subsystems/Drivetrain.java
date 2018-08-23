@@ -1,6 +1,6 @@
 package team3647subsystems;
 
-import com.ctre.CANTalon;
+//import com.ctre.CANTalon;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.ControlMode;

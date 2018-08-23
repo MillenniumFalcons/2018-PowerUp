@@ -55,11 +55,11 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				if(!Drivetrain.reachedDistance(lValue, rValue, 6500))
+				if(!Drivetrain.reachedDistance(lValue, rValue, 4500))
 				{
 					Drivetrain.newArcadeDrive(.74, 0);
 				}
-				else if(!Drivetrain.reachedDistance(lValue, rValue, 8000))
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 6000))
 				{
 					Drivetrain.newArcadeDrive(.3, 0);
 				}
