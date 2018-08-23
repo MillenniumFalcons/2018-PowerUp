@@ -72,9 +72,6 @@ public class Autonomous
 			case 3:
 				if(lValue == 0 && rValue == 0)
 				{
-					Elevator.stopEleVader();
-					ElevatorLevel.resetElevatorEncoders();
-					stopWatch.reset();
 					currentState = 4;
 					
 				}
@@ -84,11 +81,11 @@ public class Autonomous
 				}
 				break;
 			case 4:
-				if(rValue < 7000)
+				if(Encoders.rightEncoderValue < 7000)
 				{
 					Drivetrain.goStraightLeft(lValue, rValue, 4, .8, .2, .07);
 				}
-				else if(rValue < 9000)
+				else if(Encoders.rightEncoderValue < 9000)
 				{
 					Drivetrain.goStraightLeft(lValue, rValue, 4, .6, .15, .05);
 				}
