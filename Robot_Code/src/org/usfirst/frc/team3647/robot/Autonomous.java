@@ -81,13 +81,13 @@ public class Autonomous
 				}
 				break;
 			case 4:
-				if(Encoders.rightEncoderValue < 8700)
+				if(Encoders.rightEncoderValue < 8100)
 				{
-					Drivetrain.goStraightLeft(lValue, rValue, 3, .27, .81, .07);
+					Drivetrain.goStraightLeft(lValue, rValue, 4, .2, .8, .07);
 				}
-				else if(Encoders.rightEncoderValue < 9600)
+				else if(Encoders.rightEncoderValue < 9010)
 				{
-					Drivetrain.goStraightLeft(lValue, rValue, 3, .2, .6, .05);
+					Drivetrain.goStraightLeft(lValue, rValue, 3, .13, .4, .05);
 				}
 				else
 				{
