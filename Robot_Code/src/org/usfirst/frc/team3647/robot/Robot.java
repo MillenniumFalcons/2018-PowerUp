@@ -103,7 +103,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void disabledPeriodic()
 	{
-		Drivetrain.setToCoast();
+		Drivetrain.setToBrake();
 	}
 	
 	@Override

@@ -75,12 +75,26 @@ public class Autonomous
 					Elevator.stopEleVader();
 					ElevatorLevel.resetElevatorEncoders();
 					stopWatch.reset();
-					currentState = 100;
+					currentState = 4;
 					
 				}
 				else
 				{
 					Encoders.resetEncoders();
+				}
+				break;
+			case 4:
+				if(rValue < 7000)
+				{
+					Drivetrain.goStraightLeft(lValue, rValue, 4, .8, .2, .07);
+				}
+				else if(rValue < 9000)
+				{
+					Drivetrain.goStraightLeft(lValue, rValue, 4, .6, .15, .05);
+				}
+				else
+				{
+					currentState = 100;
 				}
 				break;
 			case 100:
