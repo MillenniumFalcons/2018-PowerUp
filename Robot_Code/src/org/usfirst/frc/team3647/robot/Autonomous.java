@@ -55,7 +55,7 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				if(!Drivetrain.reachedDistance(lValue, rValue, 4500))
+				if(!Drivetrain.reachedDistance(lValue, rValue, 5100))
 				{
 					Drivetrain.newArcadeDrive(.74, 0);
 				}
@@ -81,11 +81,11 @@ public class Autonomous
 				}
 				break;
 			case 4:
-				if(Encoders.rightEncoderValue < 6000)
+				if(Encoders.rightEncoderValue < 7000)
 				{
 					Drivetrain.goStraightLeft(lValue, rValue, 4, .2, .8, .07);
 				}
-				else if(Encoders.rightEncoderValue < 7500)
+				else if(Encoders.rightEncoderValue < 8500)
 				{
 					Drivetrain.goStraightLeft(lValue, rValue, 4, .15, .6, .05);
 				}
