@@ -27,6 +27,112 @@ public class Autonomous
 	
 	static int [] differences = new int[10];
 	
+	public static void rightTwoSwitch(double lValue, double rValue)
+	{
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.stop();
+				stopWatch.reset();
+				stopWatch.start();
+				IntakeWheels.pickUp(.2);
+				currentState = 1;
+				break;
+			case 1:
+				time = stopWatch.get();
+				if(lValue == 0 && rValue == 0)
+				{
+					stopWatch.stop();
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					stopWatch.reset();
+					currentState = 2;
+					
+				}
+				else
+				{
+					Encoders.resetEncoders();
+				}
+				break;
+			case 2:
+				if(!Drivetrain.reachedDistance(lValue, rValue, 6500))
+				{
+					Drivetrain.newArcadeDrive(.74, 0);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 8000))
+				{
+					Drivetrain.newArcadeDrive(.3, 0);
+				}
+				else
+				{
+					Encoders.resetEncoders();
+					currentState = 3;
+				}
+				break;
+			case 3:
+				if(lValue == 0 && rValue == 0)
+				{
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					stopWatch.reset();
+					currentState = 100;
+					
+				}
+				else
+				{
+					Encoders.resetEncoders();
+				}
+				break;
+			case 100:
+				Drivetrain.stop();
+				break;
+		}
+	}
+	
+	public static void testReset(double lValue, double rValue)
+	{
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.stop();
+				stopWatch.reset();
+				stopWatch.start();
+				IntakeWheels.pickUp(.2);
+				currentState = 1;
+				break;
+			case 1:
+				time = stopWatch.get();
+				if(lValue == 0 && rValue == 0)
+				{
+					stopWatch.stop();
+					Elevator.stopEleVader();
+					ElevatorLevel.resetElevatorEncoders();
+					stopWatch.reset();
+					currentState = 2;
+					
+				}
+				else
+				{
+					Encoders.resetEncoders();
+				}
+				break;
+			case 2:
+				if(!Drivetrain.reachedDistance(lValue, rValue, 8500))
+				{
+					Drivetrain.driveForw(lValue, rValue, .74);
+				}
+				else if(!Drivetrain.reachedDistance(lValue, rValue, 9500))
+				{
+					Drivetrain.driveForw(lValue, rValue, .3);
+				}
+				else
+				{
+					Drivetrain.stop();
+				}
+				break;
+		}
+	}
+	
 	public static void test(double lValue, double rValue, boolean button)
 	{
 		speed = 1;
