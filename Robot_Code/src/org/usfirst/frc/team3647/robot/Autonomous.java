@@ -35,7 +35,7 @@ public class Autonomous
 				stopWatch.stop();
 				stopWatch.reset();
 				stopWatch.start();
-				IntakeWheels.pickUp(.2);
+				//IntakeWheels.pickUp(.2);
 				currentState = 1;
 				break;
 			case 1:
@@ -83,11 +83,11 @@ public class Autonomous
 			case 4:
 				if(Encoders.rightEncoderValue < 7000)
 				{
-					Drivetrain.goStraightLeft(lValue, rValue, 4, .2, .8, .07);
+					Drivetrain.goStraightLeft(lValue, rValue, 3.5, .23, .8, .07);
 				}
 				else if(Encoders.rightEncoderValue < 8500)
 				{
-					Drivetrain.goStraightLeft(lValue, rValue, 4, .15, .6, .05);
+					Drivetrain.goStraightLeft(lValue, rValue, 3.5, .17, .6, .05);
 				}
 				else
 				{
