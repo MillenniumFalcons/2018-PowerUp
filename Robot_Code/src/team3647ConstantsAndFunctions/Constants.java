@@ -68,4 +68,21 @@ public class Constants
 	public static final double lrandrrBackUpToWallTurnDist = 5400;
 	public static final double lrandrrBackUpToWallTurnRatio = 3.26;
 	public static final double lrStraightAfterWall = 	2928;
+	
+	//PID Constants
+	public final static int kTimeoutMs = 10;
+	public final static int drivePID = 0;
+	public final static boolean kSensorPhase = true;
+	public final static boolean kMotorInvert = false;
+	public final static double lDrivekF = 0.577966;
+	public final static double lDrivekP = 0;
+	public final static double lDrivekI = 0;
+	public final static double lDrivekD = 0;
+	public final static double rDrivekF = 0.571189;
+	public final static double rDrivekP = 0;
+	public final static double rDrivekI = 0;
+	public final static double rDrivekD = 0;
+	public final static double velocityConstant = 1770;
+	public final static double deadZone = 0.05;
+
 }
