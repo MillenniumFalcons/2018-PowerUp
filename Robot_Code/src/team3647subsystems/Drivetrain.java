@@ -43,41 +43,6 @@ public class Drivetrain
 		rightSPX2.follow(rightSRX);
 	}
 	
-	public static void configPID()
-	{
-		//Config left side PID settings
-		leftSRX.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder , 0, Constants.kTimeoutMs);
-		leftSRX.setSensorPhase(true);
-		leftSRX.configNominalOutputForward(0, Constants.kTimeoutMs);
-		leftSRX.configNominalOutputReverse(0, Constants.kTimeoutMs);
-		leftSRX.configPeakOutputForward(1, Constants.kTimeoutMs);
-		leftSRX.configPeakOutputReverse(-1, Constants.kTimeoutMs);
-		//Config left side PID Values
-		leftSRX.selectProfileSlot(Constants.drivePID, 0);
-		leftSRX.config_kF(Constants.drivePID, Constants.lDrivekF, Constants.kTimeoutMs);
-		leftSRX.config_kP(Constants.drivePID, Constants.lDrivekP, Constants.kTimeoutMs);
-		leftSRX.config_kI(Constants.drivePID, Constants.lDrivekI, Constants.kTimeoutMs);
-		leftSRX.config_kD(Constants.drivePID, Constants.lDrivekD, Constants.kTimeoutMs);
-		//Config right side PID settings
-		rightSRX.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder , Constants.drivePID, Constants.kTimeoutMs);
-		rightSRX.setSensorPhase(true);
-		rightSRX.configNominalOutputForward(0, Constants.kTimeoutMs);
-		rightSRX.configNominalOutputReverse(0, Constants.kTimeoutMs);
-		rightSRX.configPeakOutputForward(1, Constants.kTimeoutMs);
-		rightSRX.configPeakOutputReverse(-1, Constants.kTimeoutMs);
-		//Config right side PID Values
-		rightSRX.selectProfileSlot(Constants.drivePID, 0);
-		rightSRX.config_kF(Constants.drivePID, Constants.rDrivekF, Constants.kTimeoutMs);
-		rightSRX.config_kP(Constants.drivePID, Constants.rDrivekP, Constants.kTimeoutMs);
-		rightSRX.config_kI(Constants.drivePID, Constants.rDrivekI, Constants.kTimeoutMs);
-		rightSRX.config_kD(Constants.drivePID, Constants.rDrivekD, Constants.kTimeoutMs);
-		//Set up followers
-		leftSPX1.follow(leftSRX);
-		leftSPX2.follow(leftSRX);
-		rightSPX1.follow(rightSRX);
-		rightSPX2.follow(rightSRX);
-	}
-	
 	static double avg;
 
 	
@@ -398,7 +363,7 @@ public class Drivetrain
 	{
 		if(yValue != 0 && xValue == 0)
 	 	{
-			setSpeed(yValue, yValue);
+			tankDrive(yValue, yValue);
 	 	}
 		else if(yValue == 0 && xValue == 0)
 		{

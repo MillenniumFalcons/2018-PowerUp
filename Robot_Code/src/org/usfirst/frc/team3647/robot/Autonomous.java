@@ -27,6 +27,65 @@ public class Autonomous
 	
 	static int [] differences = new int[10];
 	
+	// Cheese autos
+	
+	//212 inches in y, 78.66 inches in x
+	public static void rightSide2Cube(double lValue, double rValue)
+	{
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.stop();
+				time = stopWatch.get();
+				if(time == 0)
+				{
+					stopWatch.start();
+					currentState = 1;
+				}
+				else
+				{
+					stopWatch.reset();
+				}
+				break;
+			case 1:
+				time = stopWatch.get();
+				lSSpeed = Functions.rightSide2Cube(time, false);
+				rSSpeed = Functions.rightSide2Cube(time, true);
+				Drivetrain.tankDrive(lSSpeed, rSSpeed);
+				Functions.rightSide2Cube(time, lSSpeed, rSSpeed);
+				break;
+		}
+	}
+	
+	public static void leftSide2Cube(double lValue, double rValue)
+	{
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.stop();
+				time = stopWatch.get();
+				if(time == 0)
+				{
+					stopWatch.start();
+					currentState = 1;
+				}
+				else
+				{
+					stopWatch.reset();
+				}
+				break;
+			case 1:
+				time = stopWatch.get();
+				lSSpeed = Functions.leftSide2Cube(time, false);
+				rSSpeed = Functions.leftSide2Cube(time, true);
+				Drivetrain.tankDrive(lSSpeed, rSSpeed);
+				Functions.leftSide2Cube(time, lSSpeed, rSSpeed);
+				break;
+		}
+	}
+	
+	
+	//Actual autos
 	public static void rightTwoSwitch(double lValue, double rValue)
 	{
 		switch(currentState)

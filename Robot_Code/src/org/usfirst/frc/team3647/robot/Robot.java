@@ -94,7 +94,7 @@ public class Robot extends IterativeRobot
 			updateJoysticks();
 			enc.setEncoderValues();
 			eleVader.setElevatorEncoder();
-			Autonomous.rightTwoSwitch(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
+			Autonomous.rightSide2Cube(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
 			//Autonomous.runAuto(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
 			//runTests();
 		}

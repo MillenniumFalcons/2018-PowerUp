@@ -8,6 +8,138 @@ public class Functions
 	static double avg;
 	static boolean reached;
 	
+	
+	// Stuff for cheese autos
+	public static double rightSide2Cube(double time, boolean right)
+	{
+		double straightTime = 1.2;
+		double turnTime = .4;
+		if(right)
+		{
+			if(time < .3)
+			{
+				return .5;
+			}
+			else if(time < straightTime - .2)
+			{
+				return .7;
+			}
+			else if(time < straightTime)
+			{
+				return .35;
+			}
+//			else if(time < straightTime + turnTime - .15)
+//			{
+//				return .6;
+//			}
+//			else if(time < straightTime + turnTime)
+//			{
+//				return .4;
+//			}
+			else
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			if(time < .3)
+			{
+				return .5;
+			}
+			else if(time < straightTime - .2)
+			{
+				return .7;
+			}
+			else if(time < straightTime)
+			{
+				return .35;
+			}
+//			else if(time < straightTime + turnTime - .15)
+//			{
+//				return .15;
+//			}
+//			else if(time < straightTime + turnTime)
+//			{
+//				return .1;
+//			}
+			else
+			{
+				return 0;
+			}
+		}
+	}
+	
+	public static void rightSide2Cube(double time, double lSpeed, double rSpeed)
+	{
+		
+	}
+	
+	public static double leftSide2Cube(double time, boolean right)
+	{
+		double straightTime = 1.2;
+		double turnTime = .4;
+		if(right)
+		{
+			if(time < .3)
+			{
+				return .5;
+			}
+			else if(time < straightTime - .2)
+			{
+				return .7;
+			}
+			else if(time < straightTime)
+			{
+				return .35;
+			}
+			else if(time < straightTime + turnTime - .15)
+			{
+				return .6;
+			}
+			else if(time < straightTime + turnTime)
+			{
+				return .4;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			if(time < .3)
+			{
+				return .5;
+			}
+			else if(time < straightTime - .2)
+			{
+				return .7;
+			}
+			else if(time < straightTime)
+			{
+				return .35;
+			}
+			else if(time < straightTime + turnTime - .15)
+			{
+				return .15;
+			}
+			else if(time < straightTime + turnTime)
+			{
+				return .1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+	}
+	
+	public static void leftSide2Cube(double time, double lSpeed, double rSpeed)
+	{
+		
+	}
+	
 	public static double stopToPickUp(double eValue)
 	{
 		eValue*=(-0.00005);
