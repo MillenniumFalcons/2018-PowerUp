@@ -13,7 +13,7 @@ public class Functions
 	public static double rightSide2Cube(double time, boolean right)
 	{
 		double straightTime = 1.2;
-		double turnTime = .4;
+		double turnTime = 1.23;
 		if(right)
 		{
 			if(time < .3)
@@ -26,16 +26,16 @@ public class Functions
 			}
 			else if(time < straightTime)
 			{
-				return .35;
+				return .2;
 			}
-//			else if(time < straightTime + turnTime - .15)
-//			{
-//				return .6;
-//			}
-//			else if(time < straightTime + turnTime)
-//			{
-//				return .4;
-//			}
+			else if(time < straightTime + turnTime - .15)
+			{
+				return .9;
+			}
+			else if(time < straightTime + turnTime)
+			{
+				return .6;
+			}
 			else
 			{
 				return 0;
@@ -55,14 +55,14 @@ public class Functions
 			{
 				return .35;
 			}
-//			else if(time < straightTime + turnTime - .15)
-//			{
-//				return .15;
-//			}
-//			else if(time < straightTime + turnTime)
-//			{
-//				return .1;
-//			}
+			else if(time < straightTime + turnTime - .15)
+			{
+				return .15;
+			}
+			else if(time < straightTime + turnTime)
+			{
+				return .1;
+			}
 			else
 			{
 				return 0;
