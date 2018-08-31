@@ -72,6 +72,34 @@ public class Elevator
 			manualOverride = true;
 		}
 	}
+	
+	public static void moveToStop(int currentState)
+	{
+		elevatorState = currentState;
+		aimedElevatorState = 1;
+		runDarthVader();
+	}
+	
+	public static void moveToPickUp(int currentState)
+	{
+		elevatorState = currentState;
+		aimedElevatorState = 2;
+		runDarthVader();
+	}
+	
+	public static void moveToSwitch(int currentState)
+	{
+		elevatorState = currentState;
+		aimedElevatorState = 3;
+		runDarthVader();
+	}
+	
+	public static void moveToScale(int currentState)
+	{
+		elevatorState = currentState;
+		aimedElevatorState = 4;
+		runDarthVader();
+	}
 
 	public static void runDarthVader()
 	{

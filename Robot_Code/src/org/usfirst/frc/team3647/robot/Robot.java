@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.MotorSafetyHelper;
 import team3647elevator.Elevator;
 import team3647elevator.ElevatorLevel;
 import team3647elevator.IntakeWheels;
+import team3647elevator.Wrist;
 import team3647pistons.Intake;
 import team3647pistons.Lock;
 import team3647pistons.Compressor007;
@@ -52,6 +53,7 @@ public class Robot extends IterativeRobot
 			ElevatorLevel.resetElevatorEncoders();
 			Drivetrain.drivetrainInitialization();
 			setTests();
+			Wrist.configWristPID();
 		}
 		catch(Throwable t)
 		{
@@ -194,6 +196,15 @@ public class Robot extends IterativeRobot
 			Elevator.setManualOverride(joy.rightJoySticky1 * .6);
 			Elevator.runDarthVader();
 		}
+	}
+	
+	public void runWrist()
+	{
+		Wrist.setLimitSwitch();
+		Wrist.resetWristEncoders();
+		Wrist.setWristButtons(joy.dPadDown, joy.dPadSide, joy.dPadUp);
+		Wrist.setManualOverride(joy.rightJoySticky1);
+		Wrist.runWrist();
 	}
 
 	public void runPistonsandForks()

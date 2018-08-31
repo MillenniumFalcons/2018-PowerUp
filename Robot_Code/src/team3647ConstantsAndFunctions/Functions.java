@@ -8,12 +8,22 @@ public class Functions
 	static double avg;
 	static boolean reached;
 	
+	//auto priority
+	boolean scale = true;
+	boolean sWitch = false;
+	boolean cross = false;
+	boolean noCrossField = false;
 	
+	static double rs2cDeliverCube, rs2cPickCube, rs2cDeliverCube2;
+	static double ls2cDeliverCube, ls2cPickCube, ls2cDeliverCube2;
 	// Stuff for cheese autos
+	
+	//212 inches in y, 78.66 inches in x
 	public static double rightSide2Cube(double time, boolean right)
 	{
 		double straightTime = 1.2;
 		double turnTime = 1.23;
+		rs2cDeliverCube = straightTime + turnTime + .2;
 		if(right)
 		{
 			if(time < .3)
@@ -68,17 +78,18 @@ public class Functions
 				return 0;
 			}
 		}
+		
 	}
 	
-	public static void rightSide2Cube(double time, double lSpeed, double rSpeed)
+	public static void rightSide2Cube(double time)
 	{
-		
+			
 	}
 	
 	public static double leftSide2Cube(double time, boolean right)
 	{
 		double straightTime = 1.2;
-		double turnTime = .4;
+		double turnTime = .7;
 		if(right)
 		{
 			if(time < .3)
@@ -91,15 +102,23 @@ public class Functions
 			}
 			else if(time < straightTime)
 			{
-				return .35;
+				return .2;
 			}
 			else if(time < straightTime + turnTime - .15)
 			{
-				return .6;
+				return .9;
 			}
 			else if(time < straightTime + turnTime)
 			{
+				return .6;
+			}
+			else if(time < straightTime + turnTime + .8)
+			{
 				return .4;
+			}
+			else if(time < straightTime + turnTime + 1.1)
+			{
+				return .2;
 			}
 			else
 			{
@@ -128,6 +147,14 @@ public class Functions
 			{
 				return .1;
 			}
+			else if(time < straightTime + turnTime + .8)
+			{
+				return .4;
+			}
+			else if(time < straightTime + turnTime + 1.1)
+			{
+				return .2;
+			}
 			else
 			{
 				return 0;
@@ -135,9 +162,290 @@ public class Functions
 		}
 	}
 	
-	public static void leftSide2Cube(double time, double lSpeed, double rSpeed)
+	public static void leftSide2Cube(double time)
 	{
 		
+	}
+	
+	public static void rightScaleRightSwitch(double time)
+	{
+		
+	}
+	public static double rightScaleRightSwitch(double time, boolean right)
+	{
+		double straightTime = 1.2;
+		double turnToScaleUsingRightMotor = .5;
+		double stopAtScale = .8;
+		double extraTurn = .1;
+		double firstScale = straightTime + turnToScaleUsingRightMotor + stopAtScale + turnToScaleUsingRightMotor + extraTurn;
+		double goBackForSecondCube = .4;
+		double turnBackUsingLeftMotor = .76;
+		double timeToPickUpSecondCube = firstScale + goBackForSecondCube + turnBackUsingLeftMotor + .4;
+		double straightToSecondSube = 1;
+		double turnToSecondCube;
+		if(right)
+		{
+			if(time < .3)
+			{
+				return .5;
+			}
+			else if(time < straightTime - .5)
+			{
+				return .7;
+			}
+			else if(time < straightTime)
+			{
+				return .2;
+			}
+			else if(time < straightTime + turnToScaleUsingRightMotor)
+			{
+				return .5;
+			}
+//			else if(time < straightTime + turnToScaleUsingRightMotor + stopAtScale)
+//			{
+//				return 0;
+//			}
+//			else if(time < firstScale)
+//			{
+//				return 0;
+//			}
+//			else if(time < firstScale + goBackForSecondCube)
+//			{
+//				return -.5;
+//			}
+//			else if(time < firstScale + goBackForSecondCube + turnBackUsingLeftMotor)
+//			{
+//				return 0;
+//			}
+//			else if(time < timeToPickUpSecondCube)
+//			{
+//				return 0;
+//			}
+//			else if(time < timeToPickUpSecondCube + .4)
+//			{
+//				return .4;
+//			}
+//			else if(time < timeToPickUpSecondCube + straightToSecondSube - .2)
+//			{
+//				return .65;
+//			}
+//			else if(time < timeToPickUpSecondCube + straightToSecondSube)
+//			{
+//				return .3;
+//			}
+//			else if(time < timeToPickUpSecondCube + straightToSecondSube + turnToSecondCube - .2)
+//			{
+//				return .6;
+//			}
+//			else if(time < timeToPickUpSecondCube + straightToSecondSube + turnToSecondCube)
+//			{
+//				return .3;
+//			}
+			else
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			if(time < .3)
+			{
+				return .5;
+			}
+			else if(time < straightTime - .5)
+			{
+				return .7;
+			}
+			else if(time < straightTime)
+			{
+				return .2;
+			}
+			else if(time < straightTime + turnToScaleUsingRightMotor)
+			{
+				return 0;
+			}
+//			else if(time < straightTime + turnToScaleUsingRightMotor + stopAtScale)
+//			{
+//				return 0;
+//			}
+//			else if(time < firstScale)
+//			{
+//				return -.5;
+//			}
+//			else if(time < firstScale + goBackForSecondCube)
+//			{
+//				return -.5;
+//			}
+//			else if(time < firstScale + goBackForSecondCube + turnBackUsingLeftMotor - .2)
+//			{
+//				return -.8;
+//			}
+//			else if(time < firstScale + goBackForSecondCube + turnBackUsingLeftMotor)
+//			{
+//				return -.5;
+//			}
+//			else if(time < timeToPickUpSecondCube)
+//			{
+//				return 0;
+//			}
+//			else if(time < timeToPickUpSecondCube + .4)
+//			{
+//				return .4;
+//			}
+//			else if(time < timeToPickUpSecondCube + straightToSecondSube - .2)
+//			{
+//				return .65;
+//			}
+//			else if(time < timeToPickUpSecondCube + straightToSecondSube)
+//			{
+//				return .3;
+//			}
+			else
+			{
+				return 0;
+			}
+		}
+	}
+	
+	public static void rightScaleLeftSwitch(double time)
+	{
+		
+	}
+	
+	public static double rightScaleLeftSwitch(double time, boolean right)
+	{
+		double straightTime = 1.2;
+		double turnToScaleUsingRightMotor = .5;
+		double stopAtScale = .8;
+		double extraTurn = .1;
+		double firstScale = straightTime + turnToScaleUsingRightMotor + stopAtScale + turnToScaleUsingRightMotor + extraTurn;
+		double goBackForSecondCube = .4;
+		double turnBackUsingLeftMotor = .76;
+		double timeToPickUpSecondCube = firstScale + goBackForSecondCube + turnBackUsingLeftMotor + .4;
+		double straightToSecondSube = 1;
+		double turnToSecondCube;
+		if(right)
+		{
+			if(time < .3)
+			{
+				return .5;
+			}
+			else if(time < straightTime - .5)
+			{
+				return .7;
+			}
+			else if(time < straightTime)
+			{
+				return .2;
+			}
+			else if(time < straightTime + turnToScaleUsingRightMotor)
+			{
+				return .5;
+			}
+//			else if(time < straightTime + turnToScaleUsingRightMotor + stopAtScale)
+//			{
+//				return 0;
+//			}
+//			else if(time < firstScale)
+//			{
+//				return 0;
+//			}
+//			else if(time < firstScale + goBackForSecondCube)
+//			{
+//				return -.5;
+//			}
+//			else if(time < firstScale + goBackForSecondCube + turnBackUsingLeftMotor)
+//			{
+//				return 0;
+//			}
+//			else if(time < timeToPickUpSecondCube)
+//			{
+//				return 0;
+//			}
+//			else if(time < timeToPickUpSecondCube + .4)
+//			{
+//				return .4;
+//			}
+//			else if(time < timeToPickUpSecondCube + straightToSecondSube - .2)
+//			{
+//				return .65;
+//			}
+//			else if(time < timeToPickUpSecondCube + straightToSecondSube)
+//			{
+//				return .3;
+//			}
+//			else if(time < timeToPickUpSecondCube + straightToSecondSube + turnToSecondCube - .2)
+//			{
+//				return .6;
+//			}
+//			else if(time < timeToPickUpSecondCube + straightToSecondSube + turnToSecondCube)
+//			{
+//				return .3;
+//			}
+			else
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			if(time < .3)
+			{
+				return .5;
+			}
+			else if(time < straightTime - .5)
+			{
+				return .7;
+			}
+			else if(time < straightTime)
+			{
+				return .2;
+			}
+			else if(time < straightTime + turnToScaleUsingRightMotor)
+			{
+				return 0;
+			}
+//			else if(time < straightTime + turnToScaleUsingRightMotor + stopAtScale)
+//			{
+//				return 0;
+//			}
+//			else if(time < firstScale)
+//			{
+//				return -.5;
+//			}
+//			else if(time < firstScale + goBackForSecondCube)
+//			{
+//				return -.5;
+//			}
+//			else if(time < firstScale + goBackForSecondCube + turnBackUsingLeftMotor - .2)
+//			{
+//				return -.8;
+//			}
+//			else if(time < firstScale + goBackForSecondCube + turnBackUsingLeftMotor)
+//			{
+//				return -.5;
+//			}
+//			else if(time < timeToPickUpSecondCube)
+//			{
+//				return 0;
+//			}
+//			else if(time < timeToPickUpSecondCube + .4)
+//			{
+//				return .4;
+//			}
+//			else if(time < timeToPickUpSecondCube + straightToSecondSube - .2)
+//			{
+//				return .65;
+//			}
+//			else if(time < timeToPickUpSecondCube + straightToSecondSube)
+//			{
+//				return .3;
+//			}
+			else
+			{
+				return 0;
+			}
+		}
 	}
 	
 	public static double stopToPickUp(double eValue)

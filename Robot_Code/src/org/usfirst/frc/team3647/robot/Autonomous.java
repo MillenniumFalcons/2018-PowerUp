@@ -48,11 +48,104 @@ public class Autonomous
 				}
 				break;
 			case 1:
+				IntakeWheels.runIntake(0, 0, true, .2, .2);
+				if(ElevatorLevel.reachedStop())
+				{
+					stopWatch.stop();
+					stopWatch.reset();
+					currentState = 2;
+					Elevator.stopEleVader();
+				}
+				else if(time > 1.5)
+				{
+					stopWatch.stop();
+					stopWatch.reset();
+					currentState = 2;
+					Elevator.stopEleVader();
+				}
+				else
+				{
+					Elevator.moveEleVader(-.3);
+				}
+				break;
+			case 2:
+				time = stopWatch.get();
+				if(time == 0)
+				{
+					stopWatch.start();
+					currentState = 3;
+				}
+				else
+				{
+					stopWatch.reset();
+				}
+				break;
+			case 3:
 				time = stopWatch.get();
 				lSSpeed = Functions.rightSide2Cube(time, false);
 				rSSpeed = Functions.rightSide2Cube(time, true);
 				Drivetrain.tankDrive(lSSpeed, rSSpeed);
-				Functions.rightSide2Cube(time, lSSpeed, rSSpeed);
+				Functions.rightSide2Cube(time);
+				break;
+		}
+	}
+	
+	public static void rightScaleRightSwitch(double lValue, double rValue)
+	{
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.stop();
+				time = stopWatch.get();
+				if(time == 0)
+				{
+					stopWatch.start();
+					currentState = 1;
+				}
+				else
+				{
+					stopWatch.reset();
+				}
+				break;
+			case 1:
+				IntakeWheels.runIntake(0, 0, true, .2, .2);
+				if(ElevatorLevel.reachedStop())
+				{
+					stopWatch.stop();
+					stopWatch.reset();
+					currentState = 2;
+					Elevator.stopEleVader();
+				}
+				else if(time > 1.5)
+				{
+					stopWatch.stop();
+					stopWatch.reset();
+					currentState = 2;
+					Elevator.stopEleVader();
+				}
+				else
+				{
+					Elevator.moveEleVader(-.3);
+				}
+				break;
+			case 2:
+				time = stopWatch.get();
+				if(time == 0)
+				{
+					stopWatch.start();
+					currentState = 3;
+				}
+				else
+				{
+					stopWatch.reset();
+				}
+				break;
+			case 3:
+				time = stopWatch.get();
+				lSSpeed = Functions.leftSide2Cube(time, false);
+				rSSpeed = Functions.leftSide2Cube(time, true);
+				Drivetrain.tankDrive(lSSpeed, rSSpeed);
+				Functions.leftSide2Cube(time);
 				break;
 		}
 	}
@@ -75,17 +168,48 @@ public class Autonomous
 				}
 				break;
 			case 1:
+				IntakeWheels.runIntake(0, 0, true, .2, .2);
+				if(ElevatorLevel.reachedStop())
+				{
+					stopWatch.stop();
+					stopWatch.reset();
+					currentState = 2;
+					Elevator.stopEleVader();
+				}
+				else if(time > 1.5)
+				{
+					stopWatch.stop();
+					stopWatch.reset();
+					currentState = 2;
+					Elevator.stopEleVader();
+				}
+				else
+				{
+					Elevator.moveEleVader(-.3);
+				}
+				break;
+			case 2:
+				time = stopWatch.get();
+				if(time == 0)
+				{
+					stopWatch.start();
+					currentState = 3;
+				}
+				else
+				{
+					stopWatch.reset();
+				}
+				break;
+			case 3:
 				time = stopWatch.get();
 				lSSpeed = Functions.leftSide2Cube(time, false);
 				rSSpeed = Functions.leftSide2Cube(time, true);
 				Drivetrain.tankDrive(lSSpeed, rSSpeed);
-				Functions.leftSide2Cube(time, lSSpeed, rSSpeed);
+				Functions.leftSide2Cube(time);
 				break;
 		}
 	}
 	
-	
-	//Actual autos
 	public static void rightTwoSwitch(double lValue, double rValue)
 	{
 		switch(currentState)
@@ -98,6 +222,7 @@ public class Autonomous
 				currentState = 1;
 				break;
 			case 1:
+				IntakeWheels.runIntake(0, 0, true, .2, .2);
 				time = stopWatch.get();
 				if(lValue == 0 && rValue == 0)
 				{
