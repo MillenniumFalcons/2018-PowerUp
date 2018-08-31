@@ -23,7 +23,7 @@ public class Wrist
 	 * 3. Facing Up
 	 */
 
-	public static boolean start, flat, aim, up, manualOverride, originalPositionButton;
+	public static boolean start, flat, aim, up, manualOverride, originalPositionButton, limitSwitchValue;
 	public static double overrideValue, speed, wristEncoder; 
 
 	//Insert step 1 code below
@@ -58,7 +58,7 @@ public class Wrist
 	
 	public static void setLimitSwitch()
 	{
-		flat = limitSwitch.get();
+		limitSwitchValue = limitSwitch.get();
 	}
 	
 	public static void testLimitSwitch()
@@ -77,7 +77,7 @@ public class Wrist
 	
 	public void setWristEncoders()
 	{
-		if(flat)
+		if(limitSwitchValue)
 		{
 			resetWristEncoders();
 		}
@@ -86,7 +86,7 @@ public class Wrist
 	
 	public static void resetWristEncoders()
 	{
-		wristMotor.getSensorCollection().getQuadraturePosition(0, 10);
+		wristMotor.getSensorCollection().setQuadraturePosition(0, 10);
 	}
 	
 	public static void testWristEncoders()
@@ -99,6 +99,19 @@ public class Wrist
 		flat = flatButton;
 		aim = aimButton;
 		up = upButton;
+	}
+	
+	public static void setManualOverride(double jValue)
+	{
+		if(Math.abs(jValue) > .15)
+		{
+			manualOverride = true;
+			overrideValue = jValue;
+		}
+		else
+		{
+			manualOverride = false;
+		}
 	}
 	
 	public static boolean reachedFlat()
