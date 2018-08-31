@@ -1,5 +1,9 @@
 package team3647subsystems;
 
+import team3647elevator.Wrist;
+import team3647pistons.Lock;
+import team3647pistons.Shifter;
+
 public class ClimbButton {
 	
 	public static int buttonState;
