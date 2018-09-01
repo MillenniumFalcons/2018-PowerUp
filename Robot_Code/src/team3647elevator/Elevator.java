@@ -9,52 +9,97 @@ import team3647ConstantsAndFunctions.Functions;
 
 public class Elevator 
 {
-	public static int elevatorState;
 	/*
 	 * 0. Start
 	 * 1. Stop
-	 * 2. PickUp
-	 * 3. Switch
-	 * 4. Scale
-	 * 5. Lower Scale
+	 * 2. Switch
+	 * 3. Scale
+	 * 4. Lower Scale
 	 */
-	public static int aimedElevatorState;
+	public static int aimedElevatorState, elevatorEncoderValue;
 	
-	public static boolean stop, pickUp, sWitch, scale, lowerScale, moving, manualOverride, originalPositionButton;
-	public static double overrideValue;
+	public static boolean bottom, sWitch, scale, lowerScale, moving, manualOverride, originalPositionButton;
+    public static double overrideValue;
 	
-	public static WPI_TalonSRX leftElevator = new WPI_TalonSRX(Constants.leftElevatorMaster);
-	public static WPI_TalonSRX rightElevator = new WPI_TalonSRX(Constants.rightElevatorMaster);
+	public static DigitalInput bannerSensor = new DigitalInput(Constants.elevatorBannerSensor); 
+
+	public static WPI_TalonSRX leftGearboxMaster = new WPI_TalonSRX(Constants.leftGearboxSRX);
+	public static WPI_TalonSRX rightGearboxSRX = new WPI_TalonSRX(Constants.rightGearboxSRX);
+	public static VictorSPX leftGearboxSPX = new VictorSPX(Constants.leftGearboxSPX);
+	public static VictorSPX rightGearboxSPX = new VictorSPX(Constants.rightGearboxSPX);
 	
-	public static VictorSPX leftElevatorSPX = new VictorSPX(Constants.leftElevatorSlave);
-	public static VictorSPX rightElevatorSPX = new VictorSPX(Constants.rightElevatorSlave);
-	
-	public static DifferentialDrive elevatorDrive = new DifferentialDrive(leftElevator, rightElevator);
-	
-	public static void moveEleVader(double speed)
+	public static boolean reachedBottom = false;
+    
+    public static void elevatorInitialization()
 	{
-		elevatorDrive.tankDrive(-speed, speed, false);
-//		leftElevatorSPX.set(ControlMode.PercentOutput, -speed);
-//		rightElevatorSPX.set(ControlMode.PercentOutput, -speed);
-		leftElevatorSPX.follow(leftElevator);
-		rightElevatorSPX.follow(rightElevator);
+		leftGearboxMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Constants.kTimeoutMs);
+		leftGearboxMaster.setSensorPhase(true);
+		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
+		leftGearboxMaster.config_kF(Constants.carriagePID, Constants.carriageF, Constants.kTimeoutMs);
+		leftGearboxMaster.config_kP(Constants.carriagePID, Constants.carriageP, Constants.kTimeoutMs);
+		leftGearboxMaster.config_kI(Constants.carriagePID, Constants.carriageI, Constants.kTimeoutMs);
+		leftGearboxMaster.config_kD(Constants.carriagePID, Constants.carriageD, Constants.kTimeoutMs);	
+
+		leftGearboxMaster.config_kF(Constants.interstagePID, Constants.interstageF, Constants.kTimeoutMs);		
+		leftGearboxMaster.config_kP(Constants.interstagePID, Constants.interstageP, Constants.kTimeoutMs);		
+		leftGearboxMaster.config_kI(Constants.interstagePID, Constants.interstageI, Constants.kTimeoutMs);		
+        leftGearboxMaster.config_kD(Constants.interstagePID, Constants.interstageD, Constants.kTimeoutMs);	
+        
+        rightGearboxSRX.follow(leftGearboxMaster);
+        rightGearboxSPX.follow(leftGearboxMaster);
+        leftGearboxSPX.follow(leftGearboxMaster);
+        rightGearboxSRX.setInverted(true);
+		rightGearboxSPX.setInverted(true);
+		leftGearboxMaster.setInverted(true);
+		leftGearboxSPX.setInverted(true);
+	}
+
+	public void setElevatorEncoder()
+	{
+        if(reachedBottom())
+		{
+            resetElevatorEncoders();
+		}
+		elevatorEncoderValue = Elevator.leftGearboxMaster.getSensorCollection().getQuadraturePosition();
 	}
 	
-	public static void testElevatorCurrent()
+	public static void resetElevatorEncoders()
 	{
-		System.out.println("Left Elevator Current: " + leftElevator.getOutputCurrent());
-		System.out.println("Right Elevator Current:" + rightElevator.getOutputCurrent());
+        Elevator.leftGearboxMaster.getSensorCollection().setQuadraturePosition(0, 10);
 	}
 	
-	public static void stopEleVader()
+    public static void stopElevator()
+    {
+        moveElevator(0);
+    }
+    
+    public static void moveElevator(double speed)
+    {
+        leftGearboxMaster.set(ControlMode.PercentOutput, speed);
+        //leftGearboxMasterSPX.set(ControlMode.PercentOutput, -speed);
+        //rightGearboxSPX.set(ControlMode.PercentOutput, -speed);
+    }
+    
+    public static void moveElevatorPosition(double position)
+    {
+        leftGearboxMaster.set(ControlMode.Position, position);
+    }
+
+	public static boolean reachedBottom()
 	{
-		moveEleVader(0);
+        if(bannerSensor.get())
+		{
+            return false;
+		}
+		else
+		{
+            return true;
+		}
 	}
-	
-	public static void setElevatorButtons(boolean stopButton, boolean pickUpButton, boolean switchButton, boolean scaleButton, boolean LSButton)
+    
+	public static void setElevatorButtons(boolean bottomButton, boolean switchButton, boolean scaleButton, boolean LSButton)
 	{
-		stop = stopButton;
-		pickUp = pickUpButton;
+        bottom = bottomButton;
 		sWitch = switchButton;
 		lowerScale = LSButton;
 		scale = scaleButton;
@@ -62,631 +107,157 @@ public class Elevator
 	
 	public static void setManualOverride(double jValue)
 	{
-		if(Math.abs(jValue) <.2 )
+        if(Math.abs(jValue) <.1 )
 		{
-			manualOverride = false;
+            manualOverride = false;
 		}
 		else
 		{
-			overrideValue = jValue;
+            overrideValue = jValue;
 			manualOverride = true;
 		}
 	}
-	
-	public static void moveToStop(int currentState)
+    
+	public static void runElevator()
 	{
-		elevatorState = currentState;
-		aimedElevatorState = 1;
-		runDarthVader();
-	}
-	
-	public static void moveToPickUp(int currentState)
-	{
-		elevatorState = currentState;
-		aimedElevatorState = 2;
-		runDarthVader();
-	}
-	
-	public static void moveToSwitch(int currentState)
-	{
-		elevatorState = currentState;
-		aimedElevatorState = 3;
-		runDarthVader();
-	}
-	
-	public static void moveToScale(int currentState)
-	{
-		elevatorState = currentState;
-		aimedElevatorState = 4;
-		runDarthVader();
-	}
-
-	public static void runDarthVader()
-	{
-		switch(elevatorState)
+		if(manualOverride)
 		{
-			case 0://start
+			aimedElevatorState = -1;
+		}
+		if(bottom)
+		{
+			leftGearboxMaster.selectProfileSlot(Constants.carriagePID, 0);
+			aimedElevatorState = 1;
+		}
+		else if(sWitch)
+		{
+			leftGearboxMaster.selectProfileSlot(Constants.carriagePID, 0);
+			aimedElevatorState = 2;
+		}
+		else if(lowerScale)
+		{
+			leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
+			aimedElevatorState = 3;
+		}
+		else if(scale)
+		{
+			leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
+			aimedElevatorState = 4;
+		}
+        switch(aimedElevatorState)
+		{
+			case 0:
 				if(manualOverride)
 				{
-					elevatorState = -1;
+					aimedElevatorState = -1;
 				}
-				else if(ElevatorLevel.reachedStop())
+				else if(reachedBottom)
 				{
-					stopEleVader();
+					stopElevator();
 					aimedElevatorState = 1;
-					elevatorState = 1;
 				}
 				else
 				{
-					moveEleVader(-.2);
+					moveElevator(-.3);
 				}
-				break;
-			case 1://stop
-				if(manualOverride)
+			break;
+			case 1:
+				if(reachedBottom())
 				{
-					aimedElevatorState = -1;
+					resetElevatorEncoders();
+					stopElevator();
 				}
-				else if(stop)
+				else
 				{
-					aimedElevatorState = 1;
+					moveElevator(-0.4);
 				}
-				else if(pickUp)
-				{
-					aimedElevatorState = 2;
-				}
-				else if(sWitch)
-				{
-					aimedElevatorState = 3;
-				}
-				else if(scale)
-				{
-					aimedElevatorState = 4;
-				}
-				else if(lowerScale)
-				{
-					aimedElevatorState = 5;
-				}
-				switch(aimedElevatorState)
-				{
-					case 1:
-						if(ElevatorLevel.reachedStop())
-						{
-							stopEleVader();
-						}
-						else
-						{
-							moveEleVader(-.2);
-						}
-						break;
-					case 2:
-						if(ElevatorLevel.reachedPickUp())
-						{
-							ElevatorLevel.maintainPickUpPosition();
-							elevatorState = 2;
-						}
-						else
-						{
-							moveEleVader(Functions.stopToPickUp(ElevatorLevel.elevatorEncoderValue));
-						}
-						break;
-					case 3:
-						if(ElevatorLevel.reachedSwitch())
-						{
-							ElevatorLevel.maintainSwitchPosition();
-							elevatorState = 3;
-						}
-						else
-						{
-							moveEleVader(Functions.stopToSwitch(ElevatorLevel.elevatorEncoderValue));
-						}
-						break;
-					case 4:
-						if(ElevatorLevel.reachedScale())
-						{
-							ElevatorLevel.maintainScalePosition();
-							elevatorState = 4;
-						}
-						else
-						{
-							moveEleVader(Functions.stopToScale(ElevatorLevel.elevatorEncoderValue));
-						}
-						break;
-					case 5:
-						if(ElevatorLevel.reachedLowerScale())
-						{
-							ElevatorLevel.maintainLowerScalePosition();
-							elevatorState = 5;
-						}
-						else
-						{
-							moveEleVader(Functions.stopToLowerScale(ElevatorLevel.elevatorEncoderValue));
-						}
-						break;
-					case -1:
-						elevatorState = -1;
-						break;
-				}
-				break;
-			case 2://pickup
-				if(manualOverride)
-				{
-					aimedElevatorState = -1;
-				}
-				else if(stop)
-				{
-					aimedElevatorState = 1;
-				}
-				else if(pickUp)
-				{
-					aimedElevatorState = 2;
-				}
-				else if(sWitch)
-				{
-					aimedElevatorState = 3;
-				}
-				else if(scale)
-				{
-					aimedElevatorState = 4;
-				}
-				else if(lowerScale)
-				{
-					aimedElevatorState = 5;
-				}
-				switch(aimedElevatorState)
-				{
-					case 1:
-						if(ElevatorLevel.reachedStop())
-						{
-							stopEleVader();
-							elevatorState = 1;
-						}
-						else
-						{
-							moveEleVader(Functions.pickUpToStop(ElevatorLevel.elevatorEncoderValue));//
-						}
-						break;
-					case 2:
-						ElevatorLevel.maintainPickUpPosition();
-						break;
-					case 3:
-						if(ElevatorLevel.reachedSwitch())
-						{
-							ElevatorLevel.maintainSwitchPosition();
-							elevatorState = 3;
-						}
-						else
-						{
-							moveEleVader(Functions.pickUpToSwitch(ElevatorLevel.elevatorEncoderValue));//
-						}
-						break;
-					case 4:
-						if(ElevatorLevel.reachedScale())
-						{
-							ElevatorLevel.maintainScalePosition();
-							elevatorState = 4;
-						}
-						else
-						{
-							moveEleVader(Functions.pickUpToScale(ElevatorLevel.elevatorEncoderValue));//
-						}
-						break;
-					case 5:
-						if(ElevatorLevel.reachedLowerScale())
-						{
-							ElevatorLevel.maintainLowerScalePosition();
-							elevatorState = 5;
-						}
-						else
-						{
-							moveEleVader(Functions.pickUpToLowerScale(ElevatorLevel.elevatorEncoderValue));
-						}
-						break;
-					case -1:
-						elevatorState = -1;
-						break;
-				}
-				break;
+			break;
+			case 2:
+				moveElevatorPosition(Constants.sWitch);
+			break;
 			case 3:
-				if(manualOverride)
-				{
-					aimedElevatorState = -1;
-				}
-				else if(stop)
-				{
-					aimedElevatorState = 1;
-					originalPositionButton = false;
-				}
-				else if(pickUp)
-				{
-					aimedElevatorState = 2;
-					originalPositionButton = false;
-				}
-				else if(sWitch)
-				{
-					aimedElevatorState = 3;
-					originalPositionButton = true;
-				}
-				else if(scale)
-				{
-					aimedElevatorState = 4;
-					originalPositionButton = false;
-				}
-				else if(lowerScale)
-				{
-					aimedElevatorState = 5;
-				}
-				switch(aimedElevatorState)
-				{
-					case 1:
-						if(ElevatorLevel.reachedStop())
-						{
-							stopEleVader();
-							elevatorState = 1;
-						}
-						else
-						{
-							moveEleVader(Functions.switchToStop(ElevatorLevel.elevatorEncoderValue));
-						}
-						break;
-					case 2:
-						if(ElevatorLevel.reachedPickUp())
-						{
-							ElevatorLevel.maintainPickUpPosition();
-							elevatorState = 2;
-						}
-						else
-						{
-							moveEleVader(Functions.switchToPickUp(ElevatorLevel.elevatorEncoderValue));
-						}
-						
-						break;
-					case 3:
-						ElevatorLevel.maintainSwitchPosition();
-						break;
-					case 4:
-						if(ElevatorLevel.reachedScale())
-						{
-							ElevatorLevel.maintainScalePosition();
-							elevatorState = 4;
-						}
-						else
-						{
-							moveEleVader(Functions.switchToScale(ElevatorLevel.elevatorEncoderValue));//
-						}
-						break;
-					case 5:
-						if(ElevatorLevel.reachedLowerScale())
-						{
-							ElevatorLevel.maintainLowerScalePosition();
-							elevatorState = 5;
-						}
-						else
-						{
-							moveEleVader(Functions.switchToLowerScale(ElevatorLevel.elevatorEncoderValue));
-						}
-						break;
-					case -1:
-						elevatorState = -1;
-						break;
-				}
-				break;
+				moveElevatorPosition(Constants.lowerScale);
+			break;
 			case 4:
-				if(manualOverride)
-				{
-					aimedElevatorState = -1;
-				}
-				else if(stop)
-				{
-					aimedElevatorState = 1;
-					originalPositionButton = false;
-				}
-				else if(pickUp)
-				{
-					aimedElevatorState = 2;
-					originalPositionButton = false;
-				}
-				else if(sWitch)
-				{
-					aimedElevatorState = 3;
-					originalPositionButton = false;
-				}
-				else if(scale)
-				{
-					aimedElevatorState = 4;
-					originalPositionButton = true;
-				}
-				else if(lowerScale)
-				{
-					aimedElevatorState = 5;
-				}
-				switch(aimedElevatorState)
-				{
-					case 1:
-						if(ElevatorLevel.reachedStop())
-						{
-							stopEleVader();
-							elevatorState = 1;
-						}
-						else
-						{
-							moveEleVader(Functions.scaleToStop(ElevatorLevel.elevatorEncoderValue));//
-						}
-						break;
-					case 2:
-						if(ElevatorLevel.reachedPickUp())
-						{
-							ElevatorLevel.maintainPickUpPosition();
-							elevatorState = 2;
-						}
-						else
-						{
-							moveEleVader(Functions.scaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
-						}
-						
-						break;
-					case 3:
-						if(ElevatorLevel.reachedSwitch())
-						{
-							ElevatorLevel.maintainSwitchPosition();
-							elevatorState = 3;
-						}
-						else
-						{
-							moveEleVader(Functions.scaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
-						}
-						break;
-					case 4:
-						ElevatorLevel.maintainScalePosition();
-						break;
-					case 5:
-						if(ElevatorLevel.reachedLowerScale())
-						{
-							ElevatorLevel.maintainLowerScalePosition();
-							elevatorState = 5;
-						}
-						else
-						{
-							moveEleVader(Functions.scaleToLowerScale(ElevatorLevel.elevatorEncoderValue));
-						}
-						break;
-					case -1:
-						elevatorState = -1;
-						break;
-				}
-				break;
-			case 5:
-				if(manualOverride)
-				{
-					aimedElevatorState = -1;
-				}
-				else if(stop)
-				{
-					aimedElevatorState = 1;
-					originalPositionButton = false;
-				}
-				else if(pickUp)
-				{
-					aimedElevatorState = 2;
-					originalPositionButton = false;
-				}
-				else if(sWitch)
-				{
-					aimedElevatorState = 3;
-					originalPositionButton = false;
-				}
-				else if(scale)
-				{
-					aimedElevatorState = 4;
-					originalPositionButton = true;
-				}
-				else if(lowerScale)
-				{
-					aimedElevatorState = 5;
-				}
-				switch(aimedElevatorState)
-				{
-					case 1:
-						if(ElevatorLevel.reachedStop())
-						{
-							stopEleVader();
-							elevatorState = 1;
-						}
-						else
-						{
-							moveEleVader(Functions.lowerScaleToStop(ElevatorLevel.elevatorEncoderValue));//
-						}
-						break;
-					case 2:
-						if(ElevatorLevel.reachedPickUp())
-						{
-							ElevatorLevel.maintainPickUpPosition();
-							elevatorState = 2;
-						}
-						else
-						{
-							moveEleVader(Functions.lowerScaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
-						}
-						
-						break;
-					case 3:
-						if(ElevatorLevel.reachedSwitch())
-						{
-							ElevatorLevel.maintainSwitchPosition();
-							elevatorState = 3;
-						}
-						else
-						{
-							moveEleVader(Functions.lowerScaleToSwitch(ElevatorLevel.elevatorEncoderValue));//
-						}
-						break;
-					case 4:
-						if(ElevatorLevel.reachedScale())
-						{
-							ElevatorLevel.maintainScalePosition();
-							elevatorState = 3;
-						}
-						else
-						{
-							moveEleVader(Functions.lowerScaleToScale(ElevatorLevel.elevatorEncoderValue));//
-						}
-						break;
-					case 5:
-						if(ElevatorLevel.reachedLowerScale())
-						{
-							ElevatorLevel.maintainLowerScalePosition();
-						}
-						else
-						{
-							if(ElevatorLevel.elevatorEncoderValue > Constants.lowerScale)
-							{
-								moveEleVader(Functions.scaleToLowerScale(ElevatorLevel.elevatorEncoderValue));//
-							}
-							else
-							{
-								moveEleVader(Functions.switchToLowerScale(ElevatorLevel.elevatorEncoderValue));//
-							}
-						}
-						break;
-					case -1:
-						elevatorState = -1;
-						break;
-				}
-				break;
+				moveElevatorPosition(Constants.scale);
+			break;
 			case -1:
-				if(stop || pickUp || sWitch || scale)
+				if(!manualOverride)
 				{
-					if(stop)
-					{
-						if(ElevatorLevel.reachedStop())
-						{
-							ElevatorLevel.resetElevatorEncoders();
-							elevatorState = 1;
-							aimedElevatorState = 1;
-						}
-						else if(ElevatorLevel.elevatorEncoderValue >= 0 && ElevatorLevel.elevatorEncoderValue < Constants.pickUp)
-						{
-							elevatorState = 1;
-							aimedElevatorState = 1;
-						}
-						else if(ElevatorLevel.elevatorEncoderValue >= Constants.pickUp && ElevatorLevel.elevatorEncoderValue < Constants.sWitch)
-						{
-							elevatorState = 2;
-							aimedElevatorState = 1;
-						}
-						else if(ElevatorLevel.elevatorEncoderValue >= Constants.sWitch && ElevatorLevel.elevatorEncoderValue < Constants.scale)
-						{
-							elevatorState = 3;
-							aimedElevatorState = 1;
-						}
-						else
-						{
-							elevatorState = 4;
-							aimedElevatorState = 1;
-						}	
-					}
-					else if(pickUp)
-					{
-						if(ElevatorLevel.reachedStop())
-						{
-							ElevatorLevel.resetElevatorEncoders();
-							elevatorState = 1;
-							aimedElevatorState = 2;
-						}
-						else if(ElevatorLevel.elevatorEncoderValue >= 0 && ElevatorLevel.elevatorEncoderValue < Constants.pickUp)
-						{
-							elevatorState = 1;
-							aimedElevatorState = 2;
-						}
-						else if(ElevatorLevel.elevatorEncoderValue >= Constants.pickUp && ElevatorLevel.elevatorEncoderValue < Constants.sWitch)
-						{
-							elevatorState = 2;
-							aimedElevatorState = 2;
-						}
-						else if(ElevatorLevel.elevatorEncoderValue >= Constants.sWitch && ElevatorLevel.elevatorEncoderValue < Constants.scale)
-						{
-							elevatorState = 3;
-							aimedElevatorState = 2;
-						}
-						else
-						{
-							elevatorState = 4;
-							aimedElevatorState = 2;
-						}
-					}
-					else if(sWitch)
-					{
-						if(ElevatorLevel.reachedStop())
-						{
-							ElevatorLevel.resetElevatorEncoders();
-							elevatorState = 1;
-							aimedElevatorState = 3;
-						}
-						else if(ElevatorLevel.elevatorEncoderValue >= 0 && ElevatorLevel.elevatorEncoderValue < Constants.pickUp)
-						{
-							elevatorState = 1;
-							aimedElevatorState = 3;
-						}
-						else if(ElevatorLevel.elevatorEncoderValue >= Constants.pickUp && ElevatorLevel.elevatorEncoderValue < Constants.sWitch)
-						{
-							elevatorState = 2;
-							aimedElevatorState = 3;
-						}
-						else if(ElevatorLevel.elevatorEncoderValue >= Constants.sWitch && ElevatorLevel.elevatorEncoderValue < Constants.scale)
-						{
-							elevatorState = 3;
-							aimedElevatorState = 3;
-						}
-						else
-						{
-							elevatorState = 4;
-							aimedElevatorState = 3;
-						}
-					}
-					else if(scale)
-					{
-						if(ElevatorLevel.reachedStop())
-						{
-							ElevatorLevel.resetElevatorEncoders();
-							elevatorState = 1;
-							aimedElevatorState = 4;
-						}
-						else if(ElevatorLevel.elevatorEncoderValue >= 0 && ElevatorLevel.elevatorEncoderValue < Constants.pickUp)
-						{
-							elevatorState = 1;
-							aimedElevatorState = 4;
-						}
-						else if(ElevatorLevel.elevatorEncoderValue >= Constants.pickUp && ElevatorLevel.elevatorEncoderValue < Constants.sWitch)
-						{
-							elevatorState = 2;
-							aimedElevatorState = 4;
-						}
-						else if(ElevatorLevel.elevatorEncoderValue >= Constants.sWitch && ElevatorLevel.elevatorEncoderValue < Constants.scale)
-						{
-							elevatorState = 3;
-							aimedElevatorState = 4;
-						}
-						else
-						{
-							elevatorState = 4;
-							aimedElevatorState = 4;
-						}
-					}
-					else
-					{
-						elevatorState = -1;
-						aimedElevatorState = -1;
-					}
+					overrideValue = 0;
 				}
-				else
-				{
-					if(!manualOverride)
-					{
-						overrideValue = 0;
-					}
-					moveEleVader(overrideValue);
-				}
-				break;
+				moveElevator(overrideValue);
+			break;
+        }
+    }
+    
+    public static void testElevatorEncoders()
+    {
+        System.out.println("Elevator Encoder Value: " + elevatorEncoderValue);
+    }
+    
+    public static void testBannerSensor()
+    {
+        if(reachedBottom())
+        {
+            System.out.println("Banner Sensor Triggered!");
+        }
+        else
+        {
+            System.out.println("Banner Sensor Not Triggered!");
+        }
+    }
+
+    public static void testElevatorCurrent()
+    {
+        System.out.println("Right Elevator Current:" + leftGearboxMaster.getOutputCurrent());
+	}
+	
+	public static boolean reachedSwitch()
+	{
+		if(elevatorEncoderValue > Constants.sWitch - 2000 && elevatorEncoderValue < Constants.sWitch + 2000)
+		{
+			return true;
+		}
+		else
+		{
+			return false; 
 		}
 	}
 	
+	public static boolean reachedLowerScale()
+	{
+		if(elevatorEncoderValue > Constants.lowerScale - 2500 && elevatorEncoderValue < Constants.lowerScale + 2500)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public static boolean reachedScale()
+	{
+		if(elevatorEncoderValue > Constants.scale - 3000 && elevatorEncoderValue < Constants.scale + 3000)
+		{
+			return true;
+		}
+		else
+		{
+			return false; 
+		}
+	}
+	
+	public static boolean reachedClimb()
+	{
+		if(elevatorEncoderValue > Constants.climb - 2200 && elevatorEncoderValue < Constants.climb + 2200)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

@@ -27,7 +27,8 @@ public class Robot extends IterativeRobot
 	//Objects
 	Encoders enc;
 	Joysticks joy;
-	ElevatorLevel eleVader;
+	Elevator eleVader;
+	Wrist wrist;
 	MotorSafety safety;
 	MotorSafetyHelper safetyChecker;
 	CameraServer server;
@@ -44,13 +45,14 @@ public class Robot extends IterativeRobot
 		{
 			CrashChecker.logRobotInit();
 //			server = CameraServer.getInstance();
-//			server.startAutomaticCapture("cam0", 0);
-			enc = new Encoders();
+//			enc = new Encoders();
 			safetyChecker = new MotorSafetyHelper(safety);
 			joy = new Joysticks();
-			eleVader = new ElevatorLevel();
+			eleVader = new Elevator();
+			wrist = new Wrist();
 			Encoders.resetEncoders();
-			ElevatorLevel.resetElevatorEncoders();
+			Elevator.resetElevatorEncoders();
+			Elevator.elevatorInitialization();
 			Drivetrain.drivetrainInitialization();
 			setTests();
 			Wrist.configWristPID();
@@ -115,7 +117,8 @@ public class Robot extends IterativeRobot
 		Drivetrain.setToCoast();
 		Forks.lockTheForks();
 		Shifter.lowGear();
-		Elevator.elevatorState = 0;
+		Elevator.aimedElevatorState = 0;
+		Wrist.aimedWristState = 0;
 	}
 	
 	@Override
@@ -128,12 +131,11 @@ public class Robot extends IterativeRobot
 			runMotorSafety();
 			runPistonsandForks();
 			runDrivetrain();
-			//runElevator();
-			runWrist();
+			runElevator();
 			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
-			Lights.LightOutput(false,false,false);
+			runWrist();
+			Lights.runLights();
 			runTests();
-			System.out.println(Wrist.limitSwitchValue);
 		}
 		catch(Throwable t)
 		{
@@ -148,7 +150,7 @@ public class Robot extends IterativeRobot
 		try 
 		{
 			CrashChecker.logAutoInit();
-			Autonomous.initialize();
+			//Autonomous.initialize();
 			
 		}
 		catch(Throwable t)
@@ -174,7 +176,7 @@ public class Robot extends IterativeRobot
 		updateJoysticks();
 		enc.setEncoderValues();
 		eleVader.setElevatorEncoder();
-		Autonomous.test(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.buttonA);
+		//Autonomous.test(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.buttonA);
 //		Elevator.moveEleVader(joy.rightJoySticky * 1);
 //		Shifter.runPiston(joy.buttonY);
 	}
@@ -191,13 +193,14 @@ public class Robot extends IterativeRobot
 		eleVader.setElevatorEncoder();
 		if(Shifter.piston.get() == DoubleSolenoid.Value.kReverse)
 		{
-			Elevator.moveEleVader(joy.rightJoySticky1 * 1);
+			Elevator.moveElevator(joy.rightJoySticky1 * -1);
 		}
 		else
 		{
-			Elevator.setElevatorButtons(joy.buttonA1, false, joy.buttonB1,  joy.buttonY1, joy.buttonX1);
+			eleVader.setElevatorEncoder();
+			Elevator.setElevatorButtons(joy.buttonA1, joy.buttonB1,  joy.buttonY1, joy.buttonX1);
 			Elevator.setManualOverride(joy.rightJoySticky1 * .6);
-			Elevator.runDarthVader();
+			Elevator.runElevator();
 		}
 	}
 	
@@ -216,29 +219,23 @@ public class Robot extends IterativeRobot
 		Forks.runPiston(joy.buttonX);
 		Shifter.runPiston(joy.buttonY);
 		TiltServo.PullForks(joy.leftTrigger, joy.rightTrigger);
-		//Lock.runPiston(joyvalue);
-		//Compressor007.runCompressor();
+		Lock.runPiston(joy.buttonA);
+		Compressor007.runCompressor();
 	}
 	
 	public void runDrivetrain()
 	{
-		//enc.setEncoderValues();
+		enc.setEncoderValues();
 		if(joy.leftBumper)
 		{
-			Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky * .45, joy.rightJoyStickx * .5);
+			Drivetrain.newArcadeDrive(joy.leftJoySticky * .45, joy.rightJoyStickx * .5);
 		}
 		else
 		{
+			//Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky, joy.rightJoyStickx);
+			//Drivetrain.FRCarcadedrive(joy.leftJoySticky, joy.rightJoyStickx);
+			//Drivetrain.runMEATDrivetrain(joy.leftJoySticky, joy.rightJoyStickx);
 			Drivetrain.newArcadeDrive(joy.leftJoySticky, joy.rightJoyStickx);
-//			if(broke)
-//			{
-//				Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
-//			}
-//			else
-//			{
-//				Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky, joy.rightJoyStickx);
-//			}
-			
 		}
 	}
 	

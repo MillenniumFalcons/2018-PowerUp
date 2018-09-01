@@ -23,28 +23,41 @@ public class Constants
 	//Elevator
 	public final static int rightIntakePin = 56;
 	public final static int leftIntakePin = 55;
-	public final static int leftElevatorMaster = 52;
-	public final static int rightElevatorMaster = 62;
-	public final static int leftElevatorSlave = 54;
-	public final static int rightElevatorSlave = 57;
+	public final static int leftGearboxSRX = 52;
+	public final static int rightGearboxSRX = 62;
+	public final static int leftGearboxSPX = 54;
+	public final static int rightGearboxSPX = 57;
 	public final static int elevatorBannerSensor = 9;
 	public final static int intakeBannerSensor = 8;
 	
-	public static final double stop = 0;
-	public static final double pickUp = 3000;
+	public static final double bottom = 0;
 	public static final double sWitch = 13000;
-	public static final double lowerScale = 36300;
-	public static final double scale = 41500;
-
-	//Wrist
-	public final static int flat = 0;
-	public final static int aim = 500;
-	public final static int up = 700;
-	public final static int wristPin = 0;
-	public final static int wristLimitSwitch = 1;
+	public static final double lowerScale = 38000;
+	public static final double scale = 45000;
+	public static final double climb = 11000;
 	
-	public final static int cubePID = 1;
-	public final static double cubeF = 0.1;
+	// Elevator PID Values
+	//carriage only
+	public final static int carriagePID = 0;
+	public final static double carriageF = 0;
+	public final static double carriageP = 0.2;
+	public final static double carriageI = 0;
+	public final static double carriageD = 20;
+	//interstage
+	public final static int interstagePID = 1;
+	public final static double interstageF = 0;
+		public final static double interstageP = 0.4;
+		public final static double interstageI = 0;
+		public final static double interstageD = 50;
+		//Wrist
+		public final static int flat = 0;
+		public final static int aim = 500;
+		public final static int up = 700;
+		public final static int wristPin = 0;
+		public final static int wristLimitSwitch = 1;
+		
+		public final static int cubePID = 1;
+		public final static double cubeF = 0.1;
 	public final static double cubeP = 1;
 	public final static double cubeI = 0;
 	public final static double cubeD = 50;
@@ -53,6 +66,7 @@ public class Constants
 	public final static double noCubeP = .45;
 	public final static double noCubeI = 0;
 	public final static double noCubeD = 50;
+
 	
 	//Auto Constants
 	public static final double oneCubeSwitchRightSideStraight = 8500;
@@ -95,5 +109,6 @@ public class Constants
 	public final static double rDrivekD = 0;
 	public final static double velocityConstant = 1770;
 	public final static double deadZone = 0.05;
+
 
 }

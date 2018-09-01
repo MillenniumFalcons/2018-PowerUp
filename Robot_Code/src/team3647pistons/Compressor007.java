@@ -10,14 +10,14 @@ public class Compressor007
 	
 	public static void runCompressor()
 	{
-		if(Drivetrain.leftSRX.get() == 0 && Drivetrain.rightSRX.get() == 0 && Elevator.elevatorState == Elevator.aimedElevatorState && Elevator.overrideValue == 0)
-		{
+		// if(Drivetrain.leftSRX.get() == 0 && Drivetrain.rightSRX.get() == 0 && Elevator.elevatorState == Elevator.aimedElevatorState && Elevator.overrideValue == 0)
+		// {
 			c.setClosedLoopControl(true);
-		}
-		else
-		{
-			c.setClosedLoopControl(false);
-		}
+		// }
+		// else
+		// {
+		// 	c.setClosedLoopControl(false);
+		// }
 
 	}
 }
