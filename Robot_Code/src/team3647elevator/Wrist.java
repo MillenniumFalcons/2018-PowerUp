@@ -116,7 +116,7 @@ public class Wrist
 	
 	public static boolean reachedFlat()
 	{
-		return flat;
+		return limitSwitchValue;
 	}
 	
 	public static boolean reachedAim()
@@ -155,7 +155,7 @@ public class Wrist
 	
 	public static void moveToFlat()
 	{
-		if(flat)
+		if(reachedFlat())
 		{
 			stopWrist();
 		}

@@ -2,6 +2,9 @@ package team3647ConstantsAndFunctions;
 
 import team3647elevator.Elevator;
 import team3647elevator.ElevatorLevel;
+import team3647elevator.Wrist;
+import team3647pistons.Intake;
+import team3647subsystems.Lights;
 
 public class Functions 
 {
@@ -21,8 +24,11 @@ public class Functions
 	//212 inches in y, 78.66 inches in x
 	public static double rightSide2Cube(double time, boolean right)
 	{
-		double straightTime = 1.2;
-		double turnTime = 1.23;
+		Wrist.setLimitSwitch();
+		Wrist.moveToFlat();
+		Lights.runLights();
+		double straightTime = 2.16;
+		double turnTime = 1.17;
 		rs2cDeliverCube = straightTime + turnTime + .2;
 		if(right)
 		{
@@ -32,7 +38,7 @@ public class Functions
 			}
 			else if(time < straightTime - .2)
 			{
-				return .7;
+				return .68;
 			}
 			else if(time < straightTime)
 			{
@@ -40,11 +46,11 @@ public class Functions
 			}
 			else if(time < straightTime + turnTime - .15)
 			{
-				return .9;
+				return .8;
 			}
 			else if(time < straightTime + turnTime)
 			{
-				return .6;
+				return .58;
 			}
 			else
 			{
@@ -63,15 +69,11 @@ public class Functions
 			}
 			else if(time < straightTime)
 			{
-				return .35;
-			}
-			else if(time < straightTime + turnTime - .15)
-			{
-				return .15;
+				return .2;
 			}
 			else if(time < straightTime + turnTime)
 			{
-				return .1;
+				return .07;
 			}
 			else
 			{
@@ -81,6 +83,7 @@ public class Functions
 		
 	}
 	
+	
 	public static void rightSide2Cube(double time)
 	{
 			
@@ -88,35 +91,31 @@ public class Functions
 	
 	public static double leftSide2Cube(double time, boolean right)
 	{
-		double straightTime = 1.2;
-		double turnTime = .7;
+		double straightTime = 1;
+		double turnTime = 1.04;
 		if(right)
 		{
 			if(time < .3)
 			{
-				return .5;
+				return .4;
 			}
-			else if(time < straightTime - .2)
+			else if(time < straightTime - .4)
 			{
-				return .7;
+				return .6;
 			}
 			else if(time < straightTime)
 			{
 				return .2;
 			}
-			else if(time < straightTime + turnTime - .15)
-			{
-				return .9;
-			}
 			else if(time < straightTime + turnTime)
 			{
 				return .6;
 			}
-			else if(time < straightTime + turnTime + .8)
+			else if(time < straightTime + turnTime + .6)
 			{
-				return .4;
+				return .5;
 			}
-			else if(time < straightTime + turnTime + 1.1)
+			else if(time < straightTime + turnTime + 1)
 			{
 				return .2;
 			}
@@ -129,15 +128,15 @@ public class Functions
 		{
 			if(time < .3)
 			{
-				return .5;
+				return .4;
 			}
-			else if(time < straightTime - .2)
+			else if(time < straightTime - .4)
 			{
-				return .7;
+				return .6;
 			}
 			else if(time < straightTime)
 			{
-				return .35;
+				return .2;
 			}
 			else if(time < straightTime + turnTime - .15)
 			{
@@ -145,13 +144,13 @@ public class Functions
 			}
 			else if(time < straightTime + turnTime)
 			{
-				return .1;
+				return 0;
 			}
-			else if(time < straightTime + turnTime + .8)
+			else if(time < straightTime + turnTime + .6)
 			{
-				return .4;
+				return .5;
 			}
-			else if(time < straightTime + turnTime + 1.1)
+			else if(time < straightTime + turnTime + 1)
 			{
 				return .2;
 			}
@@ -173,25 +172,25 @@ public class Functions
 	}
 	public static double rightScaleRightSwitch(double time, boolean right)
 	{
-		double straightTime = 1.2;
+		double straightTime = 2.8;
 		double turnToScaleUsingRightMotor = .5;
-		double stopAtScale = .8;
-		double extraTurn = .1;
-		double firstScale = straightTime + turnToScaleUsingRightMotor + stopAtScale + turnToScaleUsingRightMotor + extraTurn;
-		double goBackForSecondCube = .4;
-		double turnBackUsingLeftMotor = .76;
-		double timeToPickUpSecondCube = firstScale + goBackForSecondCube + turnBackUsingLeftMotor + .4;
-		double straightToSecondSube = 1;
-		double turnToSecondCube;
+		double stopAtScale = 1;
+		double extraTurn = 0;
+		double firstScale = straightTime + turnToScaleUsingRightMotor + stopAtScale + turnToScaleUsingRightMotor - .04;
+		double goBackForSecondCube = .7;
+		double turnBackUsingLeftMotor = .615;
+		double timeToPickUpSecondCube = firstScale + goBackForSecondCube + turnBackUsingLeftMotor + 1;
+		double straightToSecondSube = .86;
+		double turnToSecondCube = 1.03;
 		if(right)
 		{
 			if(time < .3)
 			{
 				return .5;
 			}
-			else if(time < straightTime - .5)
+			else if(time < straightTime - .54)
 			{
-				return .7;
+				return .74;
 			}
 			else if(time < straightTime)
 			{
@@ -201,26 +200,48 @@ public class Functions
 			{
 				return .5;
 			}
-//			else if(time < straightTime + turnToScaleUsingRightMotor + stopAtScale)
-//			{
-//				return 0;
-//			}
-//			else if(time < firstScale)
-//			{
-//				return 0;
-//			}
-//			else if(time < firstScale + goBackForSecondCube)
-//			{
-//				return -.5;
-//			}
-//			else if(time < firstScale + goBackForSecondCube + turnBackUsingLeftMotor)
-//			{
-//				return 0;
-//			}
-//			else if(time < timeToPickUpSecondCube)
-//			{
-//				return 0;
-//			}
+			else if(time < straightTime + turnToScaleUsingRightMotor + stopAtScale)
+			{
+				return 0;
+			}
+			else if(time < firstScale)
+			{
+				return -.5;
+			}
+			else if(time < firstScale + goBackForSecondCube)
+			{
+				return -.5;
+			}
+			else if(time < firstScale + goBackForSecondCube + turnBackUsingLeftMotor)
+			{
+				return 0;
+			}
+			else if(time < timeToPickUpSecondCube)
+			{
+				return 0;
+			}
+			else if(time < timeToPickUpSecondCube + .3)
+			{
+				Intake.openIntake();
+				return .2;
+			}
+			else if(time < timeToPickUpSecondCube + straightToSecondSube)
+			{
+				return .5;
+			}
+			else if(time < timeToPickUpSecondCube + straightToSecondSube + turnToSecondCube)
+			{
+				return .5;
+			}
+			else if(time < timeToPickUpSecondCube + straightTime + turnToSecondCube + .3)
+			{
+				return 0;
+			}
+			else
+			{
+				Intake.closeIntake();
+				return 0;
+			}
 //			else if(time < timeToPickUpSecondCube + .4)
 //			{
 //				return .4;
@@ -241,10 +262,10 @@ public class Functions
 //			{
 //				return .3;
 //			}
-			else
-			{
-				return 0;
-			}
+//			else
+//			{
+//				return 0;
+//			}
 		}
 		else
 		{
@@ -252,9 +273,9 @@ public class Functions
 			{
 				return .5;
 			}
-			else if(time < straightTime - .5)
+			else if(time < straightTime - .54)
 			{
-				return .7;
+				return .74;
 			}
 			else if(time < straightTime)
 			{
@@ -264,30 +285,52 @@ public class Functions
 			{
 				return 0;
 			}
-//			else if(time < straightTime + turnToScaleUsingRightMotor + stopAtScale)
-//			{
-//				return 0;
-//			}
-//			else if(time < firstScale)
-//			{
-//				return -.5;
-//			}
-//			else if(time < firstScale + goBackForSecondCube)
-//			{
-//				return -.5;
-//			}
-//			else if(time < firstScale + goBackForSecondCube + turnBackUsingLeftMotor - .2)
-//			{
-//				return -.8;
-//			}
-//			else if(time < firstScale + goBackForSecondCube + turnBackUsingLeftMotor)
-//			{
-//				return -.5;
-//			}
-//			else if(time < timeToPickUpSecondCube)
-//			{
-//				return 0;
-//			}
+			else if(time < straightTime + turnToScaleUsingRightMotor + stopAtScale)
+			{
+				return 0;
+			}
+			else if(time < firstScale)
+			{
+				return 0;
+			}
+			else if(time < firstScale + goBackForSecondCube)
+			{
+				return -.5;
+			}
+			else if(time < firstScale + goBackForSecondCube + turnBackUsingLeftMotor - .2)
+			{
+				return -.7;
+			}
+			else if(time < firstScale + goBackForSecondCube + turnBackUsingLeftMotor)
+			{
+				return -.5;
+			}
+			else if(time < timeToPickUpSecondCube)
+			{
+				return 0;
+			}
+			else if(time < timeToPickUpSecondCube + .3)
+			{
+				Intake.openIntake();
+				return .2;
+			}
+			else if(time < timeToPickUpSecondCube + straightToSecondSube)
+			{
+				return .5;
+			}
+			else if(time < timeToPickUpSecondCube + straightToSecondSube + turnToSecondCube)
+			{
+				return 0;
+			}
+			else if(time < timeToPickUpSecondCube + straightTime + turnToSecondCube + .3)
+			{
+				return 0;
+			}
+			else
+			{
+				Intake.closeIntake();
+				return 0;
+			}
 //			else if(time < timeToPickUpSecondCube + .4)
 //			{
 //				return .4;
@@ -300,10 +343,10 @@ public class Functions
 //			{
 //				return .3;
 //			}
-			else
-			{
-				return 0;
-			}
+//			else
+//			{
+//				return 0;
+//			}
 		}
 	}
 	

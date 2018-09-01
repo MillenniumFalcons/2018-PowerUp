@@ -48,7 +48,7 @@ public class Autonomous
 				}
 				break;
 			case 1:
-				IntakeWheels.runIntake(0, 0, true, .2, .2);
+				IntakeWheels.runIntake(0, 0, true, .4, .4);
 				if(ElevatorLevel.reachedStop())
 				{
 					stopWatch.stop();
@@ -85,7 +85,7 @@ public class Autonomous
 				lSSpeed = Functions.rightSide2Cube(time, false);
 				rSSpeed = Functions.rightSide2Cube(time, true);
 				Drivetrain.tankDrive(lSSpeed, rSSpeed);
-				Functions.rightSide2Cube(time);
+				//Functions.rightSide2Cube(time);
 				break;
 		}
 	}
@@ -142,8 +142,8 @@ public class Autonomous
 				break;
 			case 3:
 				time = stopWatch.get();
-				lSSpeed = Functions.leftSide2Cube(time, false);
-				rSSpeed = Functions.leftSide2Cube(time, true);
+				lSSpeed = Functions.rightScaleRightSwitch(time, false);
+				rSSpeed = Functions.rightScaleRightSwitch(time, true);
 				Drivetrain.tankDrive(lSSpeed, rSSpeed);
 				Functions.leftSide2Cube(time);
 				break;

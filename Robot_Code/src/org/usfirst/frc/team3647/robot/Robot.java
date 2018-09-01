@@ -96,16 +96,17 @@ public class Robot extends IterativeRobot
 			updateJoysticks();
 			enc.setEncoderValues();
 			eleVader.setElevatorEncoder();
-			Autonomous.rightSide2Cube(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
+			Autonomous.leftSide2Cube(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
 			//Autonomous.runAuto(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
 			//runTests();
 		}
 	}
 	
+	
 	@Override
 	public void disabledPeriodic()
 	{
-		Drivetrain.setToBrake();
+		Drivetrain.setToCoast();
 	}
 	
 	@Override
@@ -128,9 +129,11 @@ public class Robot extends IterativeRobot
 			runPistonsandForks();
 			runDrivetrain();
 			//runElevator();
+			runWrist();
 			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
-			Lights.runLights();
+			Lights.LightOutput(false,false,false);
 			runTests();
+			System.out.println(Wrist.limitSwitchValue);
 		}
 		catch(Throwable t)
 		{
