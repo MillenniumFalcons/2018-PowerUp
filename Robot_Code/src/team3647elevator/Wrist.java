@@ -23,7 +23,7 @@ public class Wrist
 	 * 3. Facing Up
 	 */
 
-	public static boolean start, flat, aim, up, manualOverride, originalPositionButton, limitSwitchValue;
+	public static boolean start, flat, aim, up, manualOverride, originalPositionButton, limitSwitchState;
 	public static double overrideValue, speed, wristEncoder; 
 
 	//Insert step 1 code below
@@ -58,12 +58,12 @@ public class Wrist
 	
 	public static void setLimitSwitch()
 	{
-		limitSwitchValue = limitSwitch.get();
+		limitSwitchState = limitSwitch.get();
 	}
 	
 	public static void testLimitSwitch()
 	{
-		if(flat)
+		if(limitSwitchState)
 		{
 			System.out.println("Limit switch triggered");
 		}
@@ -75,21 +75,26 @@ public class Wrist
 	
 	public static double wristEncoderValue;
 	
-	public void setWristEncoders()
+	public static void setWristEncoder()
 	{
-		if(limitSwitchValue)
+		if(reachedFlat())
 		{
-			resetWristEncoders();
+			resetWristEncoder();
 		}
-		wristEncoderValue = wristMotor.getSensorCollection().getQuadraturePosition();
+		wristEncoderValue = -Wrist.wristMotor.getSensorCollection().getQuadraturePosition();
 	}
 	
-	public static void resetWristEncoders()
+	public static void resetWristEncoder()
 	{
 		wristMotor.getSensorCollection().setQuadraturePosition(0, 10);
 	}
 	
-	public static void testWristEncoders()
+	public static void testWristCurrent()
+	{
+		System.out.println("Wrist Current: " + wristMotor.getOutputCurrent());
+	}
+
+	public void testWristEncoder()
 	{
 		System.out.println("Wrist Encoder Value: " + wristEncoderValue);
 	}
@@ -101,27 +106,21 @@ public class Wrist
 		up = upButton;
 	}
 	
-	public static void setManualOverride(double jValue)
-	{
-		if(Math.abs(jValue) > .15)
-		{
-			manualOverride = true;
-			overrideValue = jValue;
-		}
-		else
-		{
-			manualOverride = false;
-		}
-	}
-	
 	public static boolean reachedFlat()
 	{
-		return limitSwitchValue;
+		if(limitSwitch.get())
+		{
+			return true;
+		} 
+		else 
+		{
+			return false;
+		}
 	}
 	
 	public static boolean reachedAim()
 	{
-		if(wristEncoder > Constants.aim - 50 && wristEncoder < Constants.aim + 50)
+		if(wristEncoder > Constants.aim - 100 && wristEncoder < Constants.aim + 50)
 		{
 			return true;
 		}
@@ -133,7 +132,7 @@ public class Wrist
 	
 	public static boolean reachedUp()
 	{
-		if(wristEncoder > Constants.up - 100 && wristEncoder < Constants.up + 100)
+		if(wristEncoder > Constants.up - 100 && wristEncoder < Constants.up + 50)
 		{
 			return true;
 		}
@@ -141,16 +140,6 @@ public class Wrist
 		{
 			return false; 
 		}
-	}
-	
-	public static void moveToAim() // can be used for maintain as well
-	{
-		wristMotor.set(ControlMode.Position, Constants.aim);
-	}
-	
-	public static void moveToUp()
-	{
-		wristMotor.set(ControlMode.Position, Constants.up);
 	}
 	
 	public static void moveToFlat()
@@ -164,11 +153,24 @@ public class Wrist
 			moveWrist(-.2);
 		}
 	}
+
+	public static void setManualWristOverride(double jValue)
+	{
+		if(Math.abs(jValue) <.1 )
+		{
+			manualOverride = false;
+		} 
+		else 
+		{
+			overrideValue = jValue;
+			manualOverride = true;
+		}
+	}
 	
 	public static void runWrist()
 	{
 		int wristPID;
-		if(!IntakeWheels.getIntakeBannerSenor())//no cube
+		if(!IntakeWheels.getIntakeBannerSensor())//no cube
 		{
 			wristPID = Constants.noCubePID;
 		}
@@ -199,10 +201,10 @@ public class Wrist
 				moveToFlat();
 				break;
 			case 2:
-				moveToAim();
+				wristMotor.set(ControlMode.Position, Constants.aim);
 				break;
 			case 3:
-				moveToUp();
+				wristMotor.set(ControlMode.Position, Constants.up);
 				break;
 			case -1:
 				if(!manualOverride)
@@ -216,4 +218,3 @@ public class Wrist
 	}
 	
 }
-

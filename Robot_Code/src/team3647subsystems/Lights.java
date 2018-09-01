@@ -21,7 +21,7 @@ public class Lights
 	
 	public static void runLights()
 	{
-		if(!IntakeWheels.getIntakeBannerSenor())
+		if(!IntakeWheels.getIntakeBannerSensor())
 		{
 			LightOutput(true, false, false);
 		}
@@ -29,14 +29,14 @@ public class Lights
 		{
 			LightOutput(false, true, false);
 		}
-		else if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue)
-		{
-			LightOutput(false, false, true);
-		}
-		else if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Red)
-		{
-			LightOutput(true, true, false);
-		}
+//		else if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue)
+//		{
+//			LightOutput(false, false, true);
+//		}
+//		else if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Red)
+//		{
+//			LightOutput(true, true, false);
+//		}
 		else
 		{
 			LightOutput(false, false, false);

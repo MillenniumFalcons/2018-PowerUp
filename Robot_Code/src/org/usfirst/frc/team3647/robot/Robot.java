@@ -36,7 +36,7 @@ public class Robot extends IterativeRobot
 	boolean broke = true;
 
 	//Test Variables
-	boolean driveEncoders, driveCurrent, elevatorCurrent, elevatorEncoder, bannerSensor, currentState;
+	boolean driveEncoders, driveCurrent, elevatorCurrent, elevatorEncoder, bannerSensor, currentState, wristLimitSwitch;
 
 	@Override
 	public void robotInit() 
@@ -72,6 +72,7 @@ public class Robot extends IterativeRobot
 		elevatorEncoder = false;
 		bannerSensor = false;
 		currentState = false;
+		wristLimitSwitch = true;
 	}
 	
 	@Override
@@ -193,7 +194,7 @@ public class Robot extends IterativeRobot
 		eleVader.setElevatorEncoder();
 		if(Shifter.piston.get() == DoubleSolenoid.Value.kReverse)
 		{
-			Elevator.moveElevator(joy.rightJoySticky1 * -1);
+			Elevator.moveEleVader(joy.rightJoySticky1 * -1);
 		}
 		else
 		{
@@ -207,9 +208,9 @@ public class Robot extends IterativeRobot
 	public void runWrist()
 	{
 		Wrist.setLimitSwitch();
-		Wrist.resetWristEncoders();
+		Wrist.resetWristEncoder();
 		Wrist.setWristButtons(joy.dPadDown, joy.dPadSide, joy.dPadUp);
-		Wrist.setManualOverride(joy.rightJoySticky1);
+		Wrist.setManualWristOverride(joy.leftJoySticky1);
 		Wrist.runWrist();
 	}
 
@@ -225,7 +226,7 @@ public class Robot extends IterativeRobot
 	
 	public void runDrivetrain()
 	{
-		enc.setEncoderValues();
+		//enc.setEncoderValues();
 		if(joy.leftBumper)
 		{
 			Drivetrain.newArcadeDrive(joy.leftJoySticky * .45, joy.rightJoyStickx * .5);
@@ -258,17 +259,13 @@ public class Robot extends IterativeRobot
 		{
 			Elevator.testElevatorCurrent();
 		}
-		if(bannerSensor)
-		{
-			ElevatorLevel.testBannerSensor();
-		}
 		if(currentState)
 		{
 			System.out.println(Autonomous.currentState);
 		}
-		if(elevatorEncoder)
+		if(wristLimitSwitch)
 		{
-			ElevatorLevel.testElevatorEncoders();
+			Wrist.testLimitSwitch();		
 		}
 	}
 }

@@ -25,7 +25,7 @@ public class Functions
 	public static double rightSide2Cube(double time, boolean right)
 	{
 		Wrist.setLimitSwitch();
-		Wrist.moveToFlat();
+		//Wrist.moveToFlat();
 		Lights.runLights();
 		double straightTime = 2.16;
 		double turnTime = 1.17;
@@ -942,123 +942,123 @@ public class Functions
 		}
 	}
 	
-	public static void lrandrrElevatorForFirstScale(double lValue, double rValue, double eValue, double step)
-	{
-		if(step == 1)
-		{
-			reached = false;
-			avg = (lValue + rValue)/2.0;
-			if(avg < 10000)
-			{
-				if(eValue < 8000)
-				{
-					Elevator.moveEleVader(.6);
-				}
-				else if(!ElevatorLevel.reachedSwitch())
-				{
-					Elevator.moveEleVader(.3);
-				}
-				else
-				{
-					ElevatorLevel.maintainSwitchPosition();
-				}
-			}
-			else
-			{
-				Elevator.moveEleVader(Functions.switchToScale(ElevatorLevel.elevatorEncoderValue));
-			}
-		}
-	}
-	
-	public static double lrandrrSpeedForFirstScale(double lValue, double rValue, double dist)
-	{
-		avg = (lValue + rValue)/2.0;
-		if(avg < 2000)
-		{
-			return .6;
-		}
-		else if(avg < 5000)
-		{
-			return .74;
-		}
-		else if(avg < 14000)
-		{
-			return .9;
-		}
-		else if(avg < (dist -1200))
-		{
-			return .7;
-		}
-		else if(avg < dist)
-		{
-			return .3;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double lrandrrFirstTurnToScale(double eValue, double dist)
-	{
-		if(eValue < (dist - 2000))
-		{
-			return .7;
-		}
-		else if(eValue < dist)
-		{
-			return .5;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static double lrandrrBackUpTurnAfterScale(double eValue, double dist)
-	{
-		eValue = Math.abs(eValue);
-		if(eValue < (dist - 2000))
-		{
-			return -.7;
-		}
-		else if(eValue < dist)
-		{
-			return -.5;
-		}
-		else
-		{
-			return 0;
-		}
-	}
-	
-	public static void moveElevatorToStop(double eValue)
-	{
-		if(!ElevatorLevel.reachedStop())
-		{
-			Elevator.moveEleVader(scaleToStop(eValue));
-		}
-		else
-		{
-			Elevator.stopEleVader();
-		}
-	}
-	
-	public static double lrandrrBackUpToWallTurn(double eValue, double dist)
-	{
-		eValue = Math.abs(eValue);
-		if(eValue < (dist - 2000))
-		{
-			return -.6;
-		}
-		else if(eValue < dist)
-		{
-			return -.4;
-		}
-		else
-		{
-			return 0;
-		}
-	}
+//	public static void lrandrrElevatorForFirstScale(double lValue, double rValue, double eValue, double step)
+//	{
+//		if(step == 1)
+//		{
+//			reached = false;
+//			avg = (lValue + rValue)/2.0;
+//			if(avg < 10000)
+//			{
+//				if(eValue < 8000)
+//				{
+//					Elevator.moveEleVader(.6);
+//				}
+//				else if(!ElevatorLevel.reachedSwitch())
+//				{
+//					Elevator.moveEleVader(.3);
+//				}
+//				else
+//				{
+//					ElevatorLevel.maintainSwitchPosition();
+//				}
+//			}
+//			else
+//			{
+//				Elevator.moveEleVader(Functions.switchToScale(ElevatorLevel.elevatorEncoderValue));
+//			}
+//		}
+//	}
+//	
+//	public static double lrandrrSpeedForFirstScale(double lValue, double rValue, double dist)
+//	{
+//		avg = (lValue + rValue)/2.0;
+//		if(avg < 2000)
+//		{
+//			return .6;
+//		}
+//		else if(avg < 5000)
+//		{
+//			return .74;
+//		}
+//		else if(avg < 14000)
+//		{
+//			return .9;
+//		}
+//		else if(avg < (dist -1200))
+//		{
+//			return .7;
+//		}
+//		else if(avg < dist)
+//		{
+//			return .3;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double lrandrrFirstTurnToScale(double eValue, double dist)
+//	{
+//		if(eValue < (dist - 2000))
+//		{
+//			return .7;
+//		}
+//		else if(eValue < dist)
+//		{
+//			return .5;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static double lrandrrBackUpTurnAfterScale(double eValue, double dist)
+//	{
+//		eValue = Math.abs(eValue);
+//		if(eValue < (dist - 2000))
+//		{
+//			return -.7;
+//		}
+//		else if(eValue < dist)
+//		{
+//			return -.5;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
+//	
+//	public static void moveElevatorToStop(double eValue)
+//	{
+//		if(!ElevatorLevel.reachedStop())
+//		{
+//			Elevator.moveEleVader(scaleToStop(eValue));
+//		}
+//		else
+//		{
+//			Elevator.stopEleVader();
+//		}
+//	}
+//	
+//	public static double lrandrrBackUpToWallTurn(double eValue, double dist)
+//	{
+//		eValue = Math.abs(eValue);
+//		if(eValue < (dist - 2000))
+//		{
+//			return -.6;
+//		}
+//		else if(eValue < dist)
+//		{
+//			return -.4;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+//	}
 
 }

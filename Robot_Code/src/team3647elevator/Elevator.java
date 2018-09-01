@@ -1,8 +1,11 @@
 package team3647elevator;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import team3647ConstantsAndFunctions.Constants;
 import team3647ConstantsAndFunctions.Functions;
@@ -56,7 +59,7 @@ public class Elevator
 
 	public void setElevatorEncoder()
 	{
-        if(reachedBottom())
+        if(reachedStop())
 		{
             resetElevatorEncoders();
 		}
@@ -68,12 +71,12 @@ public class Elevator
         Elevator.leftGearboxMaster.getSensorCollection().setQuadraturePosition(0, 10);
 	}
 	
-    public static void stopElevator()
+    public static void stopEleVader()
     {
-        moveElevator(0);
+        moveEleVader(0);
     }
     
-    public static void moveElevator(double speed)
+    public static void moveEleVader(double speed)
     {
         leftGearboxMaster.set(ControlMode.PercentOutput, speed);
         //leftGearboxMasterSPX.set(ControlMode.PercentOutput, -speed);
@@ -85,7 +88,7 @@ public class Elevator
         leftGearboxMaster.set(ControlMode.Position, position);
     }
 
-	public static boolean reachedBottom()
+	public static boolean reachedStop()
 	{
         if(bannerSensor.get())
 		{
@@ -153,23 +156,23 @@ public class Elevator
 				}
 				else if(reachedBottom)
 				{
-					stopElevator();
+					stopEleVader();
 					aimedElevatorState = 1;
 				}
 				else
 				{
-					moveElevator(-.3);
+					moveEleVader(-.3);
 				}
 			break;
 			case 1:
-				if(reachedBottom())
+				if(reachedStop())
 				{
 					resetElevatorEncoders();
-					stopElevator();
+					stopEleVader();
 				}
 				else
 				{
-					moveElevator(-0.4);
+					moveEleVader(-0.4);
 				}
 			break;
 			case 2:
@@ -186,7 +189,7 @@ public class Elevator
 				{
 					overrideValue = 0;
 				}
-				moveElevator(overrideValue);
+				moveEleVader(overrideValue);
 			break;
         }
     }
@@ -198,7 +201,7 @@ public class Elevator
     
     public static void testBannerSensor()
     {
-        if(reachedBottom())
+        if(reachedStop())
         {
             System.out.println("Banner Sensor Triggered!");
         }
