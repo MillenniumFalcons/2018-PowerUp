@@ -66,6 +66,7 @@ public class Robot extends IterativeRobot
 	
 	public void setTests()
 	{
+		CrashChecker.logAutoInit();
 		driveEncoders = false;
 		driveCurrent = false;
 		elevatorCurrent = false;
