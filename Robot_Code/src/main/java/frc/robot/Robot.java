@@ -279,16 +279,20 @@ public class Robot extends IterativeRobot
 		{
 			Elevator.testElevatorEncoders();
 		}
-		if(wristEncoder){
+		if(wristEncoder)
+		{
 			wrist.testWristEncoder();
 		}
-		if(wristCurrent){
+		if(wristCurrent)
+		{
 			Wrist.testWristCurrent();
 		}
-		if(wristLimitSwitch){
+		if(wristLimitSwitch)
+		{
 			Wrist.testLimitSwitch();
 		}
-		if(intakeBanner){
+		if(intakeBanner)
+		{
 			IntakeWheels.testBannerSensor();
 		}
 	}
