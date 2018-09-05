@@ -429,88 +429,88 @@ public class Drivetrain
 		}
 	}
 	
-	static double drift;
-	static int movingStatus, driftStatus;
-	public static void arcadeDrive(double leftEnc, double rightEnc, double yValue, double xValue)
-	{
+	// static double drift;
+	// static int movingStatus, driftStatus;
+	// public static void arcadeDrive(double leftEnc, double rightEnc, double yValue, double xValue)
+	// {
 		
-		//Moving Status
-		//Forward = 1
-		//Backward = 2
-		//Turning = 3
-		//Stop = 4
+	// 	//Moving Status
+	// 	//Forward = 1
+	// 	//Backward = 2
+	// 	//Turning = 3
+	// 	//Stop = 4
 		
-		//Drift Status
-		//Turn = 1
-		//noTurn = 0
+	// 	//Drift Status
+	// 	//Turn = 1
+	// 	//noTurn = 0
 		
-		double lSpeed, rSpeed;
-	 	if(yValue > 0 && xValue == 0)
-	 	{
-	 		movingStatus = 1;
-	 		if(driftStatus == 1)
-	 		{
-	 			drift++;
-	 		}
-	 		if(drift < 50 && driftStatus == 1)
-	 		{
-	 			Encoders.resetEncoders();
-	 		}
-	 		else
-	 		{
-	 			driftStatus = 0;
-	 		}
-	 	}
-	 	else if(yValue < 0 && xValue == 0)
-	 	{
-	 		movingStatus = 2;
-	 	}
-	 	else if(yValue == 0 && xValue == 0)
-	 	{
-	 		movingStatus = 4;
-	 		driftStatus = 1;
-	 	}
-	 	else
-	 	{
-	 		movingStatus = 3;
-	 		driftStatus = 1;
-	 	}
+	// 	double lSpeed, rSpeed;
+	//  	if(yValue > 0 && xValue == 0)
+	//  	{
+	//  		movingStatus = 1;
+	//  		if(driftStatus == 1)
+	//  		{
+	//  			drift++;
+	//  		}
+	//  		if(drift < 50 && driftStatus == 1)
+	//  		{
+	//  			Encoders.resetEncoders();
+	//  		}
+	//  		else
+	//  		{
+	//  			driftStatus = 0;
+	//  		}
+	//  	}
+	//  	else if(yValue < 0 && xValue == 0)
+	//  	{
+	//  		movingStatus = 2;
+	//  	}
+	//  	else if(yValue == 0 && xValue == 0)
+	//  	{
+	//  		movingStatus = 4;
+	//  		driftStatus = 1;
+	//  	}
+	//  	else
+	//  	{
+	//  		movingStatus = 3;
+	//  		driftStatus = 1;
+	//  	}
 	 		
-	 	switch(movingStatus)
-	 	{
-	 		case 1:
-	 			if(yValue < .15)
-	 			{
-	 				tankDrive(yValue, yValue);
-	 				Encoders.resetEncoders();
-	 			}
-	 			else
-	 			{
-	 				driveForw(leftEnc,rightEnc, yValue);
-	 			}
+	//  	switch(movingStatus)
+	//  	{
+	//  		case 1:
+	//  			if(yValue < .15)
+	//  			{
+	//  				tankDrive(yValue, yValue);
+	//  				Encoders.resetEncoders();
+	//  			}
+	//  			else
+	//  			{
+	//  				driveForw(leftEnc,rightEnc, yValue);
+	//  			}
 	 			
-	 			break;
-	 		case 2:
-	 			if(yValue > -.15)
-	 			{
-		 			tankDrive(yValue, yValue);
-	 				Encoders.resetEncoders();
-	 			}
-	 			else
-	 			{
-	 				driveBack(leftEnc,rightEnc, yValue);
-	 			}
-	 			break;
-	 		case 3:
-	 			FRCarcadedrive(yValue, xValue);
-	 			Encoders.resetEncoders();
-	 			break;
-	 		case 4:
-	 			tankDrive(0, 0);
-	 			Encoders.resetEncoders();
-	 			break;
-	 	}
-	}
+	//  			break;
+	//  		case 2:
+	//  			if(yValue > -.15)
+	//  			{
+	// 	 			tankDrive(yValue, yValue);
+	//  				Encoders.resetEncoders();
+	//  			}
+	//  			else
+	//  			{
+	//  				driveBack(leftEnc,rightEnc, yValue);
+	//  			}
+	//  			break;
+	//  		case 3:
+	//  			FRCarcadedrive(yValue, xValue);
+	//  			Encoders.resetEncoders();
+	//  			break;
+	//  		case 4:
+	//  			tankDrive(0, 0);
+	//  			Encoders.resetEncoders();
+	//  			break;
+	//  	}
+	// }
 	
 	public static boolean reachedDistance(double leftEnc, double rightEnc, double distance)
 	{

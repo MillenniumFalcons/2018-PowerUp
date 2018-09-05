@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 public class Autonomous 
 {
 	//Timer-Stuff
-	public static com.sun.glass.ui.Timer stopWatch = new Timer();
+	public static Timer stopWatch = new Timer();
 	static double time;
 	
 	//Other variables for auto
@@ -25,7 +25,7 @@ public class Autonomous
 	static double lSSpeed, rSSpeed, speed, sum;
 	static int b;
 	
-	static double oldLenc, oldRenc, newLenc, oldrEnc;
+	static double oldLenc, oldRenc, newLenc, newRenc;
 
 	static int [] differences = new int[10];
 
@@ -54,7 +54,7 @@ public class Autonomous
 				currentState = 1;
 				break;
 			case 1:
-				enc.setEncoderValues();
+				encObj.setEncoderValues();
 				if(encObj.leftEncoderValue > 6000 || encObj.rightEncoderValue > 6000)
 				{
 					Drivetrain.tankDrive(.7, .7);
@@ -139,7 +139,7 @@ public class Autonomous
 				encObj.setEncoderValues();
 				newRenc = encObj.rightEncoderValue;
 				newLenc = encObj.leftEncoderValue;
-				if(time < 1.2)
+				if(time < .5)
 				{
 					Drivetrain.tankDrive(speed, speed);
 				}
@@ -711,7 +711,7 @@ public class Autonomous
 		}
 		
 	}
-	public static void initialize()
+	public static void initialize(Encoders enc)
 	{
 		stopWatch.stop();
 		stopWatch.reset();

@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.beans.Encoder;
+
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -87,7 +89,7 @@ public class Robot extends IterativeRobot
 		try 
 		{
 			CrashChecker.logAutoInit();
-			Autonomous.initialize();
+			Autonomous.initialize(enc);
 		}
 		catch(Throwable t)
 		{
@@ -161,7 +163,7 @@ public class Robot extends IterativeRobot
 	{
 		try 
 		{
-			Autonomous.initialize();
+			Autonomous.initialize(enc);
 			CrashChecker.logAutoInit();
 		}
 		catch(Throwable t)
@@ -227,7 +229,7 @@ public class Robot extends IterativeRobot
 		enc.setEncoderValues();
 		if(joy.leftBumper)
 		{
-			Drivetrain.arcadeDrive(enc.leftEncoderValue, enc.rightEncoderValue, joy.leftJoySticky * .6, joy.rightJoyStickx * .6);
+			//Drivetrain.arcadeDrive(enc.leftEncoderValue, enc.rightEncoderValue, joy.leftJoySticky * .6, joy.rightJoyStickx * .6);
 		}
 		else
 		{

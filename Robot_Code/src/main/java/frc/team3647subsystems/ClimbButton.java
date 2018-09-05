@@ -1,8 +1,8 @@
-package main.java.frc.team3647subsystems;
+package frc.team3647subsystems;
 
-import team3647elevator.Wrist;
-import team3647pistons.Lock;
-import team3647pistons.Shifter;
+import frc.team3647elevator.Wrist;
+import frc.team3647pistons.Lock;
+import frc.team3647pistons.Shifter;
 
 public class ClimbButton 
 {
@@ -20,7 +20,7 @@ public class ClimbButton
 			}
 			break;
 		case 1:
-			Wrist.moveToUp();
+			//Wrist.moveToUp();
 			//need elevator zero
 			buttonState = 2;
 			break;

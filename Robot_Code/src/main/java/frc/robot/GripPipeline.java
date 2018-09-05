@@ -1,4 +1,4 @@
-package main.java.frc.robot;
+package frc.robot;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
