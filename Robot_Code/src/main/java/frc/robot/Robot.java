@@ -161,6 +161,7 @@ public class Robot extends IterativeRobot
 	{
 		try 
 		{
+			Autonomous.initialize();
 			CrashChecker.logAutoInit();
 		}
 		catch(Throwable t)
@@ -170,24 +171,12 @@ public class Robot extends IterativeRobot
 		}	
 	}
 	
+
 	@Override
 	public void testPeriodic() 
 	{
-//		updateJoysticks();
-//		enc.setEncoderValues();
-//		eleVader.setElevatorEncoder();
-//		runPistonsandForks();
-//		IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
-//		Elevator.moveEleVader(joy.rightJoySticky * .4);
-//		Drivetrain.tankDrive(joy.leftJoySticky, joy.leftJoySticky);
-//		Lights.runLights();
-//		runTests();
-		runMotorSafety();
 		updateJoysticks();
-		enc.setEncoderValues();
-//		Autonomous.test(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.buttonA);
-//		Elevator.moveEleVader(joy.rightJoySticky * 1);
-//		Shifter.runPiston(joy.buttonY);
+		Autonomous.countSkip(joy.buttonA, enc);
 	}
 	
 	
@@ -214,7 +203,8 @@ public class Robot extends IterativeRobot
 		//Elevator.climbPrep(joy.buttonB);
 	}
 
-	public void runWrist(){
+	public void runWrist()
+	{
 		Wrist.setWristEncoder();
 		Wrist.setWristButtons(joy.dPadDown,joy.dPadSide,joy.dPadUp);
 		Wrist.setManualWristOverride(joy.leftJoySticky1 * 0.45);
