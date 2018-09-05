@@ -25,7 +25,61 @@ public class Autonomous
 	static double lSSpeed, rSSpeed, speed, sum;
 	static int b;
 	
+	static double oldLenc, oldRenc, newLenc, oldrEnc;
+
 	static int [] differences = new int[10];
+
+	public static void countSkip(boolean button, Encoders encObj)
+	{
+		speed = 1;
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.stop();
+				time = stopWatch.get();
+				if(time == 0)
+				{
+					stopWatch.start();
+					currentState = 1;
+				}
+				else
+				{
+					stopWatch.reset();
+				}
+				break;
+			case 1:
+				time = stopWatch.get();
+				if(button)
+				{
+					currentState = 2; 
+				}
+				encObj.setEncoderValues();
+				newRenc = encObj.rightEncoderValue;
+				newLenc = encObj.leftEncoderValue;
+				if(time < 1.2)
+				{
+					Drivetrain.tankDrive(speed, speed);
+				}
+				else
+				{
+					Drivetrain.tankDrive(speed, speed);
+					if(newRenc - oldRenc != 0)
+					{
+						System.out.println("Right Encoder Skip Value: " + (newRenc - oldRenc));
+					}
+					if(newLenc - oldLenc != 0)
+					{
+						System.out.println("Left Encoder Skip Value: " + (newLenc - oldLenc));
+					}
+				}
+				oldRenc = encObj.rightEncoderValue;
+				oldLenc = encObj.leftEncoderValue;
+				break;
+			case 2:
+				Drivetrain.stop();
+				break;
+			}
+	}
 
 	public static void runAuto()
 	{
