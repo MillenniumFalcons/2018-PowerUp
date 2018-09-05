@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot
 			safetyChecker = new MotorSafetyHelper(safety);
 			joy = new Joysticks();
 			eleVader = new Elevator();
-			Encoders.resetEncoders();
+			enc.resetEncoders();
 			Elevator.resetElevatorEncoders();
 			Elevator.elevatorInitialization();
 			Drivetrain.drivetrainInitialization();
@@ -237,7 +237,7 @@ public class Robot extends IterativeRobot
 		enc.setEncoderValues();
 		if(joy.leftBumper)
 		{
-			Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky * .6, joy.rightJoyStickx * .6);
+			Drivetrain.arcadeDrive(enc.leftEncoderValue, enc.rightEncoderValue, joy.leftJoySticky * .6, joy.rightJoyStickx * .6);
 		}
 		else
 		{
@@ -257,7 +257,7 @@ public class Robot extends IterativeRobot
 	{
 		if(driveEncoders)
 		{
-			Encoders.testEncoders();
+			enc.testEncoders();
 		}
 		if(driveCurrent)
 		{

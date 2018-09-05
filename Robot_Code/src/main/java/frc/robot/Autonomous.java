@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 public class Autonomous 
 {
 	//Timer-Stuff
-	public static Timer stopWatch = new Timer();
+	public static com.sun.glass.ui.Timer stopWatch = new Timer();
 	static double time;
 	
 	//Other variables for auto
@@ -28,6 +28,89 @@ public class Autonomous
 	static double oldLenc, oldRenc, newLenc, oldrEnc;
 
 	static int [] differences = new int[10];
+
+	public static void testEncodersWithoutSkipping(Encoders encObj)
+	{
+		encObj.setEncoderValues();
+		newRenc = encObj.rightEncoderValue;
+		newLenc = encObj.leftEncoderValue;
+		if(newRenc - oldRenc != 0)
+		{
+			System.out.println("Right Encoder Skip Value: " + (newRenc - oldRenc));
+		}
+		if(newLenc - oldLenc != 0)
+		{
+			System.out.println("Left Encoder Skip Value: " + (newLenc - oldLenc));
+		}
+		oldRenc = encObj.rightEncoderValue;
+		oldLenc = encObj.leftEncoderValue;
+	}
+
+	public static void testRotate(Encoders encObj)
+	{
+		switch(currentState)
+		{
+			case 0:
+				currentState = 1;
+				break;
+			case 1:
+				enc.setEncoderValues();
+				if(encObj.leftEncoderValue > 6000 || encObj.rightEncoderValue > 6000)
+				{
+					Drivetrain.tankDrive(.7, .7);
+				}
+				else if(encObj.leftEncoderValue > 8000 || encObj.rightEncoderValue > 8000)
+				{
+					Drivetrain.tankDrive(.3, .3);
+				}
+				else
+				{
+				
+					Drivetrain.stop();
+					currentState = 2;
+				}
+				break;
+			case 2:
+				encObj.resetEncoders();
+				Timer.delay(1);
+				currentState = 3;
+				break;
+			case 3:
+				if(encObj.leftEncoderValue > 2000 || encObj.rightEncoderValue > 2000)
+				{
+					Drivetrain.tankDrive(-.5, .5);
+				}
+				else if(encObj.leftEncoderValue > 3000 || encObj.rightEncoderValue > 3000)
+				{
+					Drivetrain.tankDrive(-.3, .3);
+				}
+				else
+				{
+					currentState = 4;
+				}
+				break;
+			case 4:
+				encObj.resetEncoders();
+				Timer.delay(1);
+				currentState = 5;
+				break;
+			case 5:
+				if(encObj.leftEncoderValue > 6000 || encObj.rightEncoderValue > 6000)
+				{
+					Drivetrain.tankDrive(.7, .7);
+				}
+				else if(encObj.leftEncoderValue > 8000 || encObj.rightEncoderValue > 8000)
+				{
+					Drivetrain.tankDrive(.3, .3);
+				}
+				else
+				{
+				
+					Drivetrain.stop();
+				}
+				break;
+		}
+	}
 
 	public static void countSkip(boolean button, Encoders encObj)
 	{
@@ -636,7 +719,7 @@ public class Autonomous
 		Forks.lockTheForks();
 		Shifter.lowGear();
 		Intake.closeIntake();
-		Encoders.resetEncoders();
+		enc.resetEncoders();
 		IntakeWheels.runIntake(0, 0, true, 0, 0);
 		Elevator.stopElevator();
 		Elevator.aimedElevatorState = 0;
