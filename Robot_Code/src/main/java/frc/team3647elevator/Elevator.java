@@ -118,7 +118,57 @@ public class Elevator
 			manualOverride = true;
 		}
 	}
-    
+    	
+	public static void moveSwitch()
+	{
+		Wrist.moveWristPosition(Constants.flat);
+		moveElevatorPosition(Constants.sWitch);
+	}
+	
+	public static void moveLowerScale()
+	{
+		Wrist.moveWristPosition(Constants.flat);
+		moveElevatorPosition(Constants.lowerScale);		
+	}
+	
+	public static void moveScale()
+	{
+		Wrist.moveWristPosition(Constants.flat);
+		moveElevatorPosition(Constants.Scale);
+	}
+	
+	public static void moveBottom(boolean moveWristUp)
+	{
+		if(moveWristUp)
+		{
+			if(IntakeWheels.getIntakeBannerSensor)//no cube
+			{	
+				Wrist.moveWristPosition(Constants.up);
+			}
+			if(reachedBottom())
+			{
+				resetElevatorEncoders();
+				stopElevator();
+			}
+			else
+			{
+				moveElevator(-0.4);
+			}
+		}
+		else
+		{
+			if(reachedBottom())
+			{
+				resetElevatorEncoders();
+				stopElevator();
+			}
+			else
+			{
+				moveElevator(-0.3);
+			}
+		}
+	}
+	
 	public static void runElevator()
 	{
 		if(manualOverride)
@@ -148,39 +198,18 @@ public class Elevator
         switch(aimedElevatorState)
 		{
 			case 0:
-				if(manualOverride)
-				{
-					aimedElevatorState = -1;
-				}
-				else if(reachedBottom())
-				{
-					stopElevator();
-					aimedElevatorState = 1;
-				}
-				else
-				{
-					moveElevator(-.3);
-				}
+				moveBottom(false);
 			break;
-			case 1:
-				if(reachedBottom())
-				{
-					resetElevatorEncoders();
-					stopElevator();
-				}
-				else
-				{
-					moveElevator(-0.4);
-				}
+				moveBottom(true);
 			break;
 			case 2:
-				moveElevatorPosition(Constants.sWitch);
+				moveSwitch();
 			break;
 			case 3:
-				moveElevatorPosition(Constants.lowerScale);
+				moveLowerScale();
 			break;
 			case 4:
-				moveElevatorPosition(Constants.scale);
+				moveScale();
 			break;
 			case -1:
 				if(!manualOverride)
