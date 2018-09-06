@@ -46,6 +46,50 @@ public class Autonomous
 		oldLenc = encObj.leftEncoderValue;
 	}
 
+	public static void rightSwitch(Encoders enc)
+	{
+		encObj.setEncoderValues();
+		switch(currentState)
+		{
+			case 0:
+				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0)
+				{
+					currentState = 1;
+				}
+				else
+				{
+					enc.resetEncoders();
+				}
+				break;
+			case 1:
+				if(enc.leftEncoderValue < 10000 && enc.rightEncoderValue < 10000)
+				{
+					speed = .7;
+				}
+				else if(enc.leftEncoderValue < 10500 && enc.rightEncoderValue < 10500 && enc.leftEncoderValue > 10000 && enc.rightEncoderValue > 10000)
+				{
+					speed = .2;
+				}
+				else
+				{
+					currentState = 2;
+					enc.resetEncoders();
+				}
+				break;
+			case 2:
+				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0)
+				{
+					rSSpeed = .2;
+					lSSpeed = .7;
+				}
+				else
+				{
+					
+				}
+		}
+	}
+
+
 	public static void testRotate(Encoders encObj)
 	{
 		encObj.setEncoderValues();
