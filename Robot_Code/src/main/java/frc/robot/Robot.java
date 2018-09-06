@@ -122,7 +122,8 @@ public class Robot extends IterativeRobot
 		Drivetrain.setToCoast();
 		Forks.lockTheForks();
 		Shifter.lowGear();
-		Elevator.aimedElevatorState = 0;
+		Lock.unlock();
+		//Elevator.aimedElevatorState = 0;
 		Wrist.aimedWristState = 0;
 		stopWatch.stop();
 		stopWatch.reset();
@@ -143,7 +144,7 @@ public class Robot extends IterativeRobot
 			runPistonsandForks();
 			runDrivetrain();
 			runElevator();
-			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
+			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0, , joy.leftBumper1);
 			runWrist();
 			Lights.runLights();
 			runTests();
@@ -213,7 +214,7 @@ public class Robot extends IterativeRobot
 
 	public void runPistonsandForks()
 	{
-		//Intake.runIntake(joy.rightBumper1);
+		Intake.runIntake(joy.rightBumper1);
 		Forks.runPiston(joy.buttonX);
 		Shifter.runPiston(joy.buttonY);
 		TiltServo.PullForks(joy.leftTrigger, joy.rightTrigger);

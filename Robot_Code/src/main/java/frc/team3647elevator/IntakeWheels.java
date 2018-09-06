@@ -13,10 +13,15 @@ public class IntakeWheels
 	public static VictorSPX leftIntakeMotor = new VictorSPX(Constants.leftIntakePin);
 	public static DigitalInput bannerSensor = new DigitalInput(Constants.intakeBannerSensor);
 	
-	public static void runIntake(double lTrigger, double rTrigger, boolean auto, double lSpeed, double rSpeed)
+	public static void runIntake(double lTrigger, double rTrigger, boolean auto, double lSpeed, double rSpeed, boolean poopyShoot)
 	{
 		if(!auto)
 		{
+			if(poopyShoot)//poopyShoot
+			{
+				rightIntakeMotor.set(ControlMode.PercentOutput, Constants.poopyShoot);
+				leftIntakeMotor.set(ControlMode.PercentOutput, Constants.poopyShoot);
+			}
 			if(lTrigger > 0)//shoot
 			{	
 				rightIntakeMotor.set(ControlMode.PercentOutput, -lTrigger *.6);
@@ -50,6 +55,10 @@ public class IntakeWheels
 	{
 		runIntake(0, 0, true, -speed, -speed);
 	}
+	
+	public static void poopyShoot()
+	{
+		runIntake(
 	
 	public static void manuallyRunIntake(double lSpeed, double rSpeed)
 	{
