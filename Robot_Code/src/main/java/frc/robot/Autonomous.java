@@ -48,18 +48,28 @@ public class Autonomous
 
 	public static void testRotate(Encoders encObj)
 	{
+		encObj.setEncoderValues();
 		switch(currentState)
 		{
 			case 0:
-				currentState = 1;
+				encObj.setEncoderValues();
+				if(encObj.leftEncoderValue == 0 && encObj.rightEncoderValue == 0)
+				{
+					currentState = 1;
+				}
+				else
+				{
+					encObj.resetEncoders();
+				}
+				
 				break;
 			case 1:
 				encObj.setEncoderValues();
-				if(encObj.leftEncoderValue > 6000 || encObj.rightEncoderValue > 6000)
+				if(encObj.leftEncoderValue < 6000 || encObj.rightEncoderValue < 6000)
 				{
 					Drivetrain.tankDrive(.7, .7);
 				}
-				else if(encObj.leftEncoderValue > 8000 || encObj.rightEncoderValue > 8000)
+				else if(encObj.leftEncoderValue < 8000 || encObj.rightEncoderValue < 8000)
 				{
 					Drivetrain.tankDrive(.3, .3);
 				}
@@ -71,22 +81,37 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				encObj.resetEncoders();
-				Timer.delay(1);
-				currentState = 3;
+				encObj.setEncoderValues();
+				if(encObj.leftEncoderValue == 0 && encObj.rightEncoderValue == 0)
+				{
+					stopWatch.start();
+					currentState = 99;
+				}
+				else
+				{
+					encObj.resetEncoders();
+				}
+				break;
+			case 99:
+				if(stopWatch.get() > 1)
+				{
+					currentState = 3;
+				}
 				break;
 			case 3:
-				if(encObj.leftEncoderValue > 2000 || encObj.rightEncoderValue > 2000)
+			encObj.setEncoderValues();
+				System.out.println(encObj.leftEncoderValue);
+				if(Math.abs(encObj.leftEncoderValue) < 2000)
 				{
 					Drivetrain.tankDrive(-.5, .5);
 				}
-				else if(encObj.leftEncoderValue > 3000 || encObj.rightEncoderValue > 3000)
+				else if(Math.abs(encObj.leftEncoderValue) < 3000)
 				{
 					Drivetrain.tankDrive(-.3, .3);
 				}
 				else
 				{
-					currentState = 4;
+					currentState = 6;
 				}
 				break;
 			case 4:
@@ -105,9 +130,12 @@ public class Autonomous
 				}
 				else
 				{
-				
+					currentState = 6;
 					Drivetrain.stop();
 				}
+				break;
+			case 6:
+				Drivetrain.stop();
 				break;
 		}
 	}

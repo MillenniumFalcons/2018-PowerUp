@@ -106,7 +106,8 @@ public class Robot extends IterativeRobot
 			//runMotorSafety();
 			Elevator.setElevatorEncoder();
 			Wrist.setWristEncoder();
-			Autonomous.rightSide1Cube();
+			Autonomous.testRotate(enc);
+			System.out.println(Autonomous.currentState);
 			Lights.runLights();
 			//Autonomous.runAuto(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
 			//runTests();
