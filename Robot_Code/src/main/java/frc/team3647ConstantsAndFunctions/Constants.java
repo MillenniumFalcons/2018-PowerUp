@@ -20,6 +20,12 @@ public class Constants
 	public final static int lockPinSourceA = 6;
 	public final static int lockPinSourceB = 7;
 	
+	//Intake
+	public final static int rightIntakePin = 56;
+	public final static int leftIntakePin = 55;
+	public final static int intakeBannerSensor = 8;
+	public final static double poopyShoot = 0.42;
+	
 	//Elevator
 	public final static int rightIntakePin = 56;
 	public final static int leftIntakePin = 55;
@@ -28,7 +34,6 @@ public class Constants
 	public final static int leftGearboxSPX = 54;
 	public final static int rightGearboxSPX = 57;
 	public final static int elevatorBannerSensor = 9;
-	public final static int intakeBannerSensor = 8;
 	
 	public static final double bottom = 0;
 	public static final double sWitch = 13000;
