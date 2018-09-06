@@ -34,7 +34,7 @@ public class Elevator
     public static void elevatorInitialization()
 	{
 		leftGearboxMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Constants.kTimeoutMs);
-		leftGearboxMaster.setSensorPhase(true);
+		leftGearboxMaster.setSensorPhase(true); //if i set to false I might not need to invert gearbox motors
 		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
 		leftGearboxMaster.config_kF(Constants.carriagePID, Constants.carriageF, Constants.kTimeoutMs);
 		leftGearboxMaster.config_kP(Constants.carriagePID, Constants.carriageP, Constants.kTimeoutMs);
@@ -44,12 +44,12 @@ public class Elevator
 		leftGearboxMaster.config_kF(Constants.interstagePID, Constants.interstageF, Constants.kTimeoutMs);		
 		leftGearboxMaster.config_kP(Constants.interstagePID, Constants.interstageP, Constants.kTimeoutMs);		
 		leftGearboxMaster.config_kI(Constants.interstagePID, Constants.interstageI, Constants.kTimeoutMs);		
-        leftGearboxMaster.config_kD(Constants.interstagePID, Constants.interstageD, Constants.kTimeoutMs);	
+       	 	leftGearboxMaster.config_kD(Constants.interstagePID, Constants.interstageD, Constants.kTimeoutMs);	
         
-        rightGearboxSRX.follow(leftGearboxMaster);
-        rightGearboxSPX.follow(leftGearboxMaster);
-        leftGearboxSPX.follow(leftGearboxMaster);
-        rightGearboxSRX.setInverted(true);
+        	rightGearboxSRX.follow(leftGearboxMaster);
+        	rightGearboxSPX.follow(leftGearboxMaster);
+        	leftGearboxSPX.follow(leftGearboxMaster);
+        	rightGearboxSRX.setInverted(true);
 		rightGearboxSPX.setInverted(true);
 		leftGearboxMaster.setInverted(true);
 		leftGearboxSPX.setInverted(true);
