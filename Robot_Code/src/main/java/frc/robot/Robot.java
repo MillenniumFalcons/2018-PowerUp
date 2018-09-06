@@ -122,7 +122,7 @@ public class Robot extends IterativeRobot
 		Drivetrain.setToCoast();
 		Forks.lockTheForks();
 		Shifter.lowGear();
-		Elevator.aimedElevatorState = 0;
+		//Elevator.aimedElevatorState = 0;
 		Wrist.aimedWristState = 0;
 		stopWatch.stop();
 		stopWatch.reset();
