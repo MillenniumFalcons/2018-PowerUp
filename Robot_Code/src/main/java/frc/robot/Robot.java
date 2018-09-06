@@ -144,7 +144,7 @@ public class Robot extends IterativeRobot
 			runPistonsandForks();
 			runDrivetrain();
 			runElevator();
-			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0);
+			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0, , joy.leftBumper1);
 			runWrist();
 			Lights.runLights();
 			runTests();
@@ -206,7 +206,7 @@ public class Robot extends IterativeRobot
 	public void runWrist()
 	{
 		Wrist.setWristEncoder();
-		Wrist.setWristButtons(joy.dPadDown,joy.dPadSide,joy.dPadUp, joy.leftBumper1);
+		Wrist.setWristButtons(joy.dPadDown,joy.dPadSide,joy.dPadUp);
 		Wrist.setManualWristOverride(joy.leftJoySticky1 * 0.45);
 		Wrist.runWrist();
 		Wrist.setLimitSwitch();
