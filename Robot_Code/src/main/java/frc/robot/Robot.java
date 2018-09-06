@@ -103,14 +103,10 @@ public class Robot extends IterativeRobot
 	{
 		while(DriverStation.getInstance().isAutonomous() && !DriverStation.getInstance().isDisabled())
 		{
-			//runMotorSafety();
 			Elevator.setElevatorEncoder();
+			Wrist.setLimitSwitch();
 			Wrist.setWristEncoder();
 			Autonomous.testRotate(enc);
-			System.out.println(Autonomous.currentState);
-			Lights.runLights();
-			//Autonomous.runAuto(Encoders.leftEncoderValue, Encoders.rightEncoderValue);
-			//runTests();
 		}
 	}
 	

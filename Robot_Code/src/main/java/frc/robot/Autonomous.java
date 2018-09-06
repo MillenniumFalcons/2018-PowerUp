@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 public class Autonomous 
 {
 	//Timer-Stuff
-	public static Timer stopWatch = new Timer();
+	public static sun.misc.Timer stopWatch = new Timer();
 	static double time;
 	
 	//Other variables for auto
@@ -24,6 +24,19 @@ public class Autonomous
 	static int currentState;
 	static double lSSpeed, rSSpeed, speed, sum;
 	static int b;
+
+	public static boolean chechWristIdle(double wValue)
+	{
+		double up = Constants.up;
+		if(wValue > up - 50 || wValue < up + 50)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 	
 	static double oldLenc, oldRenc, newLenc, newRenc;
 
@@ -46,7 +59,62 @@ public class Autonomous
 		oldLenc = encObj.leftEncoderValue;
 	}
 
-	public static void rightSwitch(Encoders enc)
+	public static void chezyRightScale(Encoders enc)
+	{
+		encObj.setEncoderValues();
+		switch(currentState)
+		{
+			case 0:
+				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && chechWristIdle(Wrist.wristEncoder))
+				{
+					stopWatch.start();
+					currentState = 2;
+				}
+				else
+				{
+					enc.resetEncoders();
+					stopWatch.reset();
+					Wrist.wristMotor.getSensorCollection().setQuadraturePosition(Constants.up, 10);
+				}
+				break;
+			case 1:
+				wristMotor.set(ControlMode.Position, Constants.up);
+				if(Elevator.elevatorEncoderValue == 0)
+				{
+					stopWatch.stop();
+					Elevator.stopElevator();
+					currentState = 2;
+				}
+				else if(stopWatch.get() > 1.5)
+				{
+					stopWatch.stop();
+					Elevator.stopElevator();
+					currentState = 2;
+				}
+				else
+				{
+					Elevator.moveElevator(-.3);
+				}
+				break;
+			case 3:
+				wristMotor.set(ControlMode.Position, Constants.up);
+				if(enc.rightEncoderValue < 500)
+				{
+					Drivetrain.tankDrive(.4, .4);
+				}
+				else if(enc.rightEncoderValue < 1500)
+				{
+					Drivetrain.tankDrive(.62, .62);
+				}
+				else if(enc.rightEncoderValue < 10000)
+				{
+					Drivetrain.tankDrive(.9, .9);
+				}
+				break;
+		}
+	}
+
+	public static void chezyRightSwitch(Encoders enc)
 	{
 		encObj.setEncoderValues();
 		switch(currentState)
