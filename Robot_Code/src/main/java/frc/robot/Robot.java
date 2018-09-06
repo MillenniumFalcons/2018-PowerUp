@@ -122,6 +122,7 @@ public class Robot extends IterativeRobot
 		Drivetrain.setToCoast();
 		Forks.lockTheForks();
 		Shifter.lowGear();
+		Lock.unlock();
 		//Elevator.aimedElevatorState = 0;
 		Wrist.aimedWristState = 0;
 		stopWatch.stop();
@@ -205,7 +206,7 @@ public class Robot extends IterativeRobot
 	public void runWrist()
 	{
 		Wrist.setWristEncoder();
-		Wrist.setWristButtons(joy.dPadDown,joy.dPadSide,joy.dPadUp);
+		Wrist.setWristButtons(joy.dPadDown,joy.dPadSide,joy.dPadUp, joy.leftBumper1);
 		Wrist.setManualWristOverride(joy.leftJoySticky1 * 0.45);
 		Wrist.runWrist();
 		Wrist.setLimitSwitch();
@@ -213,7 +214,7 @@ public class Robot extends IterativeRobot
 
 	public void runPistonsandForks()
 	{
-		//Intake.runIntake(joy.rightBumper1);
+		Intake.runIntake(joy.rightBumper1);
 		Forks.runPiston(joy.buttonX);
 		Shifter.runPiston(joy.buttonY);
 		TiltServo.PullForks(joy.leftTrigger, joy.rightTrigger);
