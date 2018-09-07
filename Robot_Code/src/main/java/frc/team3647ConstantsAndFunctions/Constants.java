@@ -27,8 +27,6 @@ public class Constants
 	public final static double poopyShoot = 0.42;
 	
 	//Elevator
-	public final static int rightIntakePin = 56;
-	public final static int leftIntakePin = 55;
 	public final static int leftGearboxSRX = 52;
 	public final static int rightGearboxSRX = 62;
 	public final static int leftGearboxSPX = 54;
