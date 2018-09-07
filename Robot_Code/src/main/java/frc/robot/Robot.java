@@ -144,7 +144,7 @@ public class Robot extends IterativeRobot
 			runPistonsandForks();
 			runDrivetrain();
 			runElevator();
-			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0, , joy.leftBumper1);
+			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0, joy.leftBumper1);
 			runWrist();
 			Lights.runLights();
 			runTests();

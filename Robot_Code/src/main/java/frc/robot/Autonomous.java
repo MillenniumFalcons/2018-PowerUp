@@ -22,7 +22,7 @@ public class Autonomous
 	//Other variables for auto
 	static double prevLeftEncoder, prevRightEncoder;
 	static int currentState;
-	static double lSSpeed, rSSpeed, speed, sum;
+	static double lSSpeed, rSSpeed, speed, sum, rValue, lValue;
 	static int b;
 
 	public static boolean chechWristIdle(double wValue)
@@ -78,6 +78,7 @@ public class Autonomous
 				}
 				break;
 			case 1:
+				//
 				wristMotor.set(ControlMode.Position, Constants.up);
 				if(Elevator.elevatorEncoderValue == 0)
 				{
@@ -98,6 +99,7 @@ public class Autonomous
 				break;
 			case 3:
 				wristMotor.set(ControlMode.Position, Constants.up);
+				double totalScaleDist = 19000;
 				if(enc.rightEncoderValue < 500)
 				{
 					Drivetrain.tankDrive(.4, .4);
@@ -108,8 +110,48 @@ public class Autonomous
 				}
 				else if(enc.rightEncoderValue < 10000)
 				{
+					//Elevator.moveElevatorPosition(Constants.Scale);
 					Drivetrain.tankDrive(.9, .9);
 				}
+				else if(enc.rightEncoderValue < totalScaleDist - 2300)
+				{
+					//Elevator.moveElevatorPosition(Constants.Scale);
+					Drivetrain.tankDrive(.73, .73);
+				}
+				else if(enc.rightEncoderValue < totalScaleDist)
+				{
+					//Elevator.moveElevatorPosition(Constants.Scale);
+					Drivetrain.tankDrive(.3, .3);
+				}
+				else
+				{
+					//Elevator.moveElevatorPosition(Constants.Scale);
+					prevLeftEncoder = enc.leftEncoderValue;
+					prevRightEncoder = enc.prevRightEncoder;
+					currentState = 4;
+				}
+				break;
+			case 4:
+				rValue = enc.prevRightEncoder - prevRightEncoder;
+				lValue = enc.leftEncoderValue - prevLeftEncoder;
+				//Elevator.moveElevatorPosition(Constants.Scale);
+				double rotateRightDist = 4000;
+				if(rValue < rotateRightDist - 1600)
+				{
+					Drivetrain.tankDrive(0, .5);
+				}
+				else if(rValue < rotateRightDist)
+				{
+					Drivetrain.tankDrive(0, .3);
+				}
+				else
+				{
+					Drivetrain.stop();
+					currentState = 5;
+				}
+				break;
+			case 5:
+				//Elevator.moveElevatorPosition(Constants.Scale);
 				break;
 		}
 	}
@@ -211,7 +253,7 @@ public class Autonomous
 				}
 				break;
 			case 3:
-			encObj.setEncoderValues();
+				encObj.setEncoderValues();
 				System.out.println(encObj.leftEncoderValue);
 				if(Math.abs(encObj.leftEncoderValue) < 2000)
 				{
