@@ -136,8 +136,8 @@ public class Drivetrain
 	
 	public static void setSpeed(double lSpeed, double rSpeed)
 	{
-		targetVelocityRight = rSpeed * Constants.velocityConstant;
-		targetVelocityLeft = lSpeed * Constants.velocityConstant;
+		double targetVelocityRight = rSpeed * Constants.velocityConstant;
+		double targetVelocityLeft = lSpeed * Constants.velocityConstant;
 		rightSRX.set(ControlMode.Velocity, targetVelocityRight);
 		leftSRX.set(ControlMode.Velocity, targetVelocityLeft);
 	}

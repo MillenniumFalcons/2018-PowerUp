@@ -34,7 +34,7 @@ public class Constants
 	public final static int elevatorBannerSensor = 9;
 	
 	public static final double bottom = 0;
-	public static final double sWitch = 13000;
+	public static final double sWitch = 16000;
 	public static final double lowerScale = 38000;
 	public static final double scale = 45000;
 	public static final double climb = 11000;

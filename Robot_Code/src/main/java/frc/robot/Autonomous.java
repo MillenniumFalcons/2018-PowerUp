@@ -59,13 +59,14 @@ public class Autonomous
 		oldLenc = encObj.leftEncoderValue;
 	}
 
-	public static void chezyRightScale(Encoders enc)
+	public static void doubleSwitch(Encoders enc)
 	{
 		encObj.setEncoderValues();
 		switch(currentState)
 		{
 			case 0:
-				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && chechWristIdle(Wrist.wristEncoder))
+				//if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && chechWristIdle(Wrist.wristEncoder))
+				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0)
 				{
 					stopWatch.start();
 					currentState = 2;
@@ -74,7 +75,53 @@ public class Autonomous
 				{
 					enc.resetEncoders();
 					stopWatch.reset();
-					Wrist.wristMotor.getSensorCollection().setQuadraturePosition(Constants.up, 10);
+					//Wrist.wristMotor.getSensorCollection().setQuadraturePosition(Constants.up, 10);
+				}
+				break;
+			case 1:
+				//
+				wristMotor.set(ControlMode.Position, Constants.up);
+				if(Elevator.elevatorEncoderValue == 0)
+				{
+					stopWatch.stop();
+					Elevator.stopElevator();
+					currentState = 2;
+				}
+				else if(stopWatch.get() > 1.5)
+				{
+					stopWatch.stop();
+					Elevator.stopElevator();
+					currentState = 2;
+				}
+				else
+				{
+					Elevator.moveElevator(-.3);
+				}
+				break;
+			case 2:
+				
+				break;
+		}
+	}
+
+	//8.88 inches max on x, y min 310 inches
+	public static void chezyRightScale(Encoders enc)
+	{
+		encObj.setEncoderValues();
+		switch(currentState)
+		{
+			case 0:
+				//if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && chechWristIdle(Wrist.wristEncoder))
+				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0)
+				{
+					stopWatch.start();
+					currentState = 2;
+				}
+				else
+				{
+					enc.resetEncoders();
+					stopWatch.reset();
+					//Wrist.wristMotor.getSensorCollection().setQuadraturePosition(Constants.up, 10);
 				}
 				break;
 			case 1:
@@ -98,30 +145,30 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				wristMotor.set(ControlMode.Position, Constants.up);
+				//wristMotor.set(ControlMode.Position, Constants.up);
 				double totalScaleDist = 19000;
 				if(enc.rightEncoderValue < 500)
 				{
-					Drivetrain.tankDrive(.4, .4);
+					Drivetrain.setSpeed(.4, .4);
 				}
 				else if(enc.rightEncoderValue < 1500)
 				{
-					Drivetrain.tankDrive(.62, .62);
+					Drivetrain.setSpeed(.62, .62);
 				}
 				else if(enc.rightEncoderValue < 10000)
 				{
 					//Elevator.moveElevatorPosition(Constants.Scale);
-					Drivetrain.tankDrive(.9, .9);
+					Drivetrain.setSpeed(.9, .9);
 				}
 				else if(enc.rightEncoderValue < totalScaleDist - 2300)
 				{
 					//Elevator.moveElevatorPosition(Constants.Scale);
-					Drivetrain.tankDrive(.73, .73);
+					Drivetrain.setSpeed(.73, .73);
 				}
 				else if(enc.rightEncoderValue < totalScaleDist)
 				{
 					//Elevator.moveElevatorPosition(Constants.Scale);
-					Drivetrain.tankDrive(.3, .3);
+					Drivetrain.setSpeed(.3, .3);
 				}
 				else
 				{
@@ -138,11 +185,11 @@ public class Autonomous
 				double rotateRightDist = 4000;
 				if(rValue < rotateRightDist - 1600)
 				{
-					Drivetrain.tankDrive(0, .5);
+					Drivetrain.setSpeed(0, .5);
 				}
 				else if(rValue < rotateRightDist)
 				{
-					Drivetrain.tankDrive(0, .3);
+					Drivetrain.setSpeed(0, .3);
 				}
 				else
 				{
@@ -177,7 +224,7 @@ public class Autonomous
 				}
 				else if(stopWatch.get() < .55)
 				{
-					IntakeWheels.runIntake(0, 0, true, -.5, -.5, false);
+					IntakeWheels.runIntake(0, 0, true, -.8, -.8, false);
 				}
 				else
 				{
@@ -197,11 +244,11 @@ public class Autonomous
 				rValue = Math.abs(enc.prevRightEncoder);
 				if(rValue < 3000)
 				{
-					Drivetrain.tankDrive(-.5, -.5);
+					Drivetrain.setSpeed(-.5, -.5);
 				}
 				else if(rValue < 4000)
 				{
-					Drivetrain.tankDrive(-.3, -.3);
+					Drivetrain.setSpeed(-.3, -.3);
 				}
 				else 
 				{

@@ -14,6 +14,7 @@ import frc.team3647elevator.IntakeWheels;
 import frc.team3647elevator.Wrist;
 import frc.team3647pistons.Compressor007;
 import frc.team3647pistons.Forks;
+import frc.team3647pistons.Intake;
 import frc.team3647pistons.Lock;
 import frc.team3647pistons.Shifter;
 import frc.team3647subsystems.Drivetrain;
