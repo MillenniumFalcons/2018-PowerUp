@@ -152,6 +152,72 @@ public class Autonomous
 				break;
 			case 5:
 				//Elevator.moveElevatorPosition(Constants.Scale);
+				if(stopWatch.get() == 0)
+				{
+					currentState = 6;
+					stopWatch.start();
+				}
+				else
+				{
+					stopWatch.reset();
+				}
+				break;
+			case 6:
+				//Elevator.moveElevatorPosition(Constants.Scale);
+				if(stopWatch.get() < .4)
+				{
+					if(Wrist.reachedFlat())
+					{
+						Wrist.moveWrist(0);
+					}
+					else
+					{
+						Wrist.moveWrist(-.3);
+					}
+				}
+				else if(stopWatch.get() < .55)
+				{
+					IntakeWheels.runIntake(0, 0, true, -.5, -.5, false);
+				}
+				else
+				{
+					if(enc.prevRightEncoder == 0 && enc.prevLeftEncoder == 0)
+					{
+						stopWatch.stop();
+						currentState = 7;
+					}
+					else 
+					{
+						enc.resetEncoders();
+					}
+				}
+				break;
+			case 7:
+				//Elevator.moveElevatorPosition(Constants.Scale);
+				rValue = Math.abs(enc.prevRightEncoder);
+				if(rValue < 3000)
+				{
+					Drivetrain.tankDrive(-.5, -.5);
+				}
+				else if(rValue < 4000)
+				{
+					Drivetrain.tankDrive(-.3, -.3);
+				}
+				else 
+				{
+					Drivetrain.stop();
+					currentState = 8;
+				}
+				break;
+			case 8:
+				if(Elevator.reachedBottom())
+				{
+					Elevator.stopElevator();
+				}
+				else
+				{
+					Elevator.moveElevator(-.3);
+				}
 				break;
 		}
 	}
