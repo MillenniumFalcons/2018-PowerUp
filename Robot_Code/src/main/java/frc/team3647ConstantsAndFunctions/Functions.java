@@ -49,13 +49,13 @@ public class Functions
 			else if(time < straightTime + turnTime + shootTime)
 			{
 				Elevator.moveElevatorPosition(Constants.sWitch);
-				IntakeWheels.runIntake(0, 0, true, -1, -1);
+				IntakeWheels.runIntake(0, 0, true, -1, -1, false);
 				return 0;
 			}
 			else if(time < straightTime + turnTime + shootTime + .8)
 			{
 				Intake.openIntake();
-				IntakeWheels.runIntake(0, 0, true, 0, 0);
+				IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 				if(Elevator.reachedBottom())
 				{
 					Elevator.moveElevator(0);
@@ -69,7 +69,7 @@ public class Functions
 			else if(time < straightTime + turnTime + shootTime + 1.4)
 			{
 				Intake.openIntake();
-				IntakeWheels.runIntake(0, 0, true, .5, .5);
+				IntakeWheels.runIntake(0, 0, true, .5, .5, false);
 				if(Elevator.reachedBottom())
 				{
 					Elevator.moveElevator(0);
@@ -83,13 +83,13 @@ public class Functions
 			else if(time < straightTime + turnTime + shootTime + 1.7)
 			{
 				Intake.closeIntake();
-				IntakeWheels.runIntake(0, 0, true, .3, .3);
+				IntakeWheels.runIntake(0, 0, true, .3, .3, false);
 				return 0;
 			}
 			else if(time < secondCubeSecured)
 			{
 				Intake.closeIntake();
-				IntakeWheels.runIntake(0, 0, true, 0, 0);
+				IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 				return 0;
 			}
 			else if(time < secondCubeSecured + backUp)
@@ -109,13 +109,13 @@ public class Functions
 			else if(time < secondCubeSecured + backUp + 2.1)
 			{
 				Elevator.moveElevatorPosition(Constants.sWitch);
-				IntakeWheels.runIntake(0, 0, true, -1, -1);
+				IntakeWheels.runIntake(0, 0, true, -1, -1, false);
 				return 0;
 			}
 			else
 			{
 				Elevator.moveElevatorPosition(Constants.sWitch);
-				IntakeWheels.runIntake(0, 0, true, 0, 0);
+				IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 				return 0;
 			}
 		}
@@ -223,13 +223,13 @@ public class Functions
 			else if(time < straightTime + turnTime + secondStraight + turnToSecondCube + shootTime)
 			{
 				Elevator.moveElevatorPosition(Constants.sWitch);
-				IntakeWheels.runIntake(0, 0, true, -.5, -.9);
+				IntakeWheels.runIntake(0, 0, true, -.5, -.9, false);
 				return 0;
 			}
 			else if(time < straightTime + turnTime + secondStraight + turnToSecondCube + shootTime + .8)
 			{
 				Intake.openIntake();
-				IntakeWheels.runIntake(0, 0, true, 0, 0);
+				IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 				if(Elevator.reachedBottom())
 				{
 					Elevator.moveElevator(0);
@@ -243,7 +243,7 @@ public class Functions
 			else if(time < straightTime + turnTime + secondStraight + turnToSecondCube + shootTime + 1.4)
 			{
 				Intake.openIntake();
-				IntakeWheels.runIntake(0, 0, true, .5, .5);
+				IntakeWheels.runIntake(0, 0, true, .5, .5, false);
 				if(Elevator.reachedBottom())
 				{
 					Elevator.moveElevator(0);
@@ -257,13 +257,13 @@ public class Functions
 			else if(time < straightTime + turnTime + secondStraight + turnToSecondCube + shootTime + 1.7)
 			{
 				Intake.closeIntake();
-				IntakeWheels.runIntake(0, 0, true, .3, .3);
+				IntakeWheels.runIntake(0, 0, true, .3, .3, false);
 				return 0;
 			}
 			else if(time < secondCubeSecured)
 			{
 				Intake.closeIntake();
-				IntakeWheels.runIntake(0, 0, true, .12, .12);
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				return 0;
 			}
 			else if(time < secondCubeSecured + backUp)
@@ -283,13 +283,13 @@ public class Functions
 			else if(time < secondCubeSecured + backUp + 2.1)
 			{
 				Elevator.moveElevatorPosition(Constants.sWitch);
-				IntakeWheels.runIntake(0, 0, true, -.9, -.5);
+				IntakeWheels.runIntake(0, 0, true, -.9, -.5, false);
 				return 0;
 			}
 			else
 			{
 				Elevator.moveElevatorPosition(Constants.sWitch);
-				IntakeWheels.runIntake(0, 0, true, 0, 0);
+				IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 				return 0;
 			}
 		}
@@ -383,7 +383,7 @@ public class Functions
 		{
 			if(time < .3)
 			{
-				IntakeWheels.runIntake(0, 0, true, .12, .12);
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				Elevator.moveElevatorPosition(Constants.sWitch);
 				return .5;
 			}
@@ -405,13 +405,13 @@ public class Functions
 			else if(time < straightTime + turnToScaleUsingRightMotor + stopAtScale)
 			{
 				Elevator.moveElevatorPosition(Constants.scale);
-				IntakeWheels.runIntake(0, 0, true, -.5, -.5);
+				IntakeWheels.runIntake(0, 0, true, -.5, -.5, false);
 				return 0;
 			}
 			else if(time < firstScale)
 			{
 				Elevator.moveElevatorPosition(Constants.scale);
-				IntakeWheels.runIntake(0, 0, true, 0, 0);
+				IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 				return -.5;
 			}
 			else if(time < firstScale + goBackForSecondCube)
@@ -461,23 +461,23 @@ public class Functions
 			}
 			else if(time < timeToPickUpSecondCube + straightToSecondSube + turnToSecondCube)
 			{
-				IntakeWheels.runIntake(0, 0, true, .5, .5);
+				IntakeWheels.runIntake(0, 0, true, .5, .5, false);
 				return .5;
 			}
 			else if(time < timeToPickUpSecondCube + straightTime + turnToSecondCube + .3)
 			{
-				IntakeWheels.runIntake(0, 0, true, .5, .5);
+				IntakeWheels.runIntake(0, 0, true, .5, .5, false);
 				return 0;
 			}
 			else if(time < timeToPickUpSecondCube + straightTime + turnToSecondCube + .3)
 			{
-				IntakeWheels.runIntake(0, 0, true, .3, .3);
+				IntakeWheels.runIntake(0, 0, true, .3, .3, false);
 				Intake.closeIntake();
 				return 0;
 			}
 			else if(time < secondCubeSecured)
 			{
-				IntakeWheels.runIntake(0, 0, true, .12, .12);
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				Intake.closeIntake();
 				return 0;
 			}
@@ -498,13 +498,13 @@ public class Functions
 			else if(time < secondCubeSecured + backUp + 2.1)
 			{
 				Elevator.moveElevatorPosition(Constants.sWitch);
-				IntakeWheels.runIntake(0, 0, true, -.9, -.5);
+				IntakeWheels.runIntake(0, 0, true, -.9, -.5, false);
 				return 0;
 			}
 			else
 			{
 				Elevator.moveElevatorPosition(Constants.sWitch);
-				IntakeWheels.runIntake(0, 0, true, 0, 0);
+				IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 				return 0;
 			}
 		}
@@ -606,7 +606,7 @@ public class Functions
 		{
 			if(time < .3)
 			{
-				IntakeWheels.runIntake(0, 0, true, .12, .12);
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				Elevator.moveElevatorPosition(Constants.sWitch);
 				return .5;
 			}
@@ -628,13 +628,13 @@ public class Functions
 			else if(time < straightTime + turnToScaleUsingRightMotor + stopAtScale)
 			{
 				Elevator.moveElevatorPosition(Constants.scale);
-				IntakeWheels.runIntake(0, 0, true, -.5, -.5);
+				IntakeWheels.runIntake(0, 0, true, -.5, -.5, false);
 				return 0;
 			}
 			else if(time < firstScale)
 			{
 				Elevator.moveElevatorPosition(Constants.scale);
-				IntakeWheels.runIntake(0, 0, true, 0, 0);
+				IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 				return -.5;
 			}
 			else if(time < firstScale + goBackForSecondCube)
@@ -684,23 +684,23 @@ public class Functions
 			}
 			else if(time < timeToPickUpSecondCube + straightToSecondSube + turnToSecondCube)
 			{
-				IntakeWheels.runIntake(0, 0, true, .5, .5);
+				IntakeWheels.runIntake(0, 0, true, .5, .5, false);
 				return .5;
 			}
 			else if(time < timeToPickUpSecondCube + straightTime + turnToSecondCube + .3)
 			{
-				IntakeWheels.runIntake(0, 0, true, .5, .5);
+				IntakeWheels.runIntake(0, 0, true, .5, .5, false);
 				return 0;
 			}
 			else if(time < timeToPickUpSecondCube + straightTime + turnToSecondCube + .3)
 			{
-				IntakeWheels.runIntake(0, 0, true, .3, .3);
+				IntakeWheels.runIntake(0, 0, true, .3, .3, false);
 				Intake.closeIntake();
 				return 0;
 			}
 			else if(time < secondCubeSecured)
 			{
-				IntakeWheels.runIntake(0, 0, true, .12, .12);
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				Intake.closeIntake();
 				return 0;
 			}
@@ -736,19 +736,19 @@ public class Functions
 			else if(time < secondCubeSecured + turnToSecondCube + straightToSecondSube + 1 + turnBackUsingLeftMotor + goBackForSecondCube + turnToScaleUsingRightMotor + .1 + stopAtScale)
 			{
 				Elevator.moveElevatorPosition(Constants.scale);
-				IntakeWheels.runIntake(0, 0, true, -.5, -.5);
+				IntakeWheels.runIntake(0, 0, true, -.5, -.5, false);
 				return 0;
 			}
 			else if(time < secondCubeSecured + turnToSecondCube + straightToSecondSube + 1 + turnBackUsingLeftMotor + goBackForSecondCube + turnToScaleUsingRightMotor + .1 + stopAtScale + turnToScaleUsingRightMotor)
 			{
 				Elevator.moveElevatorPosition(Constants.scale);
-				IntakeWheels.runIntake(0, 0, true, 0, 0);
+				IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 				return -.5;
 			}
 			else
 			{
 				Elevator.moveElevatorPosition(Constants.sWitch);
-				IntakeWheels.runIntake(0, 0, true, 0, 0);
+				IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 				return 0;
 			}
 		}
@@ -870,7 +870,7 @@ public class Functions
 		{
 			if(time < .3)
 			{
-				IntakeWheels.runIntake(0, 0, true, .12, .12);
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				Elevator.moveElevatorPosition(Constants.sWitch);
 				return .5;
 			}
@@ -892,13 +892,13 @@ public class Functions
 			else if(time < straightTime + turnToScaleUsingRightMotor + stopAtScale)
 			{
 				Elevator.moveElevatorPosition(Constants.scale);
-				IntakeWheels.runIntake(0, 0, true, -.5, -.5);
+				IntakeWheels.runIntake(0, 0, true, -.5, -.5, false);
 				return 0;
 			}
 			else if(time < firstScale)
 			{
 				Elevator.moveElevatorPosition(Constants.scale);
-				IntakeWheels.runIntake(0, 0, true, 0, 0);
+				IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 				return -.5;
 			}
 			else if(time < firstScale + goBackForSecondCube)
@@ -952,23 +952,23 @@ public class Functions
 			else if(time < timeToPickUpSecondCube + straightToSecondSube + turnToSecondCube)
 			{
 				Intake.openIntake();
-				IntakeWheels.runIntake(0, 0, true, .5, .5);
+				IntakeWheels.runIntake(0, 0, true, .5, .5, false);
 				return .5;
 			}
 			else if(time < timeToPickUpSecondCube + straightTime + turnToSecondCube + .3)
 			{
-				IntakeWheels.runIntake(0, 0, true, .5, .5);
+				IntakeWheels.runIntake(0, 0, true, .5, .5, false);
 				return 0;
 			}
 			else if(time < timeToPickUpSecondCube + straightTime + turnToSecondCube + .3)
 			{
-				IntakeWheels.runIntake(0, 0, true, .3, .3);
+				IntakeWheels.runIntake(0, 0, true, .3, .3, false);
 				Intake.closeIntake();
 				return 0;
 			}
 			else if(time < secondCubeSecured)
 			{
-				IntakeWheels.runIntake(0, 0, true, .12, .12);
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				Intake.closeIntake();
 				return 0;
 			}
@@ -989,13 +989,13 @@ public class Functions
 			else if(time < secondCubeSecured + backUp + 2.1)
 			{
 				Elevator.moveElevatorPosition(Constants.sWitch);
-				IntakeWheels.runIntake(0, 0, true, -.9, -.5);
+				IntakeWheels.runIntake(0, 0, true, -.9, -.5, false);
 				return 0;
 			}
 			else
 			{
 				Elevator.moveElevatorPosition(Constants.sWitch);
-				IntakeWheels.runIntake(0, 0, true, 0, 0);
+				IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 				return 0;
 			}
 		}

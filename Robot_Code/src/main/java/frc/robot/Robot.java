@@ -1,7 +1,5 @@
 package frc.robot;
 
-import java.beans.Encoder;
-
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;

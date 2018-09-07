@@ -11,12 +11,15 @@ import frc.team3647pistons.Intake;
 import frc.team3647pistons.Shifter;
 import frc.team3647subsystems.Drivetrain;
 import frc.team3647subsystems.Encoders;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.DriverStation;
 
 public class Autonomous 
 {
 	//Timer-Stuff
-	public static sun.misc.Timer stopWatch = new Timer();
+	public static Timer stopWatch = new Timer();
 	static double time;
 	
 	//Other variables for auto
@@ -61,7 +64,7 @@ public class Autonomous
 
 	public static void doubleSwitch(Encoders enc)
 	{
-		encObj.setEncoderValues();
+		enc.setEncoderValues();
 		switch(currentState)
 		{
 			case 0:
@@ -80,7 +83,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				wristMotor.set(ControlMode.Position, Constants.up);
+				Wrist.wristMotor.set(ControlMode.Position, Constants.up);
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					stopWatch.stop();
@@ -107,7 +110,7 @@ public class Autonomous
 	//8.88 inches max on x, y min 310 inches
 	public static void chezyRightScale(Encoders enc)
 	{
-		encObj.setEncoderValues();
+		enc.setEncoderValues();
 		switch(currentState)
 		{
 			case 0:
@@ -126,7 +129,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				wristMotor.set(ControlMode.Position, Constants.up);
+				Wrist.wristMotor.set(ControlMode.Position, Constants.up);
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					stopWatch.stop();
@@ -174,12 +177,12 @@ public class Autonomous
 				{
 					//Elevator.moveElevatorPosition(Constants.Scale);
 					prevLeftEncoder = enc.leftEncoderValue;
-					prevRightEncoder = enc.prevRightEncoder;
+					prevRightEncoder = enc.rightEncoderValue;
 					currentState = 4;
 				}
 				break;
 			case 4:
-				rValue = enc.prevRightEncoder - prevRightEncoder;
+				rValue = enc.rightEncoderValue - prevRightEncoder;
 				lValue = enc.leftEncoderValue - prevLeftEncoder;
 				//Elevator.moveElevatorPosition(Constants.Scale);
 				double rotateRightDist = 4000;
@@ -228,7 +231,7 @@ public class Autonomous
 				}
 				else
 				{
-					if(enc.prevRightEncoder == 0 && enc.prevLeftEncoder == 0)
+					if(enc.rightEncoderValue == 0 && enc.rightEncoderValue == 0)
 					{
 						stopWatch.stop();
 						currentState = 7;
@@ -241,7 +244,7 @@ public class Autonomous
 				break;
 			case 7:
 				//Elevator.moveElevatorPosition(Constants.Scale);
-				rValue = Math.abs(enc.prevRightEncoder);
+				rValue = Math.abs(enc.rightEncoderValue);
 				if(rValue < 3000)
 				{
 					Drivetrain.setSpeed(-.5, -.5);
@@ -271,7 +274,7 @@ public class Autonomous
 
 	public static void chezyRightSwitch(Encoders enc)
 	{
-		encObj.setEncoderValues();
+		enc.setEncoderValues();
 		switch(currentState)
 		{
 			case 0:
