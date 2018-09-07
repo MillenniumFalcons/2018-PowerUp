@@ -107,6 +107,7 @@ public class Drivetrain
 			setSpeed(yValue + xValue, yValue - xValue);
 		}
 	}
+	
 	public static void curvatureDrive(double throttle, double turn)
 	{
 		drive.curvatureDrive(throttle, turn, true);

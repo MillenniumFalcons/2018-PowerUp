@@ -390,7 +390,7 @@ public class Autonomous
 		switch(currentState)
 		{
 			case 0:
-				IntakeWheels.runIntake(0, 0, true, .12, .12);
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				stopWatch.stop();
 				time = stopWatch.get();
 				if(time == 0)
@@ -489,7 +489,7 @@ public class Autonomous
 		switch(currentState)
 		{
 			case 0:
-				IntakeWheels.runIntake(0, 0, true, .12, .12);
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				stopWatch.stop();
 				time = stopWatch.get();
 				if(time == 0)
@@ -527,12 +527,12 @@ public class Autonomous
 				}
 				else if(time < 2.6)
 				{
-					IntakeWheels.runIntake(0, 0, true, -.5, -.5);
+					IntakeWheels.runIntake(0, 0, true, -.5, -.5, false);
 					Drivetrain.tankDrive(0, 0);
 				}
 				else 
 				{
-					IntakeWheels.runIntake(0, 0, true, 0, 0);
+					IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 					Drivetrain.tankDrive(0, 0);
 				}
 				break;
@@ -544,7 +544,7 @@ public class Autonomous
 		switch(currentState)
 		{
 			case 0:
-				IntakeWheels.runIntake(0, 0, true, .12, .12);
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				stopWatch.stop();
 				time = stopWatch.get();
 				if(time == 0)
@@ -643,7 +643,7 @@ public class Autonomous
 		switch(currentState)
 		{
 			case 0:
-				IntakeWheels.runIntake(0, 0, true, .12, .12);
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				stopWatch.stop();
 				time = stopWatch.get();
 				if(time == 0)
@@ -671,7 +671,7 @@ public class Autonomous
 		switch(currentState)
 		{
 			case 0:
-				IntakeWheels.runIntake(0, 0, true, .12, .12);
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				stopWatch.stop();
 				time = stopWatch.get();
 				if(time == 0)
@@ -769,7 +769,7 @@ public class Autonomous
 		switch(currentState)
 		{
 			case 0:
-				IntakeWheels.runIntake(0, 0, true, .12, .12);
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				stopWatch.stop();
 				time = stopWatch.get();
 				if(time == 0)
@@ -902,7 +902,7 @@ public class Autonomous
 		Shifter.lowGear();
 		Intake.closeIntake();
 		enc.resetEncoders();
-		IntakeWheels.runIntake(0, 0, true, 0, 0);
+		IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 		Elevator.stopElevator();
 		Elevator.aimedElevatorState = 0;
 		Drivetrain.setToBrake();
