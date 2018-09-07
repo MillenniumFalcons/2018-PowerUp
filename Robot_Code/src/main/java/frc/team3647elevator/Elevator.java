@@ -34,7 +34,7 @@ public class Elevator
     public static void elevatorInitialization()
 	{
 		leftGearboxMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Constants.kTimeoutMs);
-		leftGearboxMaster.setSensorPhase(true);
+		leftGearboxMaster.setSensorPhase(true); //if i set to false I might not need to invert gearbox motors
 		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
 		leftGearboxMaster.config_kF(Constants.carriagePID, Constants.carriageF, Constants.kTimeoutMs);
 		leftGearboxMaster.config_kP(Constants.carriagePID, Constants.carriageP, Constants.kTimeoutMs);
@@ -44,12 +44,12 @@ public class Elevator
 		leftGearboxMaster.config_kF(Constants.interstagePID, Constants.interstageF, Constants.kTimeoutMs);		
 		leftGearboxMaster.config_kP(Constants.interstagePID, Constants.interstageP, Constants.kTimeoutMs);		
 		leftGearboxMaster.config_kI(Constants.interstagePID, Constants.interstageI, Constants.kTimeoutMs);		
-        leftGearboxMaster.config_kD(Constants.interstagePID, Constants.interstageD, Constants.kTimeoutMs);	
+       	 	leftGearboxMaster.config_kD(Constants.interstagePID, Constants.interstageD, Constants.kTimeoutMs);	
         
-        rightGearboxSRX.follow(leftGearboxMaster);
-        rightGearboxSPX.follow(leftGearboxMaster);
-        leftGearboxSPX.follow(leftGearboxMaster);
-        rightGearboxSRX.setInverted(true);
+        	rightGearboxSRX.follow(leftGearboxMaster);
+        	rightGearboxSPX.follow(leftGearboxMaster);
+        	leftGearboxSPX.follow(leftGearboxMaster);
+        	rightGearboxSRX.setInverted(true);
 		rightGearboxSPX.setInverted(true);
 		leftGearboxMaster.setInverted(true);
 		leftGearboxSPX.setInverted(true);
@@ -118,7 +118,57 @@ public class Elevator
 			manualOverride = true;
 		}
 	}
-    
+    	
+	public static void moveSwitch()
+	{
+		Wrist.moveWristPosition(Constants.flat);
+		moveElevatorPosition(Constants.sWitch);
+	}
+	
+	public static void moveLowerScale()
+	{
+		Wrist.moveWristPosition(Constants.flat);
+		moveElevatorPosition(Constants.lowerScale);		
+	}
+	
+	public static void moveScale()
+	{
+		Wrist.moveWristPosition(Constants.flat);
+		moveElevatorPosition(Constants.Scale);
+	}
+	
+	public static void moveBottom(boolean moveWristUp)
+	{
+		if(moveWristUp)
+		{
+			if(IntakeWheels.getIntakeBannerSensor)//no cube
+			{	
+				Wrist.moveWristPosition(Constants.up);
+			}
+			if(reachedBottom())
+			{
+				resetElevatorEncoders();
+				stopElevator();
+			}
+			else
+			{
+				moveElevator(-0.4);
+			}
+		}
+		else
+		{
+			if(reachedBottom())
+			{
+				resetElevatorEncoders();
+				stopElevator();
+			}
+			else
+			{
+				moveElevator(-0.3);
+			}
+		}
+	}
+	
 	public static void runElevator()
 	{
 		if(manualOverride)
@@ -148,39 +198,18 @@ public class Elevator
         switch(aimedElevatorState)
 		{
 			case 0:
-				if(manualOverride)
-				{
-					aimedElevatorState = -1;
-				}
-				else if(reachedBottom())
-				{
-					stopElevator();
-					aimedElevatorState = 1;
-				}
-				else
-				{
-					moveElevator(-.3);
-				}
+				moveBottom(false);
 			break;
-			case 1:
-				if(reachedBottom())
-				{
-					resetElevatorEncoders();
-					stopElevator();
-				}
-				else
-				{
-					moveElevator(-0.4);
-				}
+				moveBottom(true);
 			break;
 			case 2:
-				moveElevatorPosition(Constants.sWitch);
+				moveSwitch();
 			break;
 			case 3:
-				moveElevatorPosition(Constants.lowerScale);
+				moveLowerScale();
 			break;
 			case 4:
-				moveElevatorPosition(Constants.scale);
+				moveScale();
 			break;
 			case -1:
 				if(!manualOverride)
