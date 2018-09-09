@@ -24,6 +24,7 @@ public class Autonomous
 	static double prevLeftEncoder, prevRightEncoder;
 	static int currentState;
 	static double lSSpeed, rSSpeed, speed, sum, rValue, lValue;
+	static double currTime, prevTime;
 	static int b;
 
 	public static void moveWristDownWhileRunning()
@@ -81,6 +82,170 @@ public class Autonomous
 		}
 		oldRenc = encObj.rightEncoderValue;
 		oldLenc = encObj.leftEncoderValue;
+	}
+
+	//8.88 inches max on x, y min 310 inches
+	public static void jankScale(Encoders enc)
+	{
+		enc.setEncoderValues();
+		switch(currentState)
+		{
+			case 0:
+				//if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && chechWristIdle(Wrist.wristEncoder))
+				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0)
+				{
+					stopWatch.start();
+					currentState = 3;
+				}
+				else
+				{
+					enc.resetEncoders();
+					stopWatch.reset();
+					//Wrist.wristMotor.getSensorCollection().setQuadraturePosition(Constants.up, 10);
+				}
+				break;
+			case 1:
+				//
+				Wrist.wristMotor.set(ControlMode.Position, Constants.up);
+				if(Elevator.elevatorEncoderValue == 0)
+				{
+					stopWatch.stop();
+					Elevator.stopElevator();
+					currentState = 3;
+				}
+				else if(stopWatch.get() > 1.5)
+				{
+					stopWatch.stop();
+					Elevator.stopElevator();
+					currentState = 3;
+				}
+				else
+				{
+					Elevator.moveElevator(-.3);
+				}
+				break;
+			case 3:
+				stopWatch.stop();//
+				double totalScaleDist = 19000;
+				if(enc.rightEncoderValue < 500)
+				{
+					//wristMotor.set(ControlMode.Position, Constants.up);
+					Drivetrain.setSpeed(.4, .4);
+				}
+				else if(enc.rightEncoderValue < 1500)
+				{
+					//wristMotor.set(ControlMode.Position, Constants.up);
+					Drivetrain.setSpeed(.62, .62);
+				}
+				else if(enc.rightEncoderValue < 10000)
+				{
+					//Elevator.moveElevatorPosition(Constants.Scale);
+					//moveWristDownWhileRunning();
+					Drivetrain.setSpeed(.9, .9);
+				}
+				else if(enc.rightEncoderValue < totalScaleDist - 2300)
+				{
+					//Elevator.moveElevatorPosition(Constants.Scale);
+					//moveWristDownWhileRunning();
+					Drivetrain.setSpeed(.73, .73);
+				}
+				else if(enc.rightEncoderValue < totalScaleDist)
+				{
+					//Elevator.moveElevatorPosition(Constants.Scale);
+					//moveWristDownWhileRunning();
+					Drivetrain.setSpeed(.3, .3);
+				}
+				else
+				{
+					//Elevator.moveElevatorPosition(Constants.Scale);
+					//moveWristDownWhileRunning();
+					prevLeftEncoder = enc.leftEncoderValue;
+					prevRightEncoder = enc.rightEncoderValue;
+					currentState = 4;
+				}
+				break;
+			case 4:
+				rValue = enc.rightEncoderValue - prevRightEncoder;
+				lValue = enc.leftEncoderValue - prevLeftEncoder;
+				//Elevator.moveElevatorPosition(Constants.Scale);
+				//moveWristDownWhileRunning();
+				double rotateRightDist = 3000;
+				if(rValue < rotateRightDist - 1300)
+				{
+					Drivetrain.setSpeed(0, .5);
+				}
+				else if(rValue < rotateRightDist)
+				{
+					Drivetrain.setSpeed(0, .3);
+				}
+				else
+				{
+					Drivetrain.stop();
+					currentState = 5;
+				}
+				break;
+			case 5:
+				stopWatch.stop();
+				//Elevator.moveElevatorPosition(Constants.Scale);
+				if(stopWatch.get() == 0 && enc.rightEncoderValue == 0)
+				{
+					currentState = 6;
+					stopWatch.start();
+				}
+				else
+				{
+					stopWatch.reset();
+					enc.resetEncoders();
+				}
+				break;
+			case 6:
+				//Elevator.moveElevatorPosition(Constants.Scale);
+				if(stopWatch.get() < .1)
+				{
+					
+				}
+				else if(stopWatch.get() < .6)
+				{
+					IntakeWheels.runIntake(0, 0, true, -1, -1, false);
+					enc.resetEncoders();
+				}
+				else 
+				{
+					currentState = 7;
+				}
+				break;
+			case 7:
+				double spinDist = 3000;
+				if(enc.rightEncoderValue < spinDist - 1000)
+				{
+					Drivetrain.setSpeed(-.5, .5);
+					//Elevator.moveElevatorPosition(Constants.Scale);
+				}
+				else if(enc.rightEncoderValue < spinDist)
+				{
+					Drivetrain.setSpeed(-.25, .25);
+					//Elevator.moveBottom(false);
+				}
+				else
+				{
+					Drivetrain.stop();
+					prevTime = stopWatch.get();
+					currentState = 8;
+				}
+				break;
+			case 8:
+				currTime = stopWatch.get() - prevTime;
+				double straightDistForCube = 5000;
+				if(currTime < .35)
+				{
+					//Elevator.moveBottom(false);
+				}
+				else 
+				{
+					currentState = 9;
+				}
+				break;
+		}
 	}
 
 	public static void chezyDoubleSwitchRightFromRight(Encoders enc)
@@ -228,7 +393,7 @@ public class Autonomous
 				break;
 			case 7:
 				stopWatch.stop();
-				//Elevator.moveElevator(-.3);
+				//Elevator.moveBottom(false);
 				if(stopWatch.get() == 0)
 				{
 					prevRightEncoder = enc.rightEncoderValue;
@@ -243,7 +408,7 @@ public class Autonomous
 			case 8:
 				if(stopWatch.get() < .6)
 				{
-					//Elevator.moveElevator(-.3);
+					//Elevator.moveBottom(false);
 				}
 				else 
 				{
@@ -498,7 +663,7 @@ public class Autonomous
 				break;
 			case 7:
 				stopWatch.stop();
-				//Elevator.moveElevator(-.3);
+				//Elevator.moveBottom(false);
 				if(stopWatch.get() == 0)
 				{
 					prevRightEncoder = enc.rightEncoderValue;
@@ -513,7 +678,7 @@ public class Autonomous
 			case 8:
 				if(stopWatch.get() < .6)
 				{
-					//Elevator.moveElevator(-.3);
+					//Elevator.moveBottom(false);
 				}
 				else 
 				{

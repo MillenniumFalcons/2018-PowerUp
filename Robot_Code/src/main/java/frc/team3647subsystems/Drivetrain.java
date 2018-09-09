@@ -133,6 +133,18 @@ public class Drivetrain
 	{
 		tankDrive(0,0);
 	}
+
+	public static boolean stopped()
+	{
+		if(rightSRX.getSelectedSensorVelocity(Constants.drivePID) == 0 && leftSRX.getSelectedSensorVelocity(Constants.drivePID) == 0)
+		{
+			return true;
+		}
+		else 
+		{
+			return false;
+		}
+	}
 	
 	public static void setSpeed(double lSpeed, double rSpeed)
 	{
