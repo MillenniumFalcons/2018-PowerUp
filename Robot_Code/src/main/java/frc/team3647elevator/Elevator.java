@@ -35,17 +35,26 @@ public class Elevator
 	{
 		leftGearboxMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Constants.kTimeoutMs);
 		leftGearboxMaster.setSensorPhase(true); //if i set to false I might not need to invert gearbox motors
+
+		//Configure PID Values
 		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
 		leftGearboxMaster.config_kF(Constants.carriagePID, Constants.carriageF, Constants.kTimeoutMs);
 		leftGearboxMaster.config_kP(Constants.carriagePID, Constants.carriageP, Constants.kTimeoutMs);
 		leftGearboxMaster.config_kI(Constants.carriagePID, Constants.carriageI, Constants.kTimeoutMs);
 		leftGearboxMaster.config_kD(Constants.carriagePID, Constants.carriageD, Constants.kTimeoutMs);	
+		leftGearboxMaster.config_IntegralZone(Constants.carriagePID, Constants.carriageIZone, Constants.kTimeoutMs);
 
 		leftGearboxMaster.config_kF(Constants.interstagePID, Constants.interstageF, Constants.kTimeoutMs);		
 		leftGearboxMaster.config_kP(Constants.interstagePID, Constants.interstageP, Constants.kTimeoutMs);		
 		leftGearboxMaster.config_kI(Constants.interstagePID, Constants.interstageI, Constants.kTimeoutMs);		
        	leftGearboxMaster.config_kD(Constants.interstagePID, Constants.interstageD, Constants.kTimeoutMs);	
-        
+		leftGearboxMaster.config_IntegralZone(Constants.interstagePID, Constants.interstageIZone, Constants.kTimeoutMs);
+		
+		//Motion Magic Constants
+		leftGearboxMaster.configMotionCruiseVelocity(Constants.elevatorCruiseVelocity, Constants.kTimeoutMs);
+		leftGearboxMaster.configMotionAcceleration(Constants.elevatorAcceleration, Constants.kTimeoutMs);
+
+		//set up follows and invert
         rightGearboxSRX.follow(leftGearboxMaster);
         rightGearboxSPX.follow(leftGearboxMaster);
         leftGearboxSPX.follow(leftGearboxMaster);
@@ -71,19 +80,17 @@ public class Elevator
 	
     public static void stopElevator()
     {
-        moveElevator(0);
+        leftGearboxMaster.stopMotor();
     }
     
     public static void moveElevator(double speed)
     {
         leftGearboxMaster.set(ControlMode.PercentOutput, speed);
-        //leftGearboxMasterSPX.set(ControlMode.PercentOutput, -speed);
-        //rightGearboxSPX.set(ControlMode.PercentOutput, -speed);
     }
     
     public static void moveElevatorPosition(double position)
     {
-        leftGearboxMaster.set(ControlMode.Position, position);
+        leftGearboxMaster.set(ControlMode.MotionMagic, position);
     }
 
 	public static boolean reachedBottom()
@@ -122,21 +129,21 @@ public class Elevator
 	public static void moveSwitch()
 	{
 		leftGearboxMaster.selectProfileSlot(Constants.carriagePID, 0);
-		Wrist.moveToFlat();
+		//Wrist.moveToFlat();
 		moveElevatorPosition(Constants.sWitch);
 	}
 	
 	public static void moveLowerScale()
 	{
 		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
-		Wrist.moveToFlat();
+		//Wrist.moveToFlat();
 		moveElevatorPosition(Constants.lowerScale);		
 	}
 	
 	public static void moveScale()
 	{
 		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
-		Wrist.moveToFlat();
+		//Wrist.moveToFlat();
 		moveElevatorPosition(Constants.scale);
 	}
 	
@@ -147,8 +154,8 @@ public class Elevator
 		{
 			if(IntakeWheels.getIntakeBannerSensor())//no cube
 			{	
-				Wrist.wristMotor.selectProfileSlot(Constants.noCubePID, 0);
-				Wrist.moveUp();
+				//Wrist.wristMotor.selectProfileSlot(Constants.noCubePID, 0);
+				//Wrist.moveUp();
 			}
 			if(reachedBottom())
 			{

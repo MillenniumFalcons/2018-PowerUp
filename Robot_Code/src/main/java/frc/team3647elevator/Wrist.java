@@ -35,7 +35,7 @@ public class Wrist
 	
 	public static void stopWrist()
 	{
-		moveWrist(0);
+		wristMotor.stopMotor();
 	}
 	
 	public static void configWristPID()
@@ -43,15 +43,23 @@ public class Wrist
 		wristMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Constants.kTimeoutMs);
 		wristMotor.setSensorPhase(true);
 		wristMotor.selectProfileSlot(Constants.cubePID, 0);
+
 		wristMotor.config_kF(Constants.noCubePID, Constants.noCubeF, Constants.kTimeoutMs);
 		wristMotor.config_kP(Constants.noCubePID, Constants.noCubeP, Constants.kTimeoutMs);
 		wristMotor.config_kI(Constants.noCubePID, Constants.noCubeI, Constants.kTimeoutMs);
 		wristMotor.config_kD(Constants.noCubePID, Constants.noCubeD, Constants.kTimeoutMs);	
+		wristMotor.config_IntegralZone(Constants.noCubePID, Constants.noCubeIZone, Constants.kTimeoutMs);
 
 		wristMotor.config_kF(Constants.cubePID, Constants.cubeF, Constants.kTimeoutMs);		
 		wristMotor.config_kP(Constants.cubePID, Constants.cubeP, Constants.kTimeoutMs);		
 		wristMotor.config_kI(Constants.cubePID, Constants.cubeI, Constants.kTimeoutMs);		
 		wristMotor.config_kD(Constants.cubePID, Constants.cubeD, Constants.kTimeoutMs);		
+		wristMotor.config_IntegralZone(Constants.cubePID, Constants.cubeIZone, Constants.kTimeoutMs);
+
+		//Config Motion Magic
+		wristMotor.configMotionAcceleration(Constants.wristAcceleration, Constants.kTimeoutMs);
+		wristMotor.configMotionCruiseVelocity(Constants.wristCruiseVelocity, Constants.kTimeoutMs);
+
 	}
 	
 	public static DigitalInput limitSwitch = new DigitalInput(Constants.wristLimitSwitch); 
@@ -170,7 +178,7 @@ public class Wrist
 
 	public static void moveWristPosition(double position)
 	{
-		wristMotor.set(ControlMode.Position, position);
+		wristMotor.set(ControlMode.MotionMagic, position);
 	}
 
 	public static void moveAim()
