@@ -44,12 +44,12 @@ public class Elevator
 		leftGearboxMaster.config_kF(Constants.interstagePID, Constants.interstageF, Constants.kTimeoutMs);		
 		leftGearboxMaster.config_kP(Constants.interstagePID, Constants.interstageP, Constants.kTimeoutMs);		
 		leftGearboxMaster.config_kI(Constants.interstagePID, Constants.interstageI, Constants.kTimeoutMs);		
-       	 	leftGearboxMaster.config_kD(Constants.interstagePID, Constants.interstageD, Constants.kTimeoutMs);	
+       	leftGearboxMaster.config_kD(Constants.interstagePID, Constants.interstageD, Constants.kTimeoutMs);	
         
-        	rightGearboxSRX.follow(leftGearboxMaster);
-        	rightGearboxSPX.follow(leftGearboxMaster);
-        	leftGearboxSPX.follow(leftGearboxMaster);
-        	rightGearboxSRX.setInverted(true);
+        rightGearboxSRX.follow(leftGearboxMaster);
+        rightGearboxSPX.follow(leftGearboxMaster);
+        leftGearboxSPX.follow(leftGearboxMaster);
+        rightGearboxSRX.setInverted(true);
 		rightGearboxSPX.setInverted(true);
 		leftGearboxMaster.setInverted(true);
 		leftGearboxSPX.setInverted(true);
@@ -121,29 +121,34 @@ public class Elevator
     	
 	public static void moveSwitch()
 	{
-		Wrist.moveWristPosition(Constants.flat);
+		leftGearboxMaster.selectProfileSlot(Constants.carriagePID, 0);
+		Wrist.moveToFlat();
 		moveElevatorPosition(Constants.sWitch);
 	}
 	
 	public static void moveLowerScale()
 	{
-		Wrist.moveWristPosition(Constants.flat);
+		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
+		Wrist.moveToFlat();
 		moveElevatorPosition(Constants.lowerScale);		
 	}
 	
 	public static void moveScale()
 	{
-		Wrist.moveWristPosition(Constants.flat);
-		moveElevatorPosition(Constants.Scale);
+		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
+		Wrist.moveToFlat();
+		moveElevatorPosition(Constants.scale);
 	}
 	
 	public static void moveBottom(boolean moveWristUp)
 	{
+		leftGearboxMaster.selectProfileSlot(Constants.carriagePID, 0);
 		if(moveWristUp)
 		{
-			if(IntakeWheels.getIntakeBannerSensor)//no cube
+			if(IntakeWheels.getIntakeBannerSensor())//no cube
 			{	
-				Wrist.moveWristPosition(Constants.up);
+				Wrist.wristMotor.selectProfileSlot(Constants.noCubePID, 0);
+				Wrist.moveUp();
 			}
 			if(reachedBottom())
 			{
@@ -177,22 +182,18 @@ public class Elevator
 		}
 		if(bottom)
 		{
-			leftGearboxMaster.selectProfileSlot(Constants.carriagePID, 0);
 			aimedElevatorState = 1;
 		}
 		else if(sWitch)
 		{
-			leftGearboxMaster.selectProfileSlot(Constants.carriagePID, 0);
 			aimedElevatorState = 2;
 		}
 		else if(lowerScale)
 		{
-			leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
 			aimedElevatorState = 3;
 		}
 		else if(scale)
 		{
-			leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
 			aimedElevatorState = 4;
 		}
         switch(aimedElevatorState)
@@ -200,6 +201,7 @@ public class Elevator
 			case 0:
 				moveBottom(false);
 			break;
+			case 1:
 				moveBottom(true);
 			break;
 			case 2:
@@ -257,7 +259,7 @@ public class Elevator
 	
 	public static boolean reachedLowerScale()
 	{
-		if(elevatorEncoderValue > Constants.lowerScale - 2500 && elevatorEncoderValue < Constants.lowerScale + 2500)
+		if(elevatorEncoderValue > Constants.lowerScale - 2000 && elevatorEncoderValue < Constants.lowerScale + 2500)
 		{
 			return true;
 		}
@@ -269,7 +271,7 @@ public class Elevator
 	
 	public static boolean reachedScale()
 	{
-		if(elevatorEncoderValue > Constants.scale - 3000 && elevatorEncoderValue < Constants.scale + 3000)
+		if(elevatorEncoderValue > Constants.scale - 2000 && elevatorEncoderValue < Constants.scale + 3000)
 		{
 			return true;
 		}
@@ -281,7 +283,7 @@ public class Elevator
 	
 	public static boolean reachedClimb()
 	{
-		if(elevatorEncoderValue > Constants.climb - 2200 && elevatorEncoderValue < Constants.climb + 2200)
+		if(elevatorEncoderValue > Constants.climb - 2000 && elevatorEncoderValue < Constants.climb + 2200)
 		{
 			return true;
 		}

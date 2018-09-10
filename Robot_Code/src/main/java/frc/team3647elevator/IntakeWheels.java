@@ -48,21 +48,17 @@ public class IntakeWheels
 	
 	public static void shoot(double speed)
 	{
-		runIntake(0, 0, true, speed, speed);
+		runIntake(0, 0, true, speed, speed, false);
 	}
 	
 	public static void pickUp(double speed)
 	{
-		runIntake(0, 0, true, -speed, -speed);
+		runIntake(0, 0, true, -speed, -speed, false);
 	}
-	
-	public static void poopyShoot()
-	{
-		runIntake(
 	
 	public static void manuallyRunIntake(double lSpeed, double rSpeed)
 	{
-		runIntake(0, 0, true, lSpeed, rSpeed);
+		runIntake(0, 0, true, lSpeed, rSpeed, false);
 	}
 	
 	public static boolean getIntakeBannerSensor()

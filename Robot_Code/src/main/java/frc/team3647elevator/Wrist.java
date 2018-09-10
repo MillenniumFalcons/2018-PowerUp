@@ -147,6 +147,7 @@ public class Wrist
 		if(reachedFlat())
 		{
 			stopWrist();
+			resetWristEncoder();
 		}
 		else
 		{
@@ -166,7 +167,21 @@ public class Wrist
 			manualOverride = true;
 		}
 	}
+
+	public static void moveWristPosition(double position)
+	{
+		wristMotor.set(ControlMode.Position, position);
+	}
+
+	public static void moveAim()
+	{
+		moveWristPosition(Constants.aim);
+	}
 	
+	public static void moveUp()
+	{
+		moveWristPosition(Constants.up);
+	}
 	public static void runWrist()
 	{
 		int wristPID;
@@ -201,10 +216,10 @@ public class Wrist
 				moveToFlat();
 				break;
 			case 2:
-				wristMotor.set(ControlMode.Position, Constants.aim);
+				moveAim();
 				break;
 			case 3:
-				wristMotor.set(ControlMode.Position, Constants.up);
+				moveUp();
 				break;
 			case -1:
 				if(!manualOverride)

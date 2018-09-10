@@ -34,7 +34,7 @@ public class Constants
 	public final static int elevatorBannerSensor = 9;
 	
 	public static final double bottom = 0;
-	public static final double sWitch = 13000;
+	public static final double sWitch = 16000;
 	public static final double lowerScale = 38000;
 	public static final double scale = 45000;
 	public static final double climb = 11000;
@@ -101,15 +101,14 @@ public class Constants
 	public final static int drivePID = 0;
 	public final static boolean kSensorPhase = true;
 	public final static boolean kMotorInvert = false;
-	public final static double lDrivekF = 0.577966;
-	public final static double lDrivekP = 0;
+	public final static double lDrivekF = 0.7;
+	public final static double lDrivekP = .68;
 	public final static double lDrivekI = 0;
 	public final static double lDrivekD = 0;
-	public final static double rDrivekF = 0.571189;
-	public final static double rDrivekP = 0;
+	public final static double rDrivekF = 0.66;
+	public final static double rDrivekP = .68;
 	public final static double rDrivekI = 0;
 	public final static double rDrivekD = 0;
-	public final static double velocityConstant = 1770;
-	public final static double deadZone = 0.05;
+	public final static double velocityConstant = 1872;
 
 }

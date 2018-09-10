@@ -1,7 +1,5 @@
 package frc.robot;
 
-import java.beans.Encoder;
-
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -14,6 +12,7 @@ import frc.team3647elevator.IntakeWheels;
 import frc.team3647elevator.Wrist;
 import frc.team3647pistons.Compressor007;
 import frc.team3647pistons.Forks;
+import frc.team3647pistons.Intake;
 import frc.team3647pistons.Lock;
 import frc.team3647pistons.Shifter;
 import frc.team3647subsystems.Drivetrain;
@@ -144,7 +143,7 @@ public class Robot extends IterativeRobot
 			runPistonsandForks();
 			runDrivetrain();
 			runElevator();
-			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0, , joy.leftBumper1);
+			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0, joy.leftBumper1);
 			runWrist();
 			Lights.runLights();
 			runTests();
