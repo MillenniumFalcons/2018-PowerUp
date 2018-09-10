@@ -109,13 +109,11 @@ public class Autonomous
 				Wrist.wristMotor.set(ControlMode.Position, Constants.up);
 				if(Elevator.elevatorEncoderValue == 0)
 				{
-					stopWatch.stop();
 					Elevator.stopElevator();
 					currentState = 3;
 				}
 				else if(stopWatch.get() > 1.5)
 				{
-					stopWatch.stop();
 					Elevator.stopElevator();
 					currentState = 3;
 				}
@@ -125,7 +123,6 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				stopWatch.stop();//
 				double totalScaleDist = 19000;
 				if(enc.rightEncoderValue < 500)
 				{
@@ -159,14 +156,12 @@ public class Autonomous
 				{
 					//Elevator.moveElevatorPosition(Constants.Scale);
 					//moveWristDownWhileRunning();
-					prevLeftEncoder = enc.leftEncoderValue;
 					prevRightEncoder = enc.rightEncoderValue;
 					currentState = 4;
 				}
 				break;
 			case 4:
 				rValue = enc.rightEncoderValue - prevRightEncoder;
-				lValue = enc.leftEncoderValue - prevLeftEncoder;
 				//Elevator.moveElevatorPosition(Constants.Scale);
 				//moveWristDownWhileRunning();
 				double rotateRightDist = 3000;
@@ -181,30 +176,32 @@ public class Autonomous
 				else
 				{
 					Drivetrain.stop();
+					prevTime = stopWatch.get();
 					currentState = 5;
 				}
 				break;
 			case 5:
-				stopWatch.stop();
 				//Elevator.moveElevatorPosition(Constants.Scale);
-				if(stopWatch.get() == 0 && enc.rightEncoderValue == 0)
+				currTime = stopWatch.get() - prevTime;
+				if(Drivetrain.stopped())
 				{
+					prevTime = stopWatch.get();
 					currentState = 6;
-					stopWatch.start();
+				}
+				else if(currTime < .4)
+				{
+
 				}
 				else
 				{
-					stopWatch.reset();
-					enc.resetEncoders();
+					prevTime = stopWatch.get();
+					currentState = 6;
 				}
 				break;
 			case 6:
+				currTime = stopWatch.get() - prevTime;
 				//Elevator.moveElevatorPosition(Constants.Scale);
-				if(stopWatch.get() < .1)
-				{
-					
-				}
-				else if(stopWatch.get() < .6)
+				if(currTime < .3)
 				{
 					IntakeWheels.runIntake(0, 0, true, -1, -1, false);
 					enc.resetEncoders();
@@ -224,6 +221,7 @@ public class Autonomous
 				else if(enc.rightEncoderValue < spinDist)
 				{
 					Drivetrain.setSpeed(-.25, .25);
+					IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 					//Elevator.moveBottom(false);
 				}
 				else
@@ -234,6 +232,9 @@ public class Autonomous
 				}
 				break;
 			case 8:
+				
+				break;
+			case 9:
 				currTime = stopWatch.get() - prevTime;
 				double straightDistForCube = 5000;
 				if(currTime < .35)
@@ -272,13 +273,11 @@ public class Autonomous
 				Wrist.wristMotor.set(ControlMode.Position, Constants.up);
 				if(Elevator.elevatorEncoderValue == 0)
 				{
-					stopWatch.stop();
 					Elevator.stopElevator();
 					currentState = 2;
 				}
 				else if(stopWatch.get() > 1.5)
 				{
-					stopWatch.stop();
 					Elevator.stopElevator();
 					currentState = 2;
 				}
@@ -344,40 +343,27 @@ public class Autonomous
 				else 
 				{
 					Drivetrain.stop();
+					prevTime = stopWatch.get();
 					currentState = 4;
 				}
 				break;
 			case 4:
-				stopWatch.stop();
+				currTime = stopWatch.get() - prevTime;
 				//Elevator.moveElevatorPosition(Constants.Switch);
-				if(stopWatch.get() == 0)
-				{
-					currentState = 5;
-					stopWatch.start();
-				}
-				else
-				{
-					stopWatch.reset();
-				}
-				break;
-			case 5:
-				//Elevator.moveElevatorPosition(Constants.Switch);
-				if(stopWatch.get() < .6)
-				{
-					IntakeWheels.runIntake(0, 0, true, -.8, -.8, false);
-				}
-				else if(enc.rightEncoderValue != 0)
+				if(currTime < .4)
 				{
 					enc.resetEncoders();
+					if(currTime > .2)
+					{
+						IntakeWheels.runIntake(0, 0, true, -.8, -.8, false);
+					}
 				}
 				else 
 				{
-					stopWatch.stop();
-					stopWatch.reset();
-					currentState = 6;
+					currentState = 5;
 				}
 				break;
-			case 6:
+			case 5:
 				double backUpDist = 2000;
 				Elevator.moveElevator(-.3);
 				rValue = Math.abs(enc.rightEncoderValue);
@@ -388,36 +374,23 @@ public class Autonomous
 				else 
 				{
 					Drivetrain.stop();
-					currentState = 7;
+					prevTime = stopWatch.get();
+					currentState = 6;
 				}
 				break;
-			case 7:
-				stopWatch.stop();
-				//Elevator.moveBottom(false);
-				if(stopWatch.get() == 0)
-				{
-					prevRightEncoder = enc.rightEncoderValue;
-					currentState = 8;
-					stopWatch.start();
-				}
-				else
-				{
-					stopWatch.reset();
-				}
-				break;
-			case 8:
-				if(stopWatch.get() < .6)
+			case 6:
+				currTime = stopWatch.get() - prevTime;
+				if(currTime < .6)
 				{
 					//Elevator.moveBottom(false);
 				}
 				else 
 				{
-					stopWatch.stop();
-					currentState = 9;
+					prevRightEncoder = enc.rightEncoderValue;
+					currentState = 7;
 				}
 				break;
-			case 9:
-				stopWatch.stop();
+			case 7:
 				Wrist.moveWrist(-.3);
 				double deliverDist = 3000;
 				rValue = enc.rightEncoderValue - prevRightEncoder;
@@ -430,23 +403,23 @@ public class Autonomous
 				{
 					intakeCube();
 					Drivetrain.stop();
-					stopWatch.reset();
 				}
 				else 
 				{
 					intakeCube();
 					Drivetrain.stop();
-					currentState = 10;
-					stopWatch.start();
+					prevTime = stopWatch.get();
+					currentState = 8;
 				}
 				break;
-			case 10:
-				if(stopWatch.get() < .2)
+			case 8:
+				currTime = stopWatch.get() - prevTime;
+				if(currTime < .2)
 				{
 					intakeCube();
 					enc.resetEncoders();
 				}
-				else if(stopWatch.get() < .4)
+				else if(currTime < .4)
 				{
 					Intake.closeIntake();
 					IntakeWheels.runIntake(0, 0, true, .25, .25, false);
@@ -455,11 +428,10 @@ public class Autonomous
 				else 
 				{
 					IntakeWheels.runIntake(0, 0, true, .12, .12, false);
-					stopWatch.stop();
-					currentState = 11;
+					currentState = 9;
 				}
 				break;
-			case 11:
+			case 9:
 				rValue = Math.abs(enc.rightEncoderValue);
 				if(enc.rightEncoderValue < 2000)
 				{
@@ -468,34 +440,23 @@ public class Autonomous
 				else 
 				{
 					Drivetrain.stop();
-					currentState = 12;
+					prevTime = stopWatch.get();
+					currentState = 10;
 				}
 				break;
-			case 12:
-				stopWatch.stop();
-				if(stopWatch.get() == 0)
-				{
-					currentState = 13;
-					stopWatch.start();
-				}
-				else
-				{
-					stopWatch.reset();
-				}
-				break;
-			case 13:
+			case 10:
+				currTime = stopWatch.get() - prevTime;
 				//Elevator.moveElevatorPosition(Constants.Switch);
-				if(stopWatch.get() > 1 && enc.rightEncoderValue == 0)
+				if(currTime > 1 && enc.rightEncoderValue == 0)
 				{
-					stopWatch.stop();
-					currentState = 14;
+					currentState = 11;
 				}
 				else 
 				{
 					enc.resetEncoders();
 				}
 				break;
-			case 14:
+			case 11:
 				//Elevator.moveElevatorPosition(Constants.Switch);
 				if(enc.rightEncoderValue < 2000)
 				{
@@ -534,13 +495,11 @@ public class Autonomous
 				Wrist.wristMotor.set(ControlMode.Position, Constants.up);
 				if(Elevator.elevatorEncoderValue == 0)
 				{
-					stopWatch.stop();
 					Elevator.stopElevator();
 					currentState = 2;
 				}
 				else if(stopWatch.get() > 1.5)
 				{
-					stopWatch.stop();
 					Elevator.stopElevator();
 					currentState = 2;
 				}
@@ -580,7 +539,7 @@ public class Autonomous
 					currentState = 3;
 				}
 				break;
-			case 3:
+			case 3:	
 				double firstTurn = 3000;
 				double straightForAWhile = 2000;
 				double secondTurn = 3200;
@@ -614,40 +573,27 @@ public class Autonomous
 				else 
 				{
 					Drivetrain.stop();
-					currentState = 4;
+					prevTime = stopWatch.get();
+					urrentState = 4;
 				}
 				break;
 			case 4:
-				stopWatch.stop();
+				currTime = stopWatch.get() - prevTime;
 				//Elevator.moveElevatorPosition(Constants.Switch);
-				if(stopWatch.get() == 0)
-				{
-					currentState = 5;
-					stopWatch.start();
-				}
-				else
-				{
-					stopWatch.reset();
-				}
-				break;
-			case 5:
-				//Elevator.moveElevatorPosition(Constants.Switch);
-				if(stopWatch.get() < .6)
-				{
-					IntakeWheels.runIntake(0, 0, true, -.8, -.8, false);
-				}
-				else if(enc.rightEncoderValue != 0)
+				if(currTime < .4)
 				{
 					enc.resetEncoders();
+					if(currTime > .2)
+					{
+						IntakeWheels.runIntake(0, 0, true, -.8, -.8, false);
+					}
 				}
 				else 
 				{
-					stopWatch.stop();
-					stopWatch.reset();
-					currentState = 6;
+					currentState = 5;
 				}
 				break;
-			case 6:
+			case 5:
 				double backUpDist = 2000;
 				Elevator.moveElevator(-.3);
 				rValue = Math.abs(enc.rightEncoderValue);
@@ -658,36 +604,23 @@ public class Autonomous
 				else 
 				{
 					Drivetrain.stop();
-					currentState = 7;
+					prevTime = stopWatch.get();
+					currentState = 6;
 				}
 				break;
-			case 7:
-				stopWatch.stop();
-				//Elevator.moveBottom(false);
-				if(stopWatch.get() == 0)
-				{
-					prevRightEncoder = enc.rightEncoderValue;
-					currentState = 8;
-					stopWatch.start();
-				}
-				else
-				{
-					stopWatch.reset();
-				}
-				break;
-			case 8:
-				if(stopWatch.get() < .6)
+			case 6:
+				currTime = stopWatch.get() - prevTime;
+				if(currTime < .6)
 				{
 					//Elevator.moveBottom(false);
 				}
 				else 
 				{
-					stopWatch.stop();
-					currentState = 9;
+					prevRightEncoder = enc.rightEncoderValue;
+					currentState = 7;
 				}
 				break;
-			case 9:
-				stopWatch.stop();
+			case 7:
 				Wrist.moveWrist(-.3);
 				double deliverDist = 3000;
 				rValue = enc.rightEncoderValue - prevRightEncoder;
@@ -700,23 +633,23 @@ public class Autonomous
 				{
 					intakeCube();
 					Drivetrain.stop();
-					stopWatch.reset();
 				}
 				else 
 				{
 					intakeCube();
 					Drivetrain.stop();
-					currentState = 10;
-					stopWatch.start();
+					prevTime = stopWatch.get();
+					currentState = 8;
 				}
 				break;
-			case 10:
-				if(stopWatch.get() < .2)
+			case 8:
+				currTime = stopWatch.get() - prevTime;
+				if(currTime < .2)
 				{
 					intakeCube();
 					enc.resetEncoders();
 				}
-				else if(stopWatch.get() < .4)
+				else if(currTime < .4)
 				{
 					Intake.closeIntake();
 					IntakeWheels.runIntake(0, 0, true, .25, .25, false);
@@ -725,11 +658,10 @@ public class Autonomous
 				else 
 				{
 					IntakeWheels.runIntake(0, 0, true, .12, .12, false);
-					stopWatch.stop();
-					currentState = 11;
+					currentState = 9;
 				}
 				break;
-			case 11:
+			case 9:
 				rValue = Math.abs(enc.rightEncoderValue);
 				if(enc.rightEncoderValue < 2000)
 				{
@@ -738,34 +670,23 @@ public class Autonomous
 				else 
 				{
 					Drivetrain.stop();
-					currentState = 12;
+					prevTime = stopWatch.get();
+					currentState = 10;
 				}
 				break;
-			case 12:
-				stopWatch.stop();
-				if(stopWatch.get() == 0)
-				{
-					currentState = 13;
-					stopWatch.start();
-				}
-				else
-				{
-					stopWatch.reset();
-				}
-				break;
-			case 13:
+			case 10:
+				currTime = stopWatch.get() - prevTime;
 				//Elevator.moveElevatorPosition(Constants.Switch);
-				if(stopWatch.get() > 1 && enc.rightEncoderValue == 0)
+				if(currTime > 1 && enc.rightEncoderValue == 0)
 				{
-					stopWatch.stop();
-					currentState = 14;
+					currentState = 11;
 				}
 				else 
 				{
 					enc.resetEncoders();
 				}
 				break;
-			case 14:
+			case 11:
 				//Elevator.moveElevatorPosition(Constants.Switch);
 				if(enc.rightEncoderValue < 2000)
 				{
@@ -791,7 +712,7 @@ public class Autonomous
 				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0)
 				{
 					stopWatch.start();
-					currentState = 3;
+					currentState = 2;
 				}
 				else
 				{
@@ -805,23 +726,20 @@ public class Autonomous
 				Wrist.wristMotor.set(ControlMode.Position, Constants.up);
 				if(Elevator.elevatorEncoderValue == 0)
 				{
-					stopWatch.stop();
 					Elevator.stopElevator();
-					currentState = 3;
+					currentState = 2;
 				}
 				else if(stopWatch.get() > 1.5)
 				{
-					stopWatch.stop();
 					Elevator.stopElevator();
-					currentState = 3;
+					currentState = 2;
 				}
 				else
 				{
 					Elevator.moveElevator(-.3);
 				}
 				break;
-			case 3:
-				stopWatch.stop();//
+			case 2:
 				double totalScaleDist = 19000;
 				if(enc.rightEncoderValue < 500)
 				{
@@ -855,14 +773,12 @@ public class Autonomous
 				{
 					//Elevator.moveElevatorPosition(Constants.Scale);
 					//moveWristDownWhileRunning();
-					prevLeftEncoder = enc.leftEncoderValue;
 					prevRightEncoder = enc.rightEncoderValue;
-					currentState = 4;
+					currentState = 3;
 				}
 				break;
-			case 4:
+			case 3:
 				rValue = enc.rightEncoderValue - prevRightEncoder;
-				lValue = enc.leftEncoderValue - prevLeftEncoder;
 				//Elevator.moveElevatorPosition(Constants.Scale);
 				//moveWristDownWhileRunning();
 				double rotateRightDist = 4000;
@@ -877,36 +793,24 @@ public class Autonomous
 				else
 				{
 					Drivetrain.stop();
-					currentState = 5;
+					prevTime = stopWatch.get();
+					currentState = 4;
 				}
 				break;
-			case 5:
+			case 4:
 				//Elevator.moveElevatorPosition(Constants.Scale);
 				//moveWristDownWhileRunning();
-				stopWatch.stop();
-				if(stopWatch.get() == 0)
-				{
-					currentState = 6;
-					stopWatch.start();
-				}
-				else
-				{
-					stopWatch.reset();
-				}
-				break;
-			case 6:
-				//Elevator.moveElevatorPosition(Constants.Scale);
-				//moveWristDownWhileRunning();
-				if(stopWatch.get() < .55)
+				currTime = stopWatch.get() - prevTime;
+				if(currTime < .55)
 				{
 					IntakeWheels.runIntake(0, 0, true, -.8, -.8, false);
 				}
 				else
 				{
+					IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 					if(enc.rightEncoderValue == 0 && enc.rightEncoderValue == 0)
 					{
-						stopWatch.stop();
-						currentState = 7;
+						currentState = 5;
 					}
 					else 
 					{
@@ -914,7 +818,7 @@ public class Autonomous
 					}
 				}
 				break;
-			case 7:
+			case 5:
 				//Elevator.moveElevatorPosition(Constants.Scale);
 				rValue = Math.abs(enc.rightEncoderValue);
 				if(rValue < 3000)
@@ -928,10 +832,10 @@ public class Autonomous
 				else 
 				{
 					Drivetrain.stop();
-					currentState = 8;
+					currentState = 6;
 				}
 				break;
-			case 8:
+			case 6:
 				if(Elevator.reachedBottom())
 				{
 					Elevator.stopElevator();
