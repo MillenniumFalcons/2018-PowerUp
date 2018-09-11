@@ -101,7 +101,7 @@ public class Drivetrain
 		else if(yValue != 0 && xValue != 0)
 		{
 			yValue = Math.pow(yValue, powerOfStraight);
-			xValue = Math.pow(xValue, powerOfStraight);
+			xValue = Math.pow(xValue, powerOfTurn);
 			yValue *= speedOfStraight;
 			xValue *= speedOfTurn;
 			setSpeed(yValue + xValue, yValue - xValue);
