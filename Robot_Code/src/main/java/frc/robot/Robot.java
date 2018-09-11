@@ -105,7 +105,7 @@ public class Robot extends IterativeRobot
 			Elevator.setElevatorEncoder();
 			Wrist.setLimitSwitch();
 			Wrist.setWristEncoder();
-			Autonomous.testRotate(enc);
+			Autonomous.chezyDoubleSwitchRightFromRight(enc);
 		}
 	}
 	
@@ -175,7 +175,6 @@ public class Robot extends IterativeRobot
 	public void testPeriodic() 
 	{
 		updateJoysticks();
-		Autonomous.countSkip(joy.buttonA, enc);
 	}
 	
 	

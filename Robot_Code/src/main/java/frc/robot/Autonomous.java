@@ -2,7 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Timer;
 import frc.team3647ConstantsAndFunctions.Constants;
-import frc.team3647ConstantsAndFunctions.Functions;
 import frc.team3647elevator.Elevator;
 import frc.team3647elevator.IntakeWheels;
 import frc.team3647elevator.Wrist;
@@ -23,6 +22,7 @@ public class Autonomous
 	//Other variables for auto
 	static double prevLeftEncoder, prevRightEncoder;
 	static int currentState;
+	static double newLenc, newRenc, oldLenc, oldRenc;
 	static double lSSpeed, rSSpeed, speed, sum, rValue, lValue;
 	static double currTime, prevTime;
 	static int b;
@@ -146,12 +146,12 @@ public class Autonomous
 				double totalScaleDist = 19000;
 				if(enc.rightEncoderValue < 500)
 				{
-					//wristMotor.set(ControlMode.Position, Constants.up);
+					//Wrist.moveUp();
 					Drivetrain.setSpeed(.4, .4);
 				}
 				else if(enc.rightEncoderValue < 1500)
 				{
-					//wristMotor.set(ControlMode.Position, Constants.up);
+					//Wrist.moveUp();
 					Drivetrain.setSpeed(.62, .62);
 				}
 				else if(enc.rightEncoderValue < 10000)
@@ -309,27 +309,23 @@ public class Autonomous
 			case 2:
 				//Wrist.moveUp();
 				double straightDist = 10000;
-				if(enc.rightEncoderValue < 500)
+				if(enc.rightEncoderValue < (straightDist/3.0))
 				{
-					//wristMotor.set(ControlMode.Position, Constants.up);
-					Drivetrain.setSpeed(.4, .4);
+					//Wrist.moveUp();
+					speed = speedUp(.25, .8, (straightDist/3.0), ((2 * straightDist)/3.0), enc.rightEncoderValue);
+					Drivetrain.setSpeed(speed, speed);
 				}
-				else if(enc.rightEncoderValue < 1500)
+				else if(enc.rightEncoderValue < ((2 * straightDist)/3.0))
 				{
-					//wristMotor.set(ControlMode.Position, Constants.up);
-					Drivetrain.setSpeed(.62, .62);
-				}
-				else if(enc.rightEncoderValue < straightDist - 3000)
-				{
-					//Elevator.moveElevatorPosition(Constants.Switch);
-					//moveWristDownWhileRunning();
+					//Wrist.moveUp();
 					Drivetrain.setSpeed(.8, .8);
 				}
 				else if(enc.rightEncoderValue < straightDist)
 				{
 					//Elevator.moveElevatorPosition(Constants.Switch);
 					//moveWristDownWhileRunning();
-					Drivetrain.setSpeed(.3, .3);
+					speed = slowDown(.15, .8, ((2 * straightDist)/3.0), straightDist, enc.rightEncoderValue);
+					Drivetrain.setSpeed(speed, speed);
 				}
 				else 
 				{
@@ -414,12 +410,12 @@ public class Autonomous
 				Wrist.moveWrist(-.3);
 				double deliverDist = 3000;
 				rValue = enc.rightEncoderValue - prevRightEncoder;
-				if(rValue < backUpDist)
+				if(rValue < deliverDist)
 				{
 					Drivetrain.setSpeed(.4, .4);
 					intakeCube();
 				}
-				else if(rValue > backUpDist && stopWatch.get() != 0)
+				else if(rValue > deliverDist && stopWatch.get() != 0)
 				{
 					intakeCube();
 					Drivetrain.stop();
@@ -533,12 +529,12 @@ public class Autonomous
 				double straightDist = 10000;
 				if(enc.rightEncoderValue < 500)
 				{
-					//wristMotor.set(ControlMode.Position, Constants.up);
+					//Wrist.moveUp();
 					Drivetrain.setSpeed(.4, .4);
 				}
 				else if(enc.rightEncoderValue < 1500)
 				{
-					//wristMotor.set(ControlMode.Position, Constants.up);
+					//Wrist.moveUp();
 					Drivetrain.setSpeed(.62, .62);
 				}
 				else if(enc.rightEncoderValue < straightDist - 3000)
@@ -594,7 +590,7 @@ public class Autonomous
 				{
 					Drivetrain.stop();
 					prevTime = stopWatch.get();
-					urrentState = 4;
+					currentState = 4;
 				}
 				break;
 			case 4:
@@ -644,12 +640,12 @@ public class Autonomous
 				Wrist.moveWrist(-.3);
 				double deliverDist = 3000;
 				rValue = enc.rightEncoderValue - prevRightEncoder;
-				if(rValue < backUpDist)
+				if(rValue < deliverDist)
 				{
 					Drivetrain.setSpeed(.4, .4);
 					intakeCube();
 				}
-				else if(rValue > backUpDist && stopWatch.get() != 0)
+				else if(rValue > deliverDist && stopWatch.get() != 0)
 				{
 					intakeCube();
 					Drivetrain.stop();
@@ -763,12 +759,12 @@ public class Autonomous
 				double totalScaleDist = 19000;
 				if(enc.rightEncoderValue < 500)
 				{
-					//wristMotor.set(ControlMode.Position, Constants.up);
+					//Wrist.moveUp();
 					Drivetrain.setSpeed(.4, .4);
 				}
 				else if(enc.rightEncoderValue < 1500)
 				{
-					//wristMotor.set(ControlMode.Position, Constants.up);
+					//Wrist.moveUp();
 					Drivetrain.setSpeed(.62, .62);
 				}
 				else if(enc.rightEncoderValue < 10000)
