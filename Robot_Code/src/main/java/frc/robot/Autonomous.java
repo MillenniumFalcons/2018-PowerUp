@@ -54,6 +54,26 @@ public class Autonomous
 		}
 	}
 
+	public static double slowDown(double lowSpeed, double highSpeed, double lowEnc, double highEnc, double currentEnc)
+	{
+		double yDiff = highSpeed - lowSpeed;
+		double xDiff = highEnc - lowEnc;
+		double slope = -yDiff / xDiff;
+		double b = highSpeed - (slope * lowEnc);
+		double returnValue = (slope * currentEnc) + b;
+		return returnValue;
+	}
+
+	public static double speedUp(double lowSpeed, double highSpeed, double lowEnc, double highEnc, double currentEnc)
+	{
+		double yDiff = highSpeed - lowSpeed;
+		double xDiff = highEnc - lowEnc;
+		double slope = yDiff / xDiff;
+		double b = lowSpeed - (slope * lowEnc);
+		double returnValue = (slope * currentEnc) + b;
+		return returnValue;
+	}
+
 	public static boolean chechWristIdle(double wValue)
 	{
 		double up = Constants.up;
@@ -106,7 +126,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				Wrist.wristMotor.set(ControlMode.Position, Constants.up);
+				Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -270,7 +290,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				Wrist.wristMotor.set(ControlMode.Position, Constants.up);
+				Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -287,7 +307,7 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				//Wrist.wristMotor.set(ControlMode.Position, Constants.up);
+				//Wrist.moveUp();
 				double straightDist = 10000;
 				if(enc.rightEncoderValue < 500)
 				{
@@ -492,7 +512,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				Wrist.wristMotor.set(ControlMode.Position, Constants.up);
+				Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -509,7 +529,7 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				//Wrist.wristMotor.set(ControlMode.Position, Constants.up);
+				//Wrist.moveUp();
 				double straightDist = 10000;
 				if(enc.rightEncoderValue < 500)
 				{
@@ -723,7 +743,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				Wrist.wristMotor.set(ControlMode.Position, Constants.up);
+				Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
