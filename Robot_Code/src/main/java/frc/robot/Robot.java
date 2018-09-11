@@ -143,6 +143,7 @@ public class Robot extends IterativeRobot
 			runPistonsandForks();
 			runDrivetrain();
 			runElevator();
+			enc.testEncodersWithDrive(joy.buttonA);
 			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0, joy.leftBumper1);
 			runWrist();
 			Lights.runLights();
@@ -216,7 +217,7 @@ public class Robot extends IterativeRobot
 		Forks.runPiston(joy.buttonX);
 		Shifter.runPiston(joy.buttonY);
 		TiltServo.PullForks(joy.leftTrigger, joy.rightTrigger);
-		Lock.runPiston(joy.buttonA);
+		//Lock.runPiston(joy.buttonA);
 		Compressor007.runCompressor();
 	}
 	
