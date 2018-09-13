@@ -11,8 +11,6 @@ import frc.team3647pistons.Shifter;
 import frc.team3647subsystems.Drivetrain;
 import frc.team3647subsystems.Encoders;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 public class Autonomous 
 {
 	//Timer-Stuff
@@ -115,7 +113,7 @@ public class Autonomous
 				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0)
 				{
 					stopWatch.start();
-					currentState = 3;
+					currentState = 2;
 				}
 				else
 				{
@@ -130,57 +128,48 @@ public class Autonomous
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
-					currentState = 3;
+					currentState = 2;
 				}
 				else if(stopWatch.get() > 1.5)
 				{
 					Elevator.stopElevator();
-					currentState = 3;
+					currentState = 2;
 				}
 				else
 				{
 					Elevator.moveElevator(-.3);
 				}
 				break;
-			case 3:
+			case 2:
 				double totalScaleDist = 19000;
-				if(enc.rightEncoderValue < 500)
+				if(enc.rightEncoderValue < (totalScaleDist/3.0))
 				{
 					//Wrist.moveUp();
-					Drivetrain.setSpeed(.4, .4);
+					speed = speedUp(.15, .8, 0, (totalScaleDist/3.0), enc.rightEncoderValue);
+					Drivetrain.setSpeed(speed, speed);
 				}
-				else if(enc.rightEncoderValue < 1500)
-				{
-					//Wrist.moveUp();
-					Drivetrain.setSpeed(.62, .62);
-				}
-				else if(enc.rightEncoderValue < 10000)
+				else if(enc.rightEncoderValue < ((2 * totalScaleDist)/3.0))
 				{
 					//Elevator.moveElevatorPosition(Constants.Scale);
 					//moveWristDownWhileRunning();
-					Drivetrain.setSpeed(.9, .9);
-				}
-				else if(enc.rightEncoderValue < totalScaleDist - 2300)
-				{
-					//Elevator.moveElevatorPosition(Constants.Scale);
-					//moveWristDownWhileRunning();
-					Drivetrain.setSpeed(.73, .73);
+					Drivetrain.setSpeed(.8, .8);
 				}
 				else if(enc.rightEncoderValue < totalScaleDist)
 				{
 					//Elevator.moveElevatorPosition(Constants.Scale);
 					//moveWristDownWhileRunning();
-					Drivetrain.setSpeed(.3, .3);
+					speed = slowDown(.15, .8, ((2 * totalScaleDist)/3.0), totalScaleDist, enc.rightEncoderValue);
+					Drivetrain.setSpeed(speed, speed);
 				}
 				else
 				{
 					//Elevator.moveElevatorPosition(Constants.Scale);
 					//moveWristDownWhileRunning();
 					prevRightEncoder = enc.rightEncoderValue;
-					currentState = 4;
+					currentState = 3;
 				}
 				break;
-			case 4:
+			case 3:
 				rValue = enc.rightEncoderValue - prevRightEncoder;
 				//Elevator.moveElevatorPosition(Constants.Scale);
 				//moveWristDownWhileRunning();
@@ -197,10 +186,10 @@ public class Autonomous
 				{
 					Drivetrain.stop();
 					prevTime = stopWatch.get();
-					currentState = 5;
+					currentState = 4;
 				}
 				break;
-			case 5:
+			case 4:
 				//Elevator.moveElevatorPosition(Constants.Scale);
 				currTime = stopWatch.get() - prevTime;
 				if(Drivetrain.stopped())
@@ -215,25 +204,25 @@ public class Autonomous
 				else
 				{
 					prevTime = stopWatch.get();
-					currentState = 6;
+					currentState = 5;
 				}
 				break;
-			case 6:
+			case 5:
 				currTime = stopWatch.get() - prevTime;
 				//Elevator.moveElevatorPosition(Constants.Scale);
 				if(currTime < .3)
 				{
-					IntakeWheels.runIntake(0, 0, true, -1, -1, false);
+					//IntakeWheels.runIntake(0, 0, true, -1, -1, false);
 					enc.resetEncoders();
 				}
 				else 
 				{
-					currentState = 7;
+					currentState = 6;
 				}
 				break;
-			case 7:
-				double spinDist = 3000;
-				if(enc.rightEncoderValue < spinDist - 1000)
+			case 6:
+				double spinDist = 4000;
+				if(enc.rightEncoderValue < spinDist - 1300)
 				{
 					Drivetrain.setSpeed(-.5, .5);
 					//Elevator.moveElevatorPosition(Constants.Scale);
@@ -241,29 +230,52 @@ public class Autonomous
 				else if(enc.rightEncoderValue < spinDist)
 				{
 					Drivetrain.setSpeed(-.25, .25);
-					IntakeWheels.runIntake(0, 0, true, 0, 0, false);
+					//IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 					//Elevator.moveBottom(false);
 				}
 				else
 				{
 					Drivetrain.stop();
 					prevTime = stopWatch.get();
-					currentState = 8;
+					currentState = 7;
 				}
 				break;
-			case 8:
-				
-				break;
-			case 9:
+			case 7:
 				currTime = stopWatch.get() - prevTime;
-				double straightDistForCube = 5000;
-				if(currTime < .35)
+				enc.resetEncoders();
+				if(Drivetrain.stopped())
+				{
+					prevTime = stopWatch.get();
+					//Elevator.moveBottom(false);
+					currentState = 8;
+				}
+				else if(currTime < .4)
 				{
 					//Elevator.moveBottom(false);
 				}
 				else 
 				{
 					currentState = 9;
+				}
+				break;
+			case 8:
+				currTime = stopWatch.get() - prevTime;
+				//Elevator.moveBottom(false);
+				if(currTime > .1)
+				{
+					currentState = 9;
+				}
+				break;
+			case 9:
+				double straightDistForCube = 5000;
+				if(enc.rightEncoderValue < straightDistForCube - 1500)
+				{
+					Drivetrain.setSpeed(.4, .4);
+				}
+				else if(enc.rightEncoderValue < straightDistForCube)
+				{
+					Drivetrain.setSpeed(.3, .3);
+
 				}
 				break;
 		}
