@@ -41,7 +41,7 @@ public class Wrist
 	public static void configWristPID()
 	{
 		wristMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Constants.kTimeoutMs);
-		wristMotor.setSensorPhase(true);
+		wristMotor.setSensorPhase(false);
 		wristMotor.selectProfileSlot(Constants.cubePID, 0);
 
 		wristMotor.config_kF(Constants.noCubePID, Constants.noCubeF, Constants.kTimeoutMs);
@@ -81,7 +81,7 @@ public class Wrist
 		}
 	}
 	
-	public static double wristEncoderValue;
+	public static double wristEncoderValue, wristEncoderVelocity;
 	
 	public static void setWristEncoder()
 	{
@@ -89,9 +89,9 @@ public class Wrist
 		{
 			resetWristEncoder();
 		}
-		wristEncoderValue = -Wrist.wristMotor.getSensorCollection().getQuadraturePosition();
+		wristEncoderValue = wristMotor.getSelectedSensorPosition(0);
+		wristEncoderVelocity = wristMotor.getSelectedSensorVelocity(0);
 	}
-	
 	public static void resetWristEncoder()
 	{
 		wristMotor.getSensorCollection().setQuadraturePosition(0, 10);
@@ -104,7 +104,7 @@ public class Wrist
 
 	public void testWristEncoder()
 	{
-		System.out.println("Wrist Encoder Value: " + wristEncoderValue);
+		System.out.println("Wrist Encoder Value: " + wristEncoderValue + "Wrist Velocity: " + wristEncoderVelocity);
 	}
 	
 	public static void setWristButtons(boolean flatButton, boolean aimButton, boolean upButton)
