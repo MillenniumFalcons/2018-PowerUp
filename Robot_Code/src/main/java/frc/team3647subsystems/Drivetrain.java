@@ -131,7 +131,8 @@ public class Drivetrain
 	
 	public static void stop()
 	{
-		tankDrive(0,0);
+		rightSRX.stopMotor();
+		leftSRX.stopMotor();
 	}
 
 	public static boolean stopped()
