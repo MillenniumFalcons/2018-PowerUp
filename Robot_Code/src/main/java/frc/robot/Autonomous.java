@@ -272,9 +272,11 @@ public class Autonomous
 	public static void chezyDoubleSwitchRightFromRight(Encoders enc)
 	{
 		enc.setEncoderValues();
+		System.out.println(currentState);
 		switch(currentState)
 		{
 			case 0:
+				stopWatch.stop();
 				//if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && chechWristIdle(Wrist.wristEncoder))
 				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0)
 				{
@@ -307,58 +309,52 @@ public class Autonomous
 				}
 				break;
 			case 2:
+				
 				//Wrist.moveUp();
 				double straightDist = 10000;
 				if(enc.rightEncoderValue < (straightDist/3.0))
 				{
 					//Wrist.moveUp();
-					speed = speedUp(.25, .8, (straightDist/3.0), ((2 * straightDist)/3.0), enc.rightEncoderValue);
+					speed = speedUp(.25, .6, 0, (straightDist/3.0), enc.rightEncoderValue);
 					Drivetrain.setSpeed(speed, speed);
 				}
 				else if(enc.rightEncoderValue < ((2 * straightDist)/3.0))
 				{
 					//Wrist.moveUp();
-					Drivetrain.setSpeed(.8, .8);
+					Drivetrain.setSpeed(.6, .6);
 				}
 				else if(enc.rightEncoderValue < straightDist)
 				{
 					//Elevator.moveElevatorPosition(Constants.Switch);
 					//moveWristDownWhileRunning();
-					speed = slowDown(.15, .8, ((2 * straightDist)/3.0), straightDist, enc.rightEncoderValue);
+					speed = slowDown(.15, .6, ((2 * straightDist)/3.0), straightDist, enc.rightEncoderValue);
 					Drivetrain.setSpeed(speed, speed);
 				}
 				else 
 				{
+					
 					prevRightEncoder = enc.rightEncoderValue;
 					currentState = 3;
 				}
 				break;
 			case 3:
-				double firstTurn = 3000;
-				double straightForAWhile = 2000;
-				double secondTurn = 3200;
+				double firstTurn = 6050;
+				double straightForAWhile = 0;
+				double secondTurn = 3580;
 				//Elevator.moveElevatorPosition(Constants.Switch);
 				//moveWristDownWhileRunning();
 				rValue = enc.rightEncoderValue - prevRightEncoder;
-				if(rValue < firstTurn - 1000)
+				if(rValue < firstTurn + secondTurn - 1500)
 				{
 					Drivetrain.setSpeed(0, .42);
 				}
-				else if(rValue < firstTurn)
-				{
-					Drivetrain.setSpeed(0, .3);
-				}
-				else if(rValue < firstTurn + straightForAWhile)
-				{
-					Drivetrain.setSpeed(.35, .35);
-				}
-				else if(rValue < firstTurn + straightForAWhile + secondTurn)
+				else if(rValue < firstTurn + secondTurn)
 				{
 					Drivetrain.setSpeed(0, .3);
 				}
 				else 
 				{
-					Drivetrain.stop();
+				//	Drivetrain.stop();
 					prevTime = stopWatch.get();
 					currentState = 4;
 				}
@@ -371,7 +367,7 @@ public class Autonomous
 					enc.resetEncoders();
 					if(currTime > .2)
 					{
-						IntakeWheels.runIntake(0, 0, true, -.8, -.8, false);
+						//IntakeWheels.runIntake(0, 0, true, -.8, -.8, false);
 					}
 				}
 				else 
@@ -381,7 +377,7 @@ public class Autonomous
 				break;
 			case 5:
 				double backUpDist = 2000;
-				Elevator.moveElevator(-.3);
+				//Elevator.moveElevator(-.3);
 				rValue = Math.abs(enc.rightEncoderValue);
 				if(rValue < backUpDist)
 				{
@@ -407,22 +403,22 @@ public class Autonomous
 				}
 				break;
 			case 7:
-				Wrist.moveWrist(-.3);
+				//Wrist.moveWrist(-.3);
 				double deliverDist = 3000;
 				rValue = enc.rightEncoderValue - prevRightEncoder;
 				if(rValue < deliverDist)
 				{
 					Drivetrain.setSpeed(.4, .4);
-					intakeCube();
+					//intakeCube();
 				}
 				else if(rValue > deliverDist && stopWatch.get() != 0)
 				{
-					intakeCube();
+				//	intakeCube();
 					Drivetrain.stop();
 				}
 				else 
 				{
-					intakeCube();
+					//intakeCube();
 					Drivetrain.stop();
 					prevTime = stopWatch.get();
 					currentState = 8;
@@ -432,18 +428,18 @@ public class Autonomous
 				currTime = stopWatch.get() - prevTime;
 				if(currTime < .2)
 				{
-					intakeCube();
+					//intakeCube();
 					enc.resetEncoders();
 				}
 				else if(currTime < .4)
 				{
-					Intake.closeIntake();
-					IntakeWheels.runIntake(0, 0, true, .25, .25, false);
-					enc.resetEncoders();
+					// Intake.closeIntake();
+					// IntakeWheels.runIntake(0, 0, true, .25, .25, false);
+					 enc.resetEncoders();
 				}
 				else 
 				{
-					IntakeWheels.runIntake(0, 0, true, .12, .12, false);
+				//	IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 					currentState = 9;
 				}
 				break;
@@ -481,7 +477,7 @@ public class Autonomous
 				else if(enc.rightEncoderValue > 2000)
 				{
 					Drivetrain.stop();
-					IntakeWheels.runIntake(0, 0, true, -.8, -.8, false);
+					//IntakeWheels.runIntake(0, 0, true, -.8, -.8, false);
 				}
 				break;
 		}
