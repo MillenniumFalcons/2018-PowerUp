@@ -1,25 +1,9 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.MotorSafety;
-import edu.wpi.first.wpilibj.MotorSafetyHelper;
-import edu.wpi.first.wpilibj.Timer;
-import frc.team3647elevator.Elevator;
-import frc.team3647elevator.IntakeWheels;
-import frc.team3647elevator.Wrist;
-import frc.team3647pistons.Compressor007;
-import frc.team3647pistons.Forks;
-import frc.team3647pistons.Intake;
-import frc.team3647pistons.Lock;
-import frc.team3647pistons.Shifter;
-import frc.team3647subsystems.Drivetrain;
-import frc.team3647subsystems.Encoders;
-import frc.team3647subsystems.Joysticks;
-import frc.team3647subsystems.Lights;
-import frc.team3647subsystems.TiltServo;
+import edu.wpi.first.wpilibj.*;
+import frc.team3647elevator.*;
+import frc.team3647pistons.*;
+import frc.team3647subsystems.*;
 
 
 
@@ -28,6 +12,7 @@ public class Robot extends IterativeRobot
 	//Objects
 	Encoders enc;
 	Joysticks joy;
+	NavX navX;
 	Elevator eleVader;
 	Wrist wrist;
 	MotorSafety safety;
@@ -40,7 +25,7 @@ public class Robot extends IterativeRobot
 	double prevLeftEncoder = 0, prevRightEncoder = 0;
 
 	//Test Variables
-	boolean driveEncoders, driveCurrent, elevatorCurrent, elevatorEncoder, bannerSensor, currentState, wristEncoder, wristLimitSwitch, wristCurrent, intakeBanner;
+	boolean driveEncoders, driveCurrent, elevatorCurrent, elevatorEncoder, bannerSensor, currentState, wristEncoder, wristLimitSwitch, wristCurrent, intakeBanner, navXAngle;
 
 	@Override
 	public void robotInit() 
@@ -53,6 +38,8 @@ public class Robot extends IterativeRobot
 			joy = new Joysticks();
 			eleVader = new Elevator();
 			enc.resetEncoders();
+			navX.navXInitialize();
+			navX.resetAngle();
 			Elevator.resetElevatorEncoders();
 			Elevator.elevatorInitialization();
 			Drivetrain.drivetrainInitialization();
@@ -79,6 +66,7 @@ public class Robot extends IterativeRobot
 		wristLimitSwitch = false;
 		wristCurrent = false;
 		intakeBanner = false;
+		navXAngle = true;
 	}
 	
 	@Override
@@ -130,6 +118,7 @@ public class Robot extends IterativeRobot
 		Wrist.configWristPID();
 		//Wrist.aimedElevatorState = 1;
 		//ClimbButton.buttonState = 1;
+		navX.resetAngle();
 	}
 	
 	@Override
@@ -283,6 +272,10 @@ public class Robot extends IterativeRobot
 		if(intakeBanner)
 		{
 			IntakeWheels.testBannerSensor();
+		}
+		if(navXAngle)
+		{
+			navX.getAngle();
 		}
 	}
 }
