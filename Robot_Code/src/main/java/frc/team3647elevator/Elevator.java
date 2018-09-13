@@ -17,7 +17,7 @@ public class Elevator
 	 * 3. Scale
 	 * 4. Lower Scale
 	 */
-	public static int aimedElevatorState, elevatorEncoderValue;
+	public static int aimedElevatorState, elevatorEncoderValue, elevatorVelocity;
 	
 	public static boolean bottom, sWitch, scale, lowerScale, moving, manualOverride, originalPositionButton;
     public static double overrideValue;
@@ -70,7 +70,8 @@ public class Elevator
 		{
             resetElevatorEncoders();
 		}
-		elevatorEncoderValue = Elevator.leftGearboxMaster.getSensorCollection().getQuadraturePosition();
+		elevatorEncoderValue = leftGearboxMaster.getSelectedSensorPosition(0);
+		elevatorVelocity = leftGearboxMaster.getSelectedSensorVelocity(0);
 	}
 	
 	public static void resetElevatorEncoders()
@@ -128,22 +129,56 @@ public class Elevator
     	
 	public static void moveSwitch()
 	{
+		switch(currentWristState)
+		{
+			case 0:
+			if(Wrist.reachedFlat())
+			{
+				currentWristState = 1;
+			}
+			else
+			{
+				Wrist.moveToFlat();
+			}
+		}
 		leftGearboxMaster.selectProfileSlot(Constants.carriagePID, 0);
-		//Wrist.moveToFlat();
 		moveElevatorPosition(Constants.sWitch);
 	}
 	
 	public static void moveLowerScale()
 	{
+		switch(currentWristState)
+		{
+			case 0:
+			if(Wrist.reachedFlat())
+			{
+				currentWristState = 1;
+			}
+			else
+			{
+				Wrist.moveToFlat();
+			}
+		}
 		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
-		//Wrist.moveToFlat();
 		moveElevatorPosition(Constants.lowerScale);		
 	}
-	
+	public static int currentWristState = 0;
+
 	public static void moveScale()
 	{
+		switch(currentWristState)
+		{
+			case 0:
+			if(Wrist.reachedFlat())
+			{
+				currentWristState = 1;
+			}
+			else
+			{
+				Wrist.moveToFlat();
+			}
+		}
 		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
-		//Wrist.moveToFlat();
 		moveElevatorPosition(Constants.scale);
 	}
 	
@@ -153,9 +188,19 @@ public class Elevator
 		if(moveWristUp)
 		{
 			if(IntakeWheels.getIntakeBannerSensor())//no cube
-			{	
-				//Wrist.wristMotor.selectProfileSlot(Constants.noCubePID, 0);
-				//Wrist.moveUp();
+			{
+				switch(currentWristState)
+				{
+					case 0:
+					if(Wrist.reachedUp())
+					{
+						currentWristState = 1;
+					}
+					else
+					{
+						Wrist.moveUp();
+					}
+				}
 			}
 			if(reachedBottom())
 			{
@@ -185,22 +230,27 @@ public class Elevator
 	{
 		if(manualOverride)
 		{
+			currentWristState = 0;
 			aimedElevatorState = -1;
 		}
 		if(bottom)
 		{
+			currentWristState = 0;
 			aimedElevatorState = 1;
 		}
 		else if(sWitch)
 		{
+			currentWristState = 0;
 			aimedElevatorState = 2;
 		}
 		else if(lowerScale)
 		{
+			currentWristState = 0;
 			aimedElevatorState = 3;
 		}
 		else if(scale)
 		{
+			currentWristState = 0;
 			aimedElevatorState = 4;
 		}
         switch(aimedElevatorState)
@@ -232,8 +282,8 @@ public class Elevator
     
     public static void testElevatorEncoders()
     {
-        System.out.println("Elevator Encoder Value: " + elevatorEncoderValue);
-    }
+        System.out.println("Elevator Encoder Value: " + elevatorEncoderValue + "Elevator Velocity: " + elevatorVelocity);
+	}
     
     public static void testBannerSensor()
     {
