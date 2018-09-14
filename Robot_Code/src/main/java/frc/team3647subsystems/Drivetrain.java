@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.*;
 
 public class Drivetrain 
 {
-	public static double aimedRatio, currentRatio, sum, speed, turn, turnRatioR, turnRatioL, rSpeed, lSpeed;
+	public static double aimedRatio, currentRatio, sum, speed, turn, turnRatioR, turnRatioL, rSpeed, lSpeed, constant;
 	public static boolean withinRange;
 	
 	public static double initialCorrection = 0;//-.04//.085
@@ -144,6 +144,27 @@ public class Drivetrain
 		else 
 		{
 			return false;
+		}
+	}
+
+	public static void straight(double yValue, double angle)
+	{
+		if(angle != 0)
+		{
+			if(angle > 0)
+			{
+				constant = 1 - (.01 * angle);
+				setSpeed(yValue, yValue * constant);
+			}
+			else 
+			{
+				constant = 1 - (.01 * (-angle));
+				setSpeed(yValue * constant, yValue);
+			}
+		}
+		else 
+		{
+			setSpeed(yValue, yValue);
 		}
 	}
 	

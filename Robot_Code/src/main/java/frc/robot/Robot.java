@@ -37,9 +37,7 @@ public class Robot extends IterativeRobot
 			safetyChecker = new MotorSafetyHelper(safety);
 			joy = new Joysticks();
 			eleVader = new Elevator();
-			enc.resetEncoders();
-			navX.navXInitialize();
-			navX.resetAngle();
+			navX = new NavX();
 			Elevator.resetElevatorEncoders();
 			Elevator.elevatorInitialization();
 			Drivetrain.drivetrainInitialization();
@@ -66,7 +64,6 @@ public class Robot extends IterativeRobot
 		wristLimitSwitch = false;
 		wristCurrent = false;
 		intakeBanner = false;
-		navXAngle = true;
 	}
 	
 	@Override
@@ -152,6 +149,7 @@ public class Robot extends IterativeRobot
 		{
 			Autonomous.initialize(enc);
 			CrashChecker.logAutoInit();
+			navX.resetAngle();
 		}
 		catch(Throwable t)
 		{
@@ -165,6 +163,8 @@ public class Robot extends IterativeRobot
 	public void testPeriodic() 
 	{
 		updateJoysticks();
+		runDrivetrain();
+		System.out.println("NavX: " + navX.yaw);
 	}
 	
 	
@@ -212,6 +212,7 @@ public class Robot extends IterativeRobot
 	
 	public void runDrivetrain()
 	{
+		navX.setAngle();
 		enc.setEncoderValues();
 		if(joy.leftBumper)
 		{
@@ -272,10 +273,6 @@ public class Robot extends IterativeRobot
 		if(intakeBanner)
 		{
 			IntakeWheels.testBannerSensor();
-		}
-		if(navXAngle)
-		{
-			navX.getAngle();
 		}
 	}
 }
