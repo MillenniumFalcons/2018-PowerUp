@@ -106,6 +106,7 @@ public class RightAutos
 	//8.88 inches max on x, y min 310 inches
 	public static void jankScale(Encoders enc)
 	{
+		
 		enc.setEncoderValues();
 		switch(currentState)
 		{
