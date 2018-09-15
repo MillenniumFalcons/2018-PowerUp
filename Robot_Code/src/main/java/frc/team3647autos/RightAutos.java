@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.team3647autos;
 
 import edu.wpi.first.wpilibj.Timer;
 import frc.team3647ConstantsAndFunctions.Constants;
@@ -12,7 +12,7 @@ import frc.team3647subsystems.Drivetrain;
 import frc.team3647subsystems.Encoders;
 import frc.team3647subsystems.NavX;
 
-public class Autonomous 
+public class RightAutos 
 {
 	//Timer-Stuff
 	public static Timer stopWatch = new Timer();
@@ -20,7 +20,7 @@ public class Autonomous
 	
 	//Other variables for auto
 	static double prevLeftEncoder, prevRightEncoder;
-	static int currentState;
+	public static int currentState;
 	static double newLenc, newRenc, oldLenc, oldRenc;
 	static double lSSpeed, rSSpeed, speed, sum, rValue, lValue;
 	static double currTime, prevTime;
