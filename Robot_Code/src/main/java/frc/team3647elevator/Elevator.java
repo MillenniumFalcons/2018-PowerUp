@@ -140,6 +140,9 @@ public class Elevator
 			{
 				Wrist.moveToFlat();
 			}
+			break;
+			default:
+			break;
 		}
 		leftGearboxMaster.selectProfileSlot(Constants.carriagePID, 0);
 		moveElevatorPosition(Constants.sWitch);
@@ -158,6 +161,9 @@ public class Elevator
 			{
 				Wrist.moveToFlat();
 			}
+			break;
+			default:
+			break;
 		}
 		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
 		moveElevatorPosition(Constants.lowerScale);		
@@ -177,6 +183,9 @@ public class Elevator
 			{
 				Wrist.moveToFlat();
 			}
+			break;
+			default:
+			break;
 		}
 		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
 		moveElevatorPosition(Constants.scale);
@@ -200,6 +209,9 @@ public class Elevator
 					{
 						Wrist.moveUp();
 					}
+					break;
+					default:
+					break;
 				}
 			}
 			if(reachedBottom())
