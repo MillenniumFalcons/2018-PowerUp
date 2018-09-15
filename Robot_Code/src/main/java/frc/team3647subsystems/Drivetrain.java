@@ -115,9 +115,10 @@ public class Drivetrain
 
 	public static void newArcadeDrive(double yValue, double xValue)
 	{
-		if(yValue != 0 && xValue == 0)
+		if(xValue != 0 && yValue == 0)
 	 	{
-			Drivetrain.tankDrive(yValue, yValue);
+			// System.out.println(yValue);
+			Drivetrain.straight(xValue, xValue);
 	 	}
 		else if(yValue == 0 && xValue == 0)
 		{
