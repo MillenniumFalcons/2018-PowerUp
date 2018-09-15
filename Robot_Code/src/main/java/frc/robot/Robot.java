@@ -90,7 +90,7 @@ public class Robot extends IterativeRobot
 			Elevator.setElevatorEncoder();
 			Wrist.setLimitSwitch();
 			Wrist.setWristEncoder();
-			Autonomous.chezyDoubleSwitchRightFromRight(enc);
+			Autonomous.chezyDoubleSwitchRightFromRight(enc, navX);
 		}
 	}
 	

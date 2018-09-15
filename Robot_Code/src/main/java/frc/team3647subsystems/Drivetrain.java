@@ -113,20 +113,22 @@ public class Drivetrain
 		drive.curvatureDrive(throttle, turn, true);
 	}
 
-	public static void newArcadeDrive(double yValue, double xValue)
+	public static void newArcadeDrive(double yValue, double xValue, double angle, double supposedAngle)
 	{
 		if(xValue != 0 && yValue == 0)
 	 	{
 			// System.out.println(yValue);
-			Drivetrain.straight(xValue, xValue);
+			Drivetrain.straight(xValue, angle, supposedAngle);
 	 	}
 		else if(yValue == 0 && xValue == 0)
 		{
 			tankDrive(0, 0);
+			supposedAngle = angle;
 		}
 		else
 		{
 			FRCarcadedrive(yValue, xValue);
+			supposedAngle = angle;
 		}
 	}
 	
@@ -148,11 +150,11 @@ public class Drivetrain
 		}
 	}
 
-	public static void straight(double yValue, double angle)
+	public static void straight(double yValue, double angle, double supposedAngle)
 	{
-		if(angle != 0)
+		if(angle != supposedAngle)
 		{
-			if(angle > 0)
+			if(angle > supposedAngle)
 			{
 				constant = 1 - (.01 * angle);
 				setSpeed(yValue, yValue * constant);

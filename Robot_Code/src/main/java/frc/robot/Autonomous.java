@@ -10,6 +10,7 @@ import frc.team3647pistons.Intake;
 import frc.team3647pistons.Shifter;
 import frc.team3647subsystems.Drivetrain;
 import frc.team3647subsystems.Encoders;
+import frc.team3647subsystems.NavX;
 
 public class Autonomous 
 {
@@ -281,16 +282,17 @@ public class Autonomous
 		}
 	}
 
-	public static void chezyDoubleSwitchRightFromRight(Encoders enc)
+	public static void chezyDoubleSwitchRightFromRight(Encoders enc, NavX gyro)
 	{
 		enc.setEncoderValues();
+		gyro.setAngle();
 		System.out.println(currentState);
 		switch(currentState)
 		{
 			case 0:
 				stopWatch.stop();
 				//if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && chechWristIdle(Wrist.wristEncoder))
-				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0)
+				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && gyro.yaw == 0)
 				{
 					stopWatch.start();
 					currentState = 2;
@@ -299,6 +301,7 @@ public class Autonomous
 				{
 					enc.resetEncoders();
 					stopWatch.reset();
+					gyro.resetAngle();
 					//Wrist.wristMotor.getSensorCollection().setQuadraturePosition(Constants.up, 10);
 				}
 				break;
@@ -321,26 +324,25 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				
 				//Wrist.moveUp();
 				double straightDist = 10000;
 				if(enc.rightEncoderValue < (straightDist/3.0))
 				{
 					//Wrist.moveUp();
 					speed = speedUp(.25, .6, 0, (straightDist/3.0), enc.rightEncoderValue);
-					Drivetrain.setSpeed(speed, speed);
+					Drivetrain.straight(speed, gyro.yaw, 0);
 				}
 				else if(enc.rightEncoderValue < ((2 * straightDist)/3.0))
 				{
 					//Wrist.moveUp();
-					Drivetrain.setSpeed(.6, .6);
+					Drivetrain.straight(.6, gyro.yaw, 0);
 				}
 				else if(enc.rightEncoderValue < straightDist)
 				{
 					//Elevator.moveElevatorPosition(Constants.Switch);
 					//moveWristDownWhileRunning();
 					speed = slowDown(.15, .6, ((2 * straightDist)/3.0), straightDist, enc.rightEncoderValue);
-					Drivetrain.setSpeed(speed, speed);
+					Drivetrain.straight(speed, gyro.yaw, 0);
 				}
 				else 
 				{
@@ -488,16 +490,17 @@ public class Autonomous
 		}
 	}
 
-	public static void chezyDoubleSwitchleftFromRight(Encoders enc)
+	public static void chezyDoubleSwitchleftFromRight(Encoders enc, NavX gyro)
 	{
 		enc.setEncoderValues();
+		gyro.setAngle();
 		System.out.println(currentState);
 		switch(currentState)
 		{
 			case 0:
 				stopWatch.stop();
 				//if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && chechWristIdle(Wrist.wristEncoder))
-				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0)
+				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && gyro.yaw == 0)
 				{
 					stopWatch.start();
 					currentState = 2;
@@ -506,6 +509,7 @@ public class Autonomous
 				{
 					enc.resetEncoders();
 					stopWatch.reset();
+					gyro.resetAngle();
 					//Wrist.wristMotor.getSensorCollection().setQuadraturePosition(Constants.up, 10);
 				}
 				break;
@@ -534,19 +538,19 @@ public class Autonomous
 				{
 					//Wrist.moveUp();
 					speed = speedUp(.25, .6, 0, (straightDist/3.0), enc.rightEncoderValue);
-					Drivetrain.setSpeed(speed, speed);
+					Drivetrain.straight(speed, gyro.yaw, 0);
 				}
 				else if(enc.rightEncoderValue < ((2 * straightDist)/3.0))
 				{
 					//Wrist.moveUp();
-					Drivetrain.setSpeed(.6, .6);
+					Drivetrain.straight(.6, gyro.yaw, 0);
 				}
 				else if(enc.rightEncoderValue < straightDist)
 				{
 					//Elevator.moveElevatorPosition(Constants.Switch);
 					//moveWristDownWhileRunning();
 					speed = slowDown(.15, .6, ((2 * straightDist)/3.0), straightDist, enc.rightEncoderValue);
-					Drivetrain.setSpeed(speed, speed);
+					Drivetrain.straight(speed, gyro.yaw, 0);
 				}
 				else 
 				{
@@ -557,7 +561,7 @@ public class Autonomous
 				break;
 			case 3:
 				double firstTurn = 3000;
-				double straightForAWhile = 5000;
+				double straightForAWhile = 6000;
 				double secondTurn = 3200;
 				//Elevator.moveElevatorPosition(Constants.Switch);
 				//moveWristDownWhileRunning();
@@ -572,7 +576,7 @@ public class Autonomous
 				}
 				else if(rValue < firstTurn + straightForAWhile)
 				{
-					Drivetrain.setSpeed(.35, .35);
+					Drivetrain.straight(.35, gyro.yaw, -90);
 				}
 				// else if(rValue < firstTurn + straightForAWhile - 2000)
 				// {
