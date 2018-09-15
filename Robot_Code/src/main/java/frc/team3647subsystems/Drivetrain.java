@@ -15,6 +15,8 @@ public class Drivetrain
 {
 	public static double aimedRatio, currentRatio, sum, speed, turn, turnRatioR, turnRatioL, rSpeed, lSpeed, constant;
 	public static boolean withinRange;
+
+	static double supposedAngle;
 	
 	public static double initialCorrection = 0;//-.04//.085
 	public static double correction = .08;
@@ -113,8 +115,9 @@ public class Drivetrain
 		drive.curvatureDrive(throttle, turn, true);
 	}
 
-	public static void newArcadeDrive(double yValue, double xValue, double angle, double supposedAngle)
+	public static void newArcadeDrive(double yValue, double xValue, double angle)
 	{
+		
 		if(xValue != 0 && yValue == 0)
 	 	{
 			// System.out.println(yValue);
