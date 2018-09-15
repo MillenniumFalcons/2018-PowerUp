@@ -395,7 +395,7 @@ public class Autonomous
 				rValue = Math.abs(enc.rightEncoderValue);
 				if(rValue < backUpDist)
 				{
-					Drivetrain.setSpeed(-.35, -.35);
+					Drivetrain.straight(-.35, gyro.yaw, -180);
 				}
 				else 
 				{
@@ -422,7 +422,7 @@ public class Autonomous
 				rValue = enc.rightEncoderValue - prevRightEncoder;
 				if(rValue < deliverDist)
 				{
-					Drivetrain.setSpeed(.3, .3);
+					Drivetrain.straight(.35, gyro.yaw, -180);
 					//intakeCube();
 				}
 				else 
@@ -456,7 +456,7 @@ public class Autonomous
 				rValue = Math.abs(enc.rightEncoderValue);
 				if(enc.rightEncoderValue < 2000)
 				{
-					Drivetrain.setSpeed(-.35, -.35);
+					Drivetrain.straight(-.35, gyro.yaw, -180);
 				}
 				else 
 				{
@@ -481,7 +481,7 @@ public class Autonomous
 				//Elevator.moveElevatorPosition(Constants.Switch);
 				if(enc.rightEncoderValue < 2000)
 				{
-					Drivetrain.setSpeed(.35, .35);
+					Drivetrain.straight(.35, gyro.yaw, -180);
 				}
 				else if(enc.rightEncoderValue > 2000)
 				{
