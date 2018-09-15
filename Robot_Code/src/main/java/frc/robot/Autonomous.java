@@ -282,11 +282,13 @@ public class Autonomous
 		}
 	}
 
+	static double angle;
+
 	public static void chezyDoubleSwitchRightFromRight(Encoders enc, NavX gyro)
 	{
 		enc.setEncoderValues();
 		gyro.setAngle();
-		System.out.println(currentState);
+		
 		switch(currentState)
 		{
 			case 0:
@@ -300,8 +302,8 @@ public class Autonomous
 				else
 				{
 					enc.resetEncoders();
-					stopWatch.reset();
 					gyro.resetAngle();
+					stopWatch.reset();
 					//Wrist.wristMotor.getSensorCollection().setQuadraturePosition(Constants.up, 10);
 				}
 				break;
@@ -346,13 +348,13 @@ public class Autonomous
 				}
 				else 
 				{
-					
+					System.out.println(gyro.yaw);
 					prevRightEncoder = enc.rightEncoderValue;
 					currentState = 3;
 				}
 				break;
 			case 3:
-				double turn = 11000;
+				double turn = 10500;
 				//Elevator.moveElevatorPosition(Constants.Switch);
 				//moveWristDownWhileRunning();
 				rValue = enc.rightEncoderValue - prevRightEncoder;

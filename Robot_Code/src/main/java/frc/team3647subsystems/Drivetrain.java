@@ -159,13 +159,15 @@ public class Drivetrain
 		{
 			if(angle > supposedAngle)
 			{
-				constant = 1 - (.01 * angle);
+				constant = 1 - (.02 * angle);
 				setSpeed(yValue, yValue * constant);
+				System.out.println("Left speed: " + yValue + "; Right speed: " + yValue * constant);
 			}
 			else 
 			{
-				constant = 1 - (.01 * (-angle));
+				constant = 1 - (.02 * (angle));
 				setSpeed(yValue * constant, yValue);
+				System.out.println("Left speed: " + yValue  * constant + "; Right speed: " + yValue);
 			}
 		}
 		else 
