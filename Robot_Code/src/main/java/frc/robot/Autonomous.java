@@ -354,7 +354,7 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				double turn = 10500;
+				double turn = 10400;
 				//Elevator.moveElevatorPosition(Constants.Switch);
 				//moveWristDownWhileRunning();
 				rValue = enc.rightEncoderValue - prevRightEncoder;
@@ -370,7 +370,7 @@ public class Autonomous
 				{
 					Drivetrain.stop();
 					prevTime = stopWatch.get();
-					// currentState = 4;
+					 currentState = 4;
 				}
 				break;
 			case 4:
@@ -561,7 +561,7 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				double firstTurn = 3000;
+				double firstTurn = 6100;
 				double straightForAWhile = 6000;
 				double secondTurn = 3200;
 				//Elevator.moveElevatorPosition(Constants.Switch);
@@ -575,14 +575,14 @@ public class Autonomous
 				{
 					Drivetrain.setSpeed(0, .3);
 				}
-				else if(rValue < firstTurn + straightForAWhile)
-				{
-					Drivetrain.straight(.35, gyro.yaw, -90);
-				}
-				else if(rValue < firstTurn + straightForAWhile + secondTurn)
-				{
-					Drivetrain.setSpeed(0, .3);
-				}
+				// else if(rValue < firstTurn + straightForAWhile)
+				// {
+				// 	Drivetrain.straight(.35, gyro.yaw, -90);
+				// }
+				// else if(rValue < firstTurn + straightForAWhile + secondTurn)
+				// {
+				// 	Drivetrain.setSpeed(0, .3);
+				// }
 				else 
 				{
 					Drivetrain.stop();

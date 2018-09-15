@@ -108,6 +108,7 @@ public class Robot extends IterativeRobot
 		Forks.lockTheForks();
 		Shifter.lowGear();
 		Lock.unlock();
+		Lights.LightOutput(false, false, false);
 		//Elevator.aimedElevatorState = 0;
 		Wrist.aimedWristState = 0;
 		stopWatch.stop();
