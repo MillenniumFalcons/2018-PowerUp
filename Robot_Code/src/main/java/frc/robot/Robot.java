@@ -90,6 +90,7 @@ public class Robot extends IterativeRobot
 			Elevator.setElevatorEncoder();
 			Wrist.setLimitSwitch();
 			Wrist.setWristEncoder();
+			Lights.LightOutput(false, false, false);
 			Autonomous.chezyDoubleSwitchRightFromRight(enc, navX);
 		}
 	}
@@ -148,6 +149,7 @@ public class Robot extends IterativeRobot
 		try 
 		{
 			Autonomous.initialize(enc);
+			Lights.runLights();
 			CrashChecker.logAutoInit();
 			navX.resetAngle();
 		}

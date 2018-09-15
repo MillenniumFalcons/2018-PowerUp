@@ -496,7 +496,6 @@ public class Autonomous
 	{
 		enc.setEncoderValues();
 		gyro.setAngle();
-		System.out.println(currentState);
 		switch(currentState)
 		{
 			case 0:
@@ -510,8 +509,8 @@ public class Autonomous
 				else
 				{
 					enc.resetEncoders();
-					stopWatch.reset();
 					gyro.resetAngle();
+					stopWatch.reset();
 					//Wrist.wristMotor.getSensorCollection().setQuadraturePosition(Constants.up, 10);
 				}
 				break;
@@ -580,18 +579,10 @@ public class Autonomous
 				{
 					Drivetrain.straight(.35, gyro.yaw, -90);
 				}
-				// else if(rValue < firstTurn + straightForAWhile - 2000)
-				// {
-				// 	Drivetrain.setSpeed(.74, .74);
-				// }
-				// else if(rValue < firstTurn + straightForAWhile)
-				// {
-				// 	Drivetrain.setSpeed(.3, .3);
-				// }
-				// else if(rValue < firstTurn + straightForAWhile + secondTurn)
-				// {
-				// 	Drivetrain.setSpeed(0, .3);
-				// }
+				else if(rValue < firstTurn + straightForAWhile + secondTurn)
+				{
+					Drivetrain.setSpeed(0, .3);
+				}
 				else 
 				{
 					Drivetrain.stop();
