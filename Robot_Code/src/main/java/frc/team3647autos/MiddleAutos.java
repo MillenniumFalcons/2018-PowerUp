@@ -86,24 +86,24 @@ public class MiddleAutos
     public static void smallBrainRightSide(Encoders enc, NavX gyro)
     {
         enc.setEncoderValues();
-		gyro.setAngle();
-		switch(currentState)
+	gyro.setAngle();
+	switch(currentState)
+	{
+	    case 0:
+		stopWatch.stop();
+		//if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && chechWristIdle(Wrist.wristEncoder))
+		if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && gyro.yaw == 0)
 		{
-			case 0:
-				stopWatch.stop();
-				//if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && chechWristIdle(Wrist.wristEncoder))
-				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && gyro.yaw == 0)
-				{
-					stopWatch.start();
-					currentState = 2;
-				}
-				else
-				{
-					enc.resetEncoders();
-					gyro.resetAngle();
-					stopWatch.reset();
-					//Wrist.wristMotor.getSensorCollection().setQuadraturePosition(Constants.up, 10);
-				}
+			stopWatch.start();
+			currentState = 2;
+		}
+		else
+		{
+			enc.resetEncoders();
+			gyro.resetAngle();
+			stopWatch.reset();
+			//Wrist.wristMotor.getSensorCollection().setQuadraturePosition(Constants.up, 10);
+		}
                 break;
             case 1:
                 aimAngle = 45;
