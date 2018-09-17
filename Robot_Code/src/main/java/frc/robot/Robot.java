@@ -1,7 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
-import frc.team3647autos.RightAutos;
+import frc.team3647autos.Autonomous;
 import frc.team3647elevator.*;
 import frc.team3647pistons.*;
 import frc.team3647subsystems.*;
@@ -70,11 +70,10 @@ public class Robot extends IterativeRobot
 	@Override
 	public void autonomousInit() 
 	{
-		System.out.println(RightAutos.currentState);
 		try 
 		{
 			CrashChecker.logAutoInit();
-			RightAutos.initialize(enc);
+			Autonomous.initialize(enc, navX);
 		}
 		catch(Throwable t)
 		{
@@ -92,7 +91,6 @@ public class Robot extends IterativeRobot
 			Wrist.setLimitSwitch();
 			Wrist.setWristEncoder();
 			Lights.LightOutput(false, false, false);
-			RightAutos.chezyDoubleSwitchRightFromRight(enc, navX);
 		}
 	}
 	
@@ -150,7 +148,6 @@ public class Robot extends IterativeRobot
 	{
 		try 
 		{
-			RightAutos.initialize(enc);
 			Lights.runLights();
 			CrashChecker.logAutoInit();
 			navX.resetAngle();
