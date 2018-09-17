@@ -134,6 +134,13 @@ public class Drivetrain
 			supposedAngle = angle;
 		}
 	}
+
+	public static void setPercentOutput(double lOutput, double rOutput)
+	{
+		rightSRX.set(ControlMode.PercentOutput, lOutput);
+		leftSRX.set(ControlMode.PercentOutput, rOutput);
+	}
+
 	
 	public static void stop()
 	{
