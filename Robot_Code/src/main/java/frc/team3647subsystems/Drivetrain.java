@@ -34,6 +34,9 @@ public class Drivetrain
 	public static double adjustmentFactor = .88;
 	
 	static double []adjustmentValues = new double[2];
+
+	public static boolean turnFinished;
+
 	
 	public static void drivetrainInitialization()
 	{
@@ -180,6 +183,39 @@ public class Drivetrain
 		else 
 		{
 			setSpeed(yValue, yValue);
+		}
+	}
+
+	public static void turnDegrees(NavX navX, double goalAngle, double rotationRate, double toleranceDegrees)
+	{
+		double output;
+		double currentAngle = -navX.yawUnClamped;
+		double angleDifference = goalAngle - currentAngle;
+		if(angleDifference < toleranceDegrees)
+		{
+			turnFinished = true;
+
+		}
+		else
+		{
+			turnFinished = false;
+			if(angleDifference > 10 || angleDifference < -10)
+			{
+				output = 0.7*rotationRate;
+			}
+			else
+			{
+				output = 0.5*rotationRate;
+			}
+
+			if(angleDifference > 0)
+			{
+				setSpeed(-output, output);
+			}
+			else
+			{
+				setSpeed(output, -output);
+			}
 		}
 	}
 	

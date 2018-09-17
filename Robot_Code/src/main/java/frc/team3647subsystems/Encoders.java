@@ -5,6 +5,8 @@ import frc.team3647ConstantsAndFunctions.Constants;
 public class Encoders 
 {
 	public double leftEncoderValue, rightEncoderValue;
+	public int  rVelocity, lVelocity;
+	public double rVelocityFPS, lVelocityFPS;
 	
 	public void setEncoderValues()
 	{
@@ -35,8 +37,11 @@ public class Encoders
 
 	public void testEncoderVelocity()
 	{
-		System.out.println("Left Encoder Velocity: " + Drivetrain.leftSRX.getSelectedSensorVelocity(Constants.drivePID));
-		System.out.println("Right Encoder Velocity: " + Drivetrain.rightSRX.getSelectedSensorVelocity(Constants.drivePID));
+		rVelocity = Drivetrain.rightSRX.getSelectedSensorVelocity(Constants.drivePID);
+		lVelocity = Drivetrain.leftSRX.getSelectedSensorVelocity(Constants.drivePID);
+		rVelocityFPS = (rVelocity / 1440) * 10 * 5 * Math.PI / 12;
+		System.out.println("Left Encoder Velocity: " + lVelocity + "Left FPS: " + lVelocityFPS);
+		System.out.println("Right Encoder Velocity: " + rVelocity + "Right FPS: " + rVelocityFPS);
 	}
  	public void testEncoderCLError()
 	{

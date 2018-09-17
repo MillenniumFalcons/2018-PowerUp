@@ -143,6 +143,12 @@ public class Constants
 	public final static double rPFkD = 0; //D Gain
 	public final static double rPFkV = 1 / maxVelocity ; //Feed Forward(1/max velocity)
 	public final static double rPFkA = 0; //Acceleration Gain
+		//turn code constants
+	public final static double turnkP = 0;
+	public final static double turnkI = 0;
+	public final static double turnkD = 0;
+	public final static double turnkF = 0;
+
 
 	//Auto Constants
 	public final static double shootCubeTime = 0.5;
