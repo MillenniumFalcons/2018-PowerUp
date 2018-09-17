@@ -6,7 +6,6 @@ import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.TankModifier;
 import frc.team3647ConstantsAndFunctions.Constants;
 import frc.team3647subsystems.Drivetrain;
-import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.io.File;
