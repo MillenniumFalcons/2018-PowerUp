@@ -23,7 +23,7 @@ public class RightAutos
 	public static int currentState;
 	static double newLenc, newRenc, oldLenc, oldRenc;
 	static double lSSpeed, rSSpeed, speed, sum, rValue, lValue;
-	static double currTime, prevTime;
+	static double currTime, prevTime, prevAngle;
 	static int b;
 
 	public static void moveWristDownWhileRunning()
@@ -104,22 +104,23 @@ public class RightAutos
 	}
 
 	//8.88 inches max on x, y min 310 inches
-	public static void jankScale(Encoders enc)
+	public static void jankScale(Encoders enc, NavX gyro)
 	{
-		
+		gyro.setAngle();
 		enc.setEncoderValues();
 		switch(currentState)
 		{
 			case 0:
 				//if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && chechWristIdle(Wrist.wristEncoder))
-				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0)
+				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && gyro.yaw == 0)
 				{
 					stopWatch.start();
-					currentState = 2;
+					currentState = 99;
 				}
 				else
 				{
 					enc.resetEncoders();
+					gyro.resetAngle();
 					stopWatch.reset();
 					//Wrist.wristMotor.getSensorCollection().setQuadraturePosition(Constants.up, 10);
 				}
@@ -169,6 +170,28 @@ public class RightAutos
 					//moveWristDownWhileRunning();
 					prevRightEncoder = enc.rightEncoderValue;
 					currentState = 3;
+				}
+				break;
+			case 99:
+				double straight = 13000;
+				if(enc.rightEncoderValue < (straight/3.0))
+				{
+					//Wrist.moveUp();
+					speed = speedUp(.15, .7, 0, (straight/3.0), enc.rightEncoderValue);
+					Drivetrain.straight(speed, gyro.yaw, 0);
+				}
+				else if(enc.rightEncoderValue < ((2 * straight)/3.0))
+				{
+					//Elevator.moveElevatorPosition(Constants.Scale);
+					//moveWristDownWhileRunning();
+					Drivetrain.straight(.7, gyro.yaw, 0);
+				}
+				else if(enc.rightEncoderValue < straight)
+				{
+					//Elevator.moveElevatorPosition(Constants.Scale);
+					//moveWristDownWhileRunning();
+					speed = slowDown(.15, .7, ((2 * straight)/3.0), straight, enc.rightEncoderValue);
+					Drivetrain.straight(speed, gyro.yaw, 0);
 				}
 				break;
 			case 3:

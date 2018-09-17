@@ -21,7 +21,7 @@ public class Constants
 	public final static double rDrivekP = .4;
 	public final static double rDrivekI = 0;
 	public final static double rDrivekD = 40;
-	public final static double velocityConstant = 1872;
+	public final static double velocityConstant = 1550;
 	
 	//Piston Pins
 	public final static int forksPinSourceA = 4;
