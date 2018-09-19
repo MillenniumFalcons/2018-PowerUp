@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class TrajectoryFollower
 {
@@ -21,7 +23,6 @@ public class TrajectoryFollower
     EncoderFollower right = new EncoderFollower();
     EncoderFollower left = new EncoderFollower();
     int adjustedREncoder, adjustedlEncoder;
-    int reverseModifier;
     boolean finalReverse;
     double angleAdjustment;
     
@@ -31,14 +32,12 @@ public class TrajectoryFollower
         {
             adjustedREncoder = rEncoder;
             adjustedlEncoder = lEncoder;
-            reverseModifier = 1;
             angleAdjustment= 0;
         }
         else
         {
             adjustedlEncoder = -rEncoder;
             adjustedREncoder = -lEncoder;
-            reverseModifier = -1;
             angleAdjustment = 180;
         }
         
@@ -56,7 +55,7 @@ public class TrajectoryFollower
 
         if(finalReverse)
         {
-            Drivetrain.setPercentOutput(rPower*reverseModifier, lPower*reverseModifier); //with gyro
+            Drivetrain.setPercentOutput(-rPower, -lPower); //with gyro
         }
         else
         {
@@ -72,7 +71,7 @@ public class TrajectoryFollower
         SmartDashboard.putNumber("right encoder value", rEncoder);
     }
 
-    public void followPath(String path, boolean backward)
+    public void followPath(String path, boolean backward, boolean reverse)
     {
         if(backward)
         {
@@ -87,11 +86,19 @@ public class TrajectoryFollower
 
         finalReverse = backward;
         
-        right.setTrajectory(rightTrajectory);
-        left.setTrajectory(leftTrajectory);
+        if(reverse)
+        {
+            right.setTrajectory(reverseTrajectory(rightTrajectory));
+            left.setTrajectory(reverseTrajectory(leftTrajectory));
+        }
+        else
+        {
+            right.setTrajectory(rightTrajectory);
+            left.setTrajectory(leftTrajectory);
+        }
     }
 
-    public void followPath(Trajectory trajPoints, boolean backward)
+    public void followPath(Trajectory trajPoints, boolean backward, boolean reverse)
     {
         // Trajectory.Config configPoints = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_LOW, Constants.MPTimeStep, maxVelocity, maxAcceleration, Constants.maxJerk);
         // Trajectory trajPoints = Pathfinder.generate(points, configPoints);
@@ -112,8 +119,16 @@ public class TrajectoryFollower
 
         finalReverse = backward;
 
-        right.setTrajectory(rightTrajectory);
-        left.setTrajectory(leftTrajectory);
+        if(reverse)
+        {
+            right.setTrajectory(reverseTrajectory(rightTrajectory));
+            left.setTrajectory(reverseTrajectory(leftTrajectory));
+        }
+        else
+        {
+            right.setTrajectory(rightTrajectory);
+            left.setTrajectory(leftTrajectory);
+        }
     }
 
     public void initialize()
@@ -130,6 +145,13 @@ public class TrajectoryFollower
     {
         return left.isFinished() && right.isFinished();
     }
+    
+    public Trajectory reverseTrajectory(Trajectory trajectory)
+    {
+        Collections.reverse(Arrays.asList(trajectory));
+        return trajectory;
+    }
+
 }
 
 

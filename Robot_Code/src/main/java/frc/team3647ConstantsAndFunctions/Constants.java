@@ -128,18 +128,18 @@ public class Constants
 		//Pathfinder Constants
 		public final static double wheelDiameter = .378;//.416666;
 		//Used for waypoint generation method
-	public final static double wheelBase = 2.1;
-	public final static double maxVelocity = 15.498; // also used for csv file method
-	public final static double maxAcceleration = 10;
-	public final static double maxJerk = 200;
+	public final static double wheelBase = 25.2;
+	public final static double maxVelocity = 185.976; // also used for csv file method
+	public final static double maxAcceleration = 120;
+	public final static double maxJerk = 2400;
 	public final static double MPTimeStep = 0.02;
 		//PID Values
-	public final static double lPFkP = 0.05;//3048; //0.19; //P Gain
+	public final static double lPFkP = 0.6;//3048; //0.19; //P Gain
 	public final static double lPFkI = 0; //I Gain (not used)
 	public final static double lPFkD = 0; //D Gain
 	public final static double lPFkV = 1 / maxVelocity ; //Feed Forward (1/max velocity)
 	public final static double lPFkA = 0; //Acceleration Gain
-	public final static double rPFkP = 0.05;//3048; //0.19; //P Gain
+	public final static double rPFkP = 0.6;//3048; //0.19; //P Gain
 	public final static double rPFkI = 0; //I Gain (not used)
 	public final static double rPFkD = 0; //D Gain
 	public final static double rPFkV = 1 / maxVelocity ; //Feed Forward(1/max velocity)

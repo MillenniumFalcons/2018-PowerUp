@@ -4,7 +4,7 @@ import frc.team3647ConstantsAndFunctions.Constants;
 
 public class Encoders 
 {
-	public double leftEncoderValue, rightEncoderValue;
+	public int leftEncoderValue, rightEncoderValue;
 	public int  rVelocity, lVelocity;
 	public double rVelocityFPS, lVelocityFPS;
 	
