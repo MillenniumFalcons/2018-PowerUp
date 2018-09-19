@@ -22,7 +22,8 @@ public class Constants
 	public final static double rDrivekI = 0;
 	public final static double rDrivekD = 40;
 	public final static double velocityConstant = 1550;
-	
+
+	public final static double driveElevatorSpeedModifier = 0.5;
 	//Piston Pins
 	public final static int forksPinSourceA = 4;
 	public final static int forksPinSourceB = 5;
@@ -133,12 +134,12 @@ public class Constants
 	public final static double maxJerk = 200;
 	public final static double MPTimeStep = 0.02;
 		//PID Values
-	public final static double lPFkP = 0.3048;//.05; //0.19; //P Gain
+	public final static double lPFkP = 0.05;//3048; //0.19; //P Gain
 	public final static double lPFkI = 0; //I Gain (not used)
 	public final static double lPFkD = 0; //D Gain
 	public final static double lPFkV = 1 / maxVelocity ; //Feed Forward (1/max velocity)
 	public final static double lPFkA = 0; //Acceleration Gain
-	public final static double rPFkP = 0.3048;//.05; //0.19; //P Gain
+	public final static double rPFkP = 0.05;//3048; //0.19; //P Gain
 	public final static double rPFkI = 0; //I Gain (not used)
 	public final static double rPFkD = 0; //D Gain
 	public final static double rPFkV = 1 / maxVelocity ; //Feed Forward(1/max velocity)
