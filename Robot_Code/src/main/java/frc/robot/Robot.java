@@ -5,6 +5,7 @@ import frc.team3647autos.Autonomous;
 import frc.team3647elevator.*;
 import frc.team3647pistons.*;
 import frc.team3647subsystems.*;
+import frc.team3647ConstantsAndFunctions.*;
 
 
 
@@ -177,7 +178,6 @@ public class Robot extends IterativeRobot
 	
 	public void runElevator()
 	{
-
 		Elevator.setElevatorEncoder();
 		if(Shifter.piston.get() == DoubleSolenoid.Value.kReverse)
 		{
@@ -215,9 +215,9 @@ public class Robot extends IterativeRobot
 	{
 		navX.setAngle();
 		enc.setEncoderValues();
-		if(joy.leftBumper)
+		if(Elevator.elevatorEncoderValue > 30000)
 		{
-			//Drivetrain.arcadeDrive(enc.leftEncoderValue, enc.rightEncoderValue, joy.leftJoySticky * .6, joy.rightJoyStickx * .6);
+			Drivetrain.newArcadeDrive(joy.rightJoyStickx * Constants.driveElevatorSpeedModifier, joy.leftJoySticky * Constants.driveElevatorSpeedModifier, navX.yaw);
 		}
 		else
 		{
