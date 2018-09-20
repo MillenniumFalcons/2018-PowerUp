@@ -221,7 +221,7 @@ public class Elevator
 			}
 			else
 			{
-				moveElevator(-0.4);
+				moveElevator(-0.3);
 			}
 		}
 		else

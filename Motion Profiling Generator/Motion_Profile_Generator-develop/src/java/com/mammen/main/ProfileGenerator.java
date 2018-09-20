@@ -572,11 +572,11 @@ public class ProfileGenerator
     public void resetValues(String choUnits) 
     {
     	if(choUnits.equals("FEET")) {
-	        timeStep = 0.05;
-	        velocity = 4;
-	        acceleration = 3;
-	        jerk = 60;
-	        wheelBaseW = 1.464;
+	        timeStep = 0.02;
+	        velocity = 10;
+	        acceleration = 11;
+	        jerk = 200;
+	        wheelBaseW = 2.1;
 	        wheelBaseD = 0;
 	
 	        fitMethod = FitMethod.HERMITE_CUBIC;

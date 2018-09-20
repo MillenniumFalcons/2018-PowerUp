@@ -8,12 +8,12 @@ public class Lock
 {
 	public static DoubleSolenoid piston = new DoubleSolenoid(Constants.lockPinSourceA, Constants.lockPinSourceB);
 	
-	public static void lock() 
+	public static void unlock() 
 	{
 		piston.set(DoubleSolenoid.Value.kForward);
 	}
 	
-	public static void unlock() 
+	public static void lock() 
 	{
 		piston.set(DoubleSolenoid.Value.kReverse);
 	}

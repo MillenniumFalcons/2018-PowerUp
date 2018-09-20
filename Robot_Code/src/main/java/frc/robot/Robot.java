@@ -59,7 +59,7 @@ public class Robot extends IterativeRobot
 		driveEncoders = false;
 		driveCurrent = false;
 		elevatorCurrent = false;
-		elevatorEncoder = false;
+		elevatorEncoder = true;
 		bannerSensor = false;
 		currentState = false;
 		wristEncoder = false;
@@ -165,8 +165,11 @@ public class Robot extends IterativeRobot
 	public void testPeriodic() 
 	{
 		updateJoysticks();
-		runDrivetrain();
-		System.out.println("NavX: " + navX.yaw);
+		//runDrivetrain();
+		runElevator();
+		//runTests();
+		Elevator.testElevatorEncoders();
+		//System.out.println("NavX: " + navX.yaw);
 	}
 	
 	
@@ -186,7 +189,7 @@ public class Robot extends IterativeRobot
 		else
 		{
 			Elevator.setElevatorButtons(joy.buttonA1, joy.buttonB1,  joy.buttonY1, joy.buttonX1);
-			Elevator.setManualOverride(joy.rightJoySticky1 * .6);
+			Elevator.setManualOverride(joy.rightJoySticky1 * 1);
 			Elevator.runElevator();
 		}
 		//Elevator.climbPrep(joy.buttonB);

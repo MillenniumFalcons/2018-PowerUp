@@ -19,10 +19,10 @@ public class IntakeWheels
 		{
 			if(poopyShoot)//poopyShoot
 			{
-				rightIntakeMotor.set(ControlMode.PercentOutput, Constants.poopyShoot);
-				leftIntakeMotor.set(ControlMode.PercentOutput, Constants.poopyShoot);
+				rightIntakeMotor.set(ControlMode.PercentOutput, -Constants.poopyShoot);
+				leftIntakeMotor.set(ControlMode.PercentOutput, -Constants.poopyShoot);
 			}
-			if(lTrigger > 0)//shoot
+			else if(lTrigger > 0)//shoot
 			{	
 				rightIntakeMotor.set(ControlMode.PercentOutput, -lTrigger *.6);
 				leftIntakeMotor.set(ControlMode.PercentOutput, -lTrigger *.6);
