@@ -1,16 +1,11 @@
 package frc.team3647autos;
 
 import edu.wpi.first.wpilibj.Timer;
-import frc.team3647ConstantsAndFunctions.Constants;
-import frc.team3647elevator.Elevator;
-import frc.team3647elevator.IntakeWheels;
-import frc.team3647elevator.Wrist;
-import frc.team3647pistons.Forks;
-import frc.team3647pistons.Intake;
-import frc.team3647pistons.Shifter;
-import frc.team3647subsystems.Drivetrain;
-import frc.team3647subsystems.Encoders;
-import frc.team3647subsystems.NavX;
+import edu.wpi.first.wpilibj.*;
+import frc.team3647autos.*;
+import frc.team3647pistons.*;
+import frc.team3647subsystems.*;
+import frc.team3647inputs.*;
 
 public class Autonomous 
 {

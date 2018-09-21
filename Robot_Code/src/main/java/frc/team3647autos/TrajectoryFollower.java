@@ -4,9 +4,13 @@ package frc.team3647autos;
 import jaci.pathfinder.*;
 import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.TankModifier;
-import frc.team3647ConstantsAndFunctions.Constants;
-import frc.team3647subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.*;
+import frc.team3647autos.*;
+import frc.team3647pistons.*;
+import frc.team3647subsystems.*;
+import frc.team3647inputs.*;
+import frc.robot.*;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.io.File;

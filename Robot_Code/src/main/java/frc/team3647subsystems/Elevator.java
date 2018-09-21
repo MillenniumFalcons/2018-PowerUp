@@ -1,4 +1,4 @@
-package frc.team3647elevator;
+package frc.team3647subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -6,7 +6,7 @@ import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
-import frc.team3647ConstantsAndFunctions.Constants;
+import frc.robot.*;
 
 public class Elevator 
 {

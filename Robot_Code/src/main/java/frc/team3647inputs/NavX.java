@@ -1,6 +1,5 @@
-package frc.team3647subsystems;
+package frc.team3647inputs;
 
-import frc.team3647ConstantsAndFunctions.*;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.*;
 

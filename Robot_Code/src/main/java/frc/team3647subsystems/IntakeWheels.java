@@ -1,11 +1,10 @@
-package frc.team3647elevator;
+package frc.team3647subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import frc.team3647ConstantsAndFunctions.Constants;
+import frc.robot.Constants;
 
 public class IntakeWheels 
 {

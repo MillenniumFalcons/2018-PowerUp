@@ -8,8 +8,8 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.team3647ConstantsAndFunctions.Constants;
-import edu.wpi.first.wpilibj.*;
+import frc.team3647inputs.*;
+import frc.robot.*;
 
 public class Drivetrain 
 {

@@ -3,7 +3,6 @@ package frc.team3647subsystems;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
-import frc.team3647elevator.IntakeWheels;
 import frc.team3647pistons.Shifter;
 
 public class Lights 

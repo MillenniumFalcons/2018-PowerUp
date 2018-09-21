@@ -1,11 +1,11 @@
-package frc.team3647elevator;
+package frc.team3647subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import frc.team3647ConstantsAndFunctions.Constants;
+import frc.robot.Constants;
 
 public class Wrist 
 {

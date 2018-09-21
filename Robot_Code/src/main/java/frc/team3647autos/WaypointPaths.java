@@ -1,7 +1,11 @@
 package frc.team3647autos;
 
 import jaci.pathfinder.*;
-import frc.team3647ConstantsAndFunctions.*;
+import frc.team3647autos.*;
+import frc.team3647pistons.*;
+import frc.team3647subsystems.*;
+import frc.team3647inputs.*;
+import frc.robot.*;
 
 public class WaypointPaths
 {

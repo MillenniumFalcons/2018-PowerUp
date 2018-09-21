@@ -2,7 +2,11 @@ package frc.team3647pistons;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Timer;
-import frc.team3647ConstantsAndFunctions.Constants;
+import frc.team3647autos.*;
+import frc.team3647pistons.*;
+import frc.team3647subsystems.*;
+import frc.team3647inputs.*;
+import frc.robot.*;
 
 public class Forks
 {

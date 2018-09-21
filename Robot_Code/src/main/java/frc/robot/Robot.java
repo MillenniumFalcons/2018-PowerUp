@@ -1,12 +1,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
-import frc.team3647autos.Autonomous;
-import frc.team3647elevator.*;
+import frc.team3647autos.*;
 import frc.team3647pistons.*;
 import frc.team3647subsystems.*;
-import frc.team3647ConstantsAndFunctions.*;
-
+import frc.team3647inputs.*;
 
 
 public class Robot extends IterativeRobot 

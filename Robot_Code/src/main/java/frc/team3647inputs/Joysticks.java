@@ -1,4 +1,4 @@
-package frc.team3647subsystems;
+package frc.team3647inputs;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
