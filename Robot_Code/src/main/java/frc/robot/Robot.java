@@ -216,7 +216,7 @@ public class Robot extends IterativeRobot
 	{
 		navX.setAngle();
 		enc.setEncoderValues();
-		if(Elevator.elevatorEncoderValue > 30000)
+		if(Elevator.elevatorEncoderValue > 30000 || joy.leftBumper)
 		{
 			Drivetrain.newArcadeDrive(joy.rightJoyStickx * Constants.driveElevatorSpeedModifier, joy.leftJoySticky * Constants.driveElevatorSpeedModifier, navX.yaw);
 		}

@@ -25,6 +25,44 @@ public class Autonomous
         currentState = 0;
     }
 
+    public static void jonSmallestBrain(Encoders enc, NavX navX)
+    {
+        enc.setEncoderValues();
+        navX.setAngle();
+        switch(currentState)
+        {
+            case 0:
+                enc.resetEncoders();
+                navX.resetAngle();
+                System.out.println("Loading Path");
+                traj.initialize();
+                traj.followPath("leftSwitchFromMiddle1", false, false);   
+                //traj.followPath(WaypointPaths.middleToRightSwitch(), false);
+               // traj.followPath("MiddleToRightSwitch", true);
+                //traj.followPath("StraightTenFeet", false);
+               // traj.followPath("SuryaOmegaLul", false);
+                //traj.followPath("StraightandLeftCurve", false);
+                currentState = 1;
+                break;
+            case 1:
+            System.out.println("Running Path (1/2)");
+                traj.runPath(enc.leftEncoderValue, enc.rightEncoderValue, navX.yawUnClamped);
+                if(traj.isFinished())
+                {
+                    System.out.println("Path Finished (2/2)");
+                    currentState = 2;
+                }
+                else
+                {
+                    System.out.println("PATH NOT FINISHED");
+                }
+                break;
+            case 2:
+                System.out.println("CASE 2 REACHED (path finished)");
+                break;
+        }
+    }
+
     public static void rightSide2SwitchFromRightSide(Encoders enc, NavX gyro)
     {
         enc.setEncoderValues();

@@ -53,6 +53,25 @@ public class Constants
 	public static final double scale = 45000;
 	public static final double climb = 11000;
 
+	// Elevator PID Values
+	//Motion Magic Values
+	public final static int elevatorCruiseVelocity = 8000;
+	public final static int elevatorAcceleration = 20000;
+	//carriage only
+	public final static int carriagePID = 0;
+	public final static double carriageF = 0.1705;
+	public final static double carriageP = 0.2;
+	public final static double carriageI = 0;
+	public final static double carriageD = 20;
+	public final static int carriageIZone = 0;
+	//interstage
+	public final static int interstagePID = 1;
+	public final static double interstageF = 0.1705;
+	public final static double interstageP = 0.4;
+	public final static double interstageI = 0;
+	public final static double interstageD = 50;
+	public final static int interstageIZone = 0;
+	
 	//Wrist Pins
 	public final static int wristPin = 0;
 	public final static int wristLimitSwitch = 2;
@@ -60,30 +79,11 @@ public class Constants
 	public final static int flat = 0;
 	public final static int aim = 500;
 	public final static int up = 700;
-	
-	// Elevator PID Values
-		//Motion Magic Values
-	public final static int elevatorCruiseVelocity = 8000;
-	public final static int elevatorAcceleration = 20000;
-		//carriage only
-	public final static int carriagePID = 0;
-	public final static double carriageF = 0.1705;
-	public final static double carriageP = 0.2;
-	public final static double carriageI = 0;
-	public final static double carriageD = 20;
-	public final static int carriageIZone = 0;
-		//interstage
-	public final static int interstagePID = 1;
-	public final static double interstageF = 0.1705;
-	public final static double interstageP = 0.4;
-	public final static double interstageI = 0;
-	public final static double interstageD = 50;
-	public final static int interstageIZone = 0;
 
 	//Wrist PID Values
 		//Motion Magic Values
-	public final static int wristCruiseVelocity = 0;
-	public final static int wristAcceleration = 0;
+	public final static int wristCruiseVelocity = 200;
+	public final static int wristAcceleration = 700;
 		//cube PID
 	public final static int cubePID = 1;
 	public final static double cubeF = 0;
