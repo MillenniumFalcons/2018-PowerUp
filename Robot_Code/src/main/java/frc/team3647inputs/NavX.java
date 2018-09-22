@@ -7,7 +7,7 @@ public class NavX
 {
     AHRS AHRSnavX = new AHRS(SPI.Port.kMXP);
 
-    public double yaw, yawUnClamped, pitch, roll;
+    public double yaw, yawUnClamped, pitch, roll, actualYaw;
 
     public void setAngle()
     {
@@ -15,6 +15,7 @@ public class NavX
         yawUnClamped = AHRSnavX.getAngle();
         pitch = AHRSnavX.getPitch();
         roll = AHRSnavX.getRoll();
+        setActualYaw();
     }
 
     public void resetAngle()
@@ -25,5 +26,17 @@ public class NavX
     public void testAngle()
     {
         System.out.println("Yaw: " + -yaw + "Yaw (Unclamped): " + yawUnClamped + " Pitch: " + pitch + " Roll: " + roll);
+    }
+
+    public void setActualYaw()
+    {
+        if(yaw < 0)
+        {
+            actualYaw = 360 - yaw;
+        }
+        else
+        {
+            actualYaw = yaw;
+        }
     }
 }

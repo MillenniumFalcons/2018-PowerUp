@@ -90,7 +90,7 @@ public class Robot extends IterativeRobot
 			Wrist.setLimitSwitch();
 			Wrist.setWristEncoder();
 			Lights.LightOutput(false, false, false);
-			Autonomous.jonSmallestBrain(enc, navX);
+			Autonomous.chezyDoubleSwitchRightFromRight(enc, navX);
 		}
 	}
 	
