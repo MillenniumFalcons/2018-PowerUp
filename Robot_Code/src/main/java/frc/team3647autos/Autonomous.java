@@ -783,8 +783,13 @@ public class Autonomous
 			case 3:
 				double angle = 180;
 				//Elevator.moveElevatorPosition(Constants.Switch);
-				//moveWristDownWhileRunning();
-				if(gyro.actualYaw > angle + 30)
+                //moveWristDownWhileRunning();
+                rValue = enc.rightEncoderValue - prevRightEncoder;
+                if(rValue < 3000)
+                {
+                    Drivetrain.setSpeed(0, .42);
+                }
+				else if(gyro.actualYaw > angle + 30)
 				{
 					Drivetrain.setSpeed(0, .42);
 				}
@@ -992,7 +997,7 @@ public class Autonomous
 				}
 				break;
 			case 3:	
-				double firstTurn = 3000;
+				double firstTurn = 6000;
 				double straightForAWhile = 2000;
 				double secondTurn = 3200;
 				//Elevator.moveElevatorPosition(Constants.Switch);
@@ -1026,7 +1031,6 @@ public class Autonomous
 				{
 					Drivetrain.stop();
 					prevTime = stopWatch.get();
-					currentState = 4;
 				}
 				break;
 			case 4:
