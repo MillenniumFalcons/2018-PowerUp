@@ -78,7 +78,7 @@ public class Constants
 	public final static int wristLimitSwitch = 2;
 		//Levels
 	public final static int flat = 0;
-	public final static int aim = 450;
+	public final static int aim = 440;
 	public final static int up = 650;
 
 	//Wrist PID Values
@@ -88,7 +88,7 @@ public class Constants
 		//cube PID
 	public final static int cubePID = 1;
 	public final static double cubeF = 3;//5;
-	public final static double cubeP = 2.5;
+	public final static double cubeP = 2.8;
 	public final static double cubeI = 0;
 	public final static double cubeD = 200;
 	public final static int cubeIZone = 0;

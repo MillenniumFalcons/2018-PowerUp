@@ -160,7 +160,7 @@ public class Wrist
 			//moveWrist(-0.2);
 			if(IntakeWheels.getIntakeBannerSensor())
 			{
-				moveWrist(-.23);
+				moveWrist(-0.35);
 			}
 			else
 			{
