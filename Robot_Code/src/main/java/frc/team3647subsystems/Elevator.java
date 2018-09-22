@@ -222,7 +222,7 @@ public class Elevator
 			}
 			else
 			{
-				moveElevator(-0.25);
+				moveElevator(-0.3);
 			}
 		}
 		else
@@ -238,15 +238,36 @@ public class Elevator
 			}
 		}
 	}
+
+	public static double newPosition;
+
+	public static void moveManual(double jValue)
+	{
+		int currentPosition = elevatorEncoderValue;
+		if(jValue > 0.05)
+		{
+			newPosition = currentPosition + 1000 * jValue;
+		}
+		else if(jValue < -0.05)
+		{
+			newPosition = currentPosition - 1000 * jValue;
+		}
+		moveElevatorPosition(newPosition);
+	}
 	
 	public static void runElevator()
 	{
-		if(manualOverride)
+		if(elevatorEncoderValue > Constants.elevatorSafetyLimit)
 		{
 			currentWristState = 0;
-			aimedElevatorState = -1;
+			aimedElevatorState = -10;
 		}
-		if(bottom)
+		// else if(manualOverride)
+		// {
+		// 	currentWristState = 0;
+		// 	aimedElevatorState = -1;
+		// }
+		else if(bottom)
 		{
 			currentWristState = 0;
 			aimedElevatorState = 1;
@@ -268,28 +289,32 @@ public class Elevator
 		}
         switch(aimedElevatorState)
 		{
+			case -10:
+				moveElevator(0);
+				break;
 			case 0:
 				moveBottom(false);
-			break;
+				break;
 			case 1:
 				moveBottom(true);
-			break;
+				break;
 			case 2:
 				moveSwitch();
-			break;
+				break;
 			case 3:
 				moveLowerScale();
-			break;
+				break;
 			case 4:
 				moveScale();
-			break;
+				break;
 			case -1:
 				if(!manualOverride)
 				{
 					overrideValue = 0;
 				}
+				//moveManual(overrideValue);
 				moveElevator(overrideValue);
-			break;
+				break;
         }
     }
     

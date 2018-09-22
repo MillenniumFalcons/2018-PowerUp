@@ -133,7 +133,7 @@ public class Drivetrain
 		}
 		else
 		{
-			FRCarcadedrive(xValue, yValue);
+			curvatureDrive(xValue, yValue);
 			supposedAngle = angle;
 			//System.out.println(1);
 		}

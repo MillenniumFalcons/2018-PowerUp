@@ -47,11 +47,12 @@ public class Constants
 	public final static int rightGearboxSPX = 57;
 	public final static int elevatorBannerSensor = 9;
 		//Levels
-	public static final double bottom = 0;
-	public static final double sWitch = 16000;
-	public static final double lowerScale = 38000;
-	public static final double scale = 45000;
-	public static final double climb = 11000;
+	public static final int bottom = 0;
+	public static final int sWitch = 16000;
+	public static final int lowerScale = 38000;
+	public static final int scale = 45000;
+	public static final int climb = 11000;
+	public static final int elevatorSafetyLimit = 45000;
 
 	// Elevator PID Values
 	//Motion Magic Values
@@ -77,26 +78,26 @@ public class Constants
 	public final static int wristLimitSwitch = 2;
 		//Levels
 	public final static int flat = 0;
-	public final static int aim = 500;
-	public final static int up = 700;
+	public final static int aim = 450;
+	public final static int up = 650;
 
 	//Wrist PID Values
 		//Motion Magic Values
 	public final static int wristCruiseVelocity = 250;
-	public final static int wristAcceleration = 200;
+	public final static int wristAcceleration = 1000;
 		//cube PID
 	public final static int cubePID = 1;
-	public final static double cubeF = 5;
-	public final static double cubeP = 1.02;
+	public final static double cubeF = 3;//5;
+	public final static double cubeP = 2.5;
 	public final static double cubeI = 0;
-	public final static double cubeD = 20;
+	public final static double cubeD = 200;
 	public final static int cubeIZone = 0;
 		//nocube PID
 	public final static int noCubePID = 0;
-	public final static double noCubeF = 3.41;
-	public final static double noCubeP = 6.138;
+	public final static double noCubeF = 1;
+	public final static double noCubeP = 3;
 	public final static double noCubeI = 0;
-	public final static double noCubeD = 60;
+	public final static double noCubeD = 300;
 	public final static int noCubeIZone = 0;
 
 	//Auto Constants
