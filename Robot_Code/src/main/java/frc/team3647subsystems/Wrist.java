@@ -24,7 +24,7 @@ public class Wrist
 	 */
 
 	public static boolean start, flat, aim, up, manualOverride, originalPositionButton, limitSwitchState;
-	public static double overrideValue, speed, wristEncoder; 
+	public static double overrideValue, speed; 
 
 	//Insert step 1 code below
 	
@@ -41,7 +41,7 @@ public class Wrist
 	public static void configWristPID()
 	{
 		wristMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, Constants.kTimeoutMs);
-		wristMotor.setSensorPhase(false);
+		wristMotor.setSensorPhase(true);
 		wristMotor.selectProfileSlot(Constants.cubePID, 0);
 
 		wristMotor.config_kF(Constants.noCubePID, Constants.noCubeF, Constants.kTimeoutMs);
@@ -81,7 +81,7 @@ public class Wrist
 		}
 	}
 	
-	public static double wristEncoderValue, wristEncoderVelocity;
+	public static int wristEncoderValue, wristEncoderVelocity;
 	
 	public static void setWristEncoder()
 	{
@@ -102,7 +102,7 @@ public class Wrist
 		System.out.println("Wrist Current: " + wristMotor.getOutputCurrent());
 	}
 
-	public void testWristEncoder()
+	public static void testWristEncoder()
 	{
 		System.out.println("Wrist Encoder Value: " + wristEncoderValue + "Wrist Velocity: " + wristEncoderVelocity);
 	}
@@ -128,7 +128,8 @@ public class Wrist
 	
 	public static boolean reachedAim()
 	{
-		if(wristEncoder > Constants.aim - 100 && wristEncoder < Constants.aim + 50)
+		//System.out.println(wristEncoderValue);
+		if(wristEncoderValue > Constants.aim - 100 && wristEncoderValue < Constants.aim + 150)
 		{
 			return true;
 		}
@@ -140,7 +141,7 @@ public class Wrist
 	
 	public static boolean reachedUp()
 	{
-		if(wristEncoder > Constants.up - 100 && wristEncoder < Constants.up + 50)
+		if(wristEncoderValue > Constants.up - 100 && wristEncoderValue < Constants.up + 50)
 		{
 			return true;
 		}
@@ -159,7 +160,7 @@ public class Wrist
 		}
 		else
 		{
-			moveWrist(-.2);
+			moveWrist(-.22);
 		}
 	}
 
@@ -218,8 +219,14 @@ public class Wrist
 		{
 			aimedWristState = 3;
 		}
+		else if(Elevator.currentWristState == 0)
+		{
+			aimedWristState = -10;
+		}
 		switch(aimedWristState)
 		{
+			case -10:
+				break;
 			case 1:
 				moveToFlat();
 				break;

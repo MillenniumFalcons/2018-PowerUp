@@ -201,17 +201,30 @@ public class Elevator
 				switch(currentWristState)
 				{
 					case 0:
-					if(Wrist.reachedUp())
-					{
-						currentWristState = 1;
-					}
-					else
-					{
-						Wrist.moveUp();
-					}
-					break;
-					default:
-					break;
+						if(reachedBottom() && Wrist.reachedUp())
+						{
+							currentWristState = 1;
+						}
+						else
+						{
+							Wrist.moveUp();
+						}
+						break;
+					case 1:
+						if(!Wrist.reachedFlat())
+						{
+							Wrist.moveToFlat();
+						}
+						else
+						{
+							currentWristState = 2;
+						}
+						Wrist.aimedElevatorState = 1;
+						currentWristState = 2;
+						break;
+					case 2:
+						
+						break;
 				}
 			}
 			if(reachedBottom())

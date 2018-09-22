@@ -28,12 +28,12 @@ public class Lock
 		{
 			if(piston.get() == DoubleSolenoid.Value.kReverse)
 			{
-				lock();
+				unlock();
 				Timer.delay(.75);
 			}
 			else
 			{
-				unlock();
+				lock();
 				Timer.delay(.75);
 			}
 		}

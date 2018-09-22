@@ -57,10 +57,10 @@ public class Robot extends IterativeRobot
 		driveEncoders = false;
 		driveCurrent = false;
 		elevatorCurrent = false;
-		elevatorEncoder = true;
+		elevatorEncoder = false;
 		bannerSensor = false;
 		currentState = false;
-		wristEncoder = false;
+		wristEncoder = true;
 		wristLimitSwitch = false;
 		wristCurrent = false;
 		intakeBanner = false;
@@ -129,11 +129,12 @@ public class Robot extends IterativeRobot
 			runPistonsandForks();
 			runDrivetrain();
 			runElevator();
-			enc.testEncodersWithDrive(joy.buttonA);
+			//enc.testEncodersWithDrive(joy.buttonA);
 			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0, joy.leftBumper1);
 			runWrist();
 			Lights.runLights();
 			runTests();
+			System.out.println(Wrist.wristEncoderValue);
 		}
 		catch(Throwable t)
 		{
@@ -164,9 +165,11 @@ public class Robot extends IterativeRobot
 	{
 		updateJoysticks();
 		//runDrivetrain();
-		runElevator();
+		//runElevator();
+		runWrist();
 		//runTests();
-		Elevator.testElevatorEncoders();
+		//Elevator.testElevatorEncoders();
+		Wrist.testWristEncoder();
 		//System.out.println("NavX: " + navX.yaw);
 	}
 	
@@ -208,7 +211,7 @@ public class Robot extends IterativeRobot
 		Forks.runPiston(joy.buttonX);
 		Shifter.runPiston(joy.buttonY);
 		TiltServo.PullForks(joy.leftTrigger, joy.rightTrigger);
-		//Lock.runPiston(joy.buttonA);
+		Lock.runPiston(joy.buttonA);
 		Compressor007.runCompressor();
 	}
 	

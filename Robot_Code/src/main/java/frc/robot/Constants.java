@@ -82,21 +82,21 @@ public class Constants
 
 	//Wrist PID Values
 		//Motion Magic Values
-	public final static int wristCruiseVelocity = 200;
-	public final static int wristAcceleration = 700;
+	public final static int wristCruiseVelocity = 250;
+	public final static int wristAcceleration = 200;
 		//cube PID
 	public final static int cubePID = 1;
-	public final static double cubeF = 0;
-	public final static double cubeP = 1;
+	public final static double cubeF = 5;
+	public final static double cubeP = 1.02;
 	public final static double cubeI = 0;
-	public final static double cubeD = 50;
+	public final static double cubeD = 20;
 	public final static int cubeIZone = 0;
 		//nocube PID
 	public final static int noCubePID = 0;
-	public final static double noCubeF = .1;
-	public final static double noCubeP = .45;
+	public final static double noCubeF = 5;
+	public final static double noCubeP = 1.02;
 	public final static double noCubeI = 0;
-	public final static double noCubeD = 50;
+	public final static double noCubeD = 30;
 	public final static int noCubeIZone = 0;
 
 	//Auto Constants
@@ -128,10 +128,10 @@ public class Constants
 		//Pathfinder Constants
 		public final static double wheelDiameter = .378;//.416666;
 		//Used for waypoint generation method
-	public final static double wheelBase = 2.1;
-	public final static double maxVelocity = 15.5; // also used for csv file method
-	public final static double maxAcceleration = 10;
-	public final static double maxJerk = 60;
+	public final static double wheelBase = 25.2;
+	public final static double maxVelocity = 185.976; // also used for csv file method
+	public final static double maxAcceleration = 120;
+	public final static double maxJerk = 2400;
 	public final static double MPTimeStep = 0.02;
 		//PID Values
 	public final static double lPFkP = 0.6;//3048; //0.19; //P Gain
