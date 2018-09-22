@@ -23,7 +23,7 @@ public class Constants
 	public final static double rDrivekD = 40;
 	public final static double velocityConstant = 1550;
 
-	public final static double driveElevatorSpeedModifier = 0.5;
+	public final static double driveElevatorSpeedModifier = 0.6;
 	//Piston Pins
 	public final static int forksPinSourceA = 4;
 	public final static int forksPinSourceB = 5;
@@ -93,10 +93,10 @@ public class Constants
 	public final static int cubeIZone = 0;
 		//nocube PID
 	public final static int noCubePID = 0;
-	public final static double noCubeF = 5;
-	public final static double noCubeP = 1.02;
+	public final static double noCubeF = 3.41;
+	public final static double noCubeP = 6.138;
 	public final static double noCubeI = 0;
-	public final static double noCubeD = 30;
+	public final static double noCubeD = 60;
 	public final static int noCubeIZone = 0;
 
 	//Auto Constants
@@ -134,6 +134,7 @@ public class Constants
 	public final static double maxJerk = 2400;
 	public final static double MPTimeStep = 0.02;
 		//PID Values
+	public final static double PFTurnkP = 0.8;
 	public final static double lPFkP = 0.6;//3048; //0.19; //P Gain
 	public final static double lPFkI = 0; //I Gain (not used)
 	public final static double lPFkD = 0; //D Gain

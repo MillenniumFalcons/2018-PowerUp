@@ -53,7 +53,7 @@ public class TrajectoryFollower
         double gyroHeading = -1*navXAngle + angleAdjustment; //invert since RHR
         double desiredHeading = Pathfinder.r2d(right.getHeading());
         double headingDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
-        double turn = 0.8 * (-1.0/80.0) * headingDifference;
+        double turn = Constants.PFTurnkP * (-1.0/80.0) * headingDifference;
         double rPower = rValue + turn;
         double lPower = lValue - turn;
 

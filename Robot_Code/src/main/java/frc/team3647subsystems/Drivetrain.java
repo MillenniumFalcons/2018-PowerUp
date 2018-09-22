@@ -123,7 +123,7 @@ public class Drivetrain
 		
 		if(yValue != 0 && xValue == 0)
 	 	{
-			System.out.println(0);
+			//System.out.println(0);
 			Drivetrain.setSpeed(yValue, yValue);
 	 	}
 		else if(yValue == 0 && xValue == 0)
@@ -135,7 +135,7 @@ public class Drivetrain
 		{
 			FRCarcadedrive(xValue, yValue);
 			supposedAngle = angle;
-			System.out.println(1);
+			//System.out.println(1);
 		}
 	}
 
@@ -172,13 +172,13 @@ public class Drivetrain
 			{
 				constant = 1 - (.02 * angle);
 				setSpeed(yValue, yValue * constant);
-				System.out.println("Left speed: " + yValue + "; Right speed: " + yValue * constant);
+				//System.out.println("Left speed: " + yValue + "; Right speed: " + yValue * constant);
 			}
 			else 
 			{
 				constant = 1 - (.02 * (angle));
 				setSpeed(yValue * constant, yValue);
-				System.out.println("Left speed: " + yValue  * constant + "; Right speed: " + yValue);
+				//System.out.println("Left speed: " + yValue  * constant + "; Right speed: " + yValue);
 			}
 		}
 		else 

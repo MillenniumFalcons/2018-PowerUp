@@ -211,19 +211,7 @@ public class Elevator
 						}
 						break;
 					case 1:
-						if(!Wrist.reachedFlat())
-						{
-							Wrist.moveToFlat();
-						}
-						else
-						{
-							currentWristState = 2;
-						}
-						Wrist.aimedElevatorState = 1;
-						currentWristState = 2;
-						break;
-					case 2:
-						
+
 						break;
 				}
 			}
@@ -234,7 +222,7 @@ public class Elevator
 			}
 			else
 			{
-				moveElevator(-0.3);
+				moveElevator(-0.25);
 			}
 		}
 		else

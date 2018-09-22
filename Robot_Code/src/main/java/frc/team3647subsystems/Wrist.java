@@ -12,21 +12,21 @@ public class Wrist
 	
 	public static int wristState;
 	public static int aimedWristState;
-
+	
 	public static WPI_TalonSRX wristMotor = new WPI_TalonSRX(Constants.wristPin);
+	public static DigitalInput limitSwitch = new DigitalInput(Constants.wristLimitSwitch); 
 	
 	public static int elevatorState, aimedElevatorState;
 	/*
-	 * 0. Start
-	 * 1. Flat
-	 * 2. Sixty-Degrees
-	 * 3. Facing Up
-	 */
-
+	* 0. Start
+	* 1. Flat
+	* 2. Sixty-Degrees
+	* 3. Facing Up
+	*/
+	
 	public static boolean start, flat, aim, up, manualOverride, originalPositionButton, limitSwitchState;
 	public static double overrideValue, speed; 
-
-	//Insert step 1 code below
+	public static int wristEncoderValue, wristEncoderVelocity, wristEncoderCCL;
 	
 	public static void moveWrist(double speed)
 	{
@@ -62,8 +62,6 @@ public class Wrist
 
 	}
 	
-	public static DigitalInput limitSwitch = new DigitalInput(Constants.wristLimitSwitch); 
-	
 	public static void setLimitSwitch()
 	{
 		limitSwitchState = limitSwitch.get();
@@ -81,8 +79,6 @@ public class Wrist
 		}
 	}
 	
-	public static int wristEncoderValue, wristEncoderVelocity;
-	
 	public static void setWristEncoder()
 	{
 		if(reachedFlat())
@@ -91,6 +87,7 @@ public class Wrist
 		}
 		wristEncoderValue = wristMotor.getSelectedSensorPosition(0);
 		wristEncoderVelocity = wristMotor.getSelectedSensorVelocity(0);
+		wristEncoderCCL = wristMotor.getClosedLoopError(0);
 	}
 	public static void resetWristEncoder()
 	{
@@ -160,7 +157,14 @@ public class Wrist
 		}
 		else
 		{
-			moveWrist(-.22);
+			if(IntakeWheels.getIntakeBannerSensor())
+			{
+				moveWrist(-.23);
+			}
+			else
+			{
+				moveWrist(-0.2);
+			}
 		}
 	}
 
@@ -191,6 +195,7 @@ public class Wrist
 	{
 		moveWristPosition(Constants.up);
 	}
+	
 	public static void runWrist()
 	{
 		int wristPID;
