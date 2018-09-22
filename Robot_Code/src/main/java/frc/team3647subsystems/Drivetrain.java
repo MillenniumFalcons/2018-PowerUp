@@ -121,10 +121,10 @@ public class Drivetrain
 	public static void newArcadeDrive(double yValue, double xValue, double angle)
 	{
 		
-		if(xValue != 0 && yValue == 0)
+		if(yValue != 0 && xValue == 0)
 	 	{
-			// System.out.println(yValue);
-			Drivetrain.straight(xValue, angle, supposedAngle);
+			System.out.println(0);
+			Drivetrain.setSpeed(yValue, yValue);
 	 	}
 		else if(yValue == 0 && xValue == 0)
 		{
@@ -133,8 +133,9 @@ public class Drivetrain
 		}
 		else
 		{
-			FRCarcadedrive(yValue, xValue);
+			FRCarcadedrive(xValue, yValue);
 			supposedAngle = angle;
+			System.out.println(1);
 		}
 	}
 

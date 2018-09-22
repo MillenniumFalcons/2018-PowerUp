@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot
 		elevatorEncoder = false;
 		bannerSensor = false;
 		currentState = false;
-		wristEncoder = true;
+		wristEncoder = false;
 		wristLimitSwitch = false;
 		wristCurrent = false;
 		intakeBanner = false;
@@ -90,6 +90,7 @@ public class Robot extends IterativeRobot
 			Wrist.setLimitSwitch();
 			Wrist.setWristEncoder();
 			Lights.LightOutput(false, false, false);
+			Autonomous.jonSmallestBrain(enc, navX);
 		}
 	}
 	
@@ -130,11 +131,12 @@ public class Robot extends IterativeRobot
 			runDrivetrain();
 			runElevator();
 			//enc.testEncodersWithDrive(joy.buttonA);
+			navX.testAngle();
 			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0, joy.leftBumper1);
 			runWrist();
 			Lights.runLights();
 			runTests();
-			System.out.println(Wrist.wristEncoderValue);
+		//	System.out.println(Wrist.wristEncoderValue);
 		}
 		catch(Throwable t)
 		{
@@ -221,14 +223,14 @@ public class Robot extends IterativeRobot
 		enc.setEncoderValues();
 		if(Elevator.elevatorEncoderValue > 30000 || joy.leftBumper)
 		{
-			Drivetrain.newArcadeDrive(joy.rightJoyStickx * Constants.driveElevatorSpeedModifier, joy.leftJoySticky * Constants.driveElevatorSpeedModifier, navX.yaw);
+			//Drivetrain.newArcadeDrive(joy.rightJoyStickx * Constants.driveElevatorSpeedModifier, joy.leftJoySticky * Constants.driveElevatorSpeedModifier, navX.yaw);
 		}
 		else
 		{
 			//Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky, joy.rightJoyStickx);
 			//Drivetrain.FRCarcadedrive(joy.leftJoySticky, joy.rightJoyStickx);
 			//Drivetrain.runMEATDrivetrain(joy.leftJoySticky, joy.rightJoyStickx);
-			Drivetrain.newArcadeDrive(joy.rightJoyStickx, joy.leftJoySticky, navX.yaw);
+			Drivetrain.newArcadeDrive(joy.leftJoySticky, joy.rightJoyStickx, navX.yaw);
 		}
 	}
 	
