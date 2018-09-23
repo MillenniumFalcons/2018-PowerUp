@@ -13,7 +13,7 @@ import frc.robot.*;
 
 public class Drivetrain 
 {
-	public static double aimedRatio, currentRatio, sum, speed, turn, turnRatioR, turnRatioL, rSpeed, lSpeed, constant;
+	public static double aimedRatio, currentRatio, sum, speed, turn, turnRatioR, turnRatioL, rSpeed, lSpeed, constant, diff;
 	public static boolean withinRange;
 
 	static double supposedAngle;
@@ -164,19 +164,21 @@ public class Drivetrain
 		}
 	}
 
-	public static void straight(double yValue, double angle, double supposedAngle)
+	public static void straightFow(double yValue, double angle, double supposedAngle)
 	{
-		if(angle != supposedAngle)
+		diff = supposedAngle - angle;
+		if(diff != 0)
 		{
-			if(angle > supposedAngle)
+			if(diff > 0)
 			{
-				constant = 1 - (.02 * angle);
+				constant = 1 - (.02 * diff);
 				setSpeed(yValue, yValue * constant);
 				//System.out.println("Left speed: " + yValue + "; Right speed: " + yValue * constant);
 			}
 			else 
 			{
-				constant = 1 - (.02 * (angle));
+				diff = Math.abs(diff);
+				constant = 1 - (.02 * (diff));
 				setSpeed(yValue * constant, yValue);
 				//System.out.println("Left speed: " + yValue  * constant + "; Right speed: " + yValue);
 			}
