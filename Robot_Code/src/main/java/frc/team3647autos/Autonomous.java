@@ -715,7 +715,8 @@ public class Autonomous
     public static void chezyDoubleSwitchRightFromRight(Encoders enc, NavX gyro)
 	{
 		enc.setEncoderValues();
-		gyro.setAngle();
+        gyro.setAngle();
+        enc.testEncoders();
 		switch(currentState)
 		{
 			case 0:
@@ -759,19 +760,19 @@ public class Autonomous
 				{
 					//Wrist.moveUp();
 					speed = speedUp(.25, .6, 0, (straightDist/3.0), enc.rightEncoderValue);
-					Drivetrain.setSpeed(speed, speed);
+					Drivetrain.jankStraight(speed, speed);
 				}
 				else if(enc.rightEncoderValue < ((2 * straightDist)/3.0))
 				{
 					//Wrist.moveUp();
-					Drivetrain.setSpeed(.6, .6);
+					Drivetrain.jankStraight(.6, .6);
 				}
 				else if(enc.rightEncoderValue < straightDist)
 				{
 					//Elevator.moveElevatorPosition(Constants.Switch);
 					//moveWristDownWhileRunning();
 					speed = slowDown(.15, .6, ((2 * straightDist)/3.0), straightDist, enc.rightEncoderValue);
-					Drivetrain.setSpeed(speed, speed);
+					Drivetrain.jankStraight(speed, speed);
 				}
 				else 
 				{
@@ -781,15 +782,15 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				double turnDist = 11000;
+				double turnDist = 9850;
 				//Elevator.moveElevatorPosition(Constants.Switch);
                 //moveWristDownWhileRunning();
                 rValue = enc.rightEncoderValue - prevRightEncoder;
                 if(rValue < turnDist - 2000)
                 {
-                    Drivetrain.setSpeed(0, .42);
+                    Drivetrain.setSpeed(0.0, .6);
                 }
-				if(rValue < turnDist)
+				else if(rValue < turnDist)
                 {
                     Drivetrain.setSpeed(0, .3);
                 }

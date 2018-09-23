@@ -118,6 +118,25 @@ public class Drivetrain
 		drive.curvatureDrive(throttle, turn, true);
 	}
 
+	public static void jankStraight(double angle, double speed)
+	{
+		if(angle > 0)
+		{
+			constant = 1 - (.02 * angle);
+			setSpeed(speed * constant, speed);
+		}
+		else if(angle < 0)
+		{
+			angle = Math.abs(angle);
+			constant = 1 - (.02 * angle);
+			setSpeed(speed, speed * constant);
+		}
+		else 
+		{
+			setSpeed(speed, speed);
+		}
+	}
+
 	public static void newArcadeDrive(double yValue, double xValue, double angle)
 	{
 		
@@ -125,6 +144,7 @@ public class Drivetrain
 	 	{
 			//System.out.println(0);
 			Drivetrain.setSpeed(yValue, yValue);
+			//Drivetrain.straightFow(yValue, angle, supposedAngle);;
 	 	}
 		else if(yValue == 0 && xValue == 0)
 		{
