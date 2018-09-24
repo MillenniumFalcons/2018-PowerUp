@@ -141,8 +141,8 @@ public class TrajectoryFollower
         left.configureEncoder(0, 1440, Constants.wheelDiameter);
 
         //set PID values
-        right.configurePIDVA(Constants.rPFkP, Constants.rPFkI, Constants.rPFkD, Constants.rPFkV, Constants.rPFkA);
-        left.configurePIDVA(Constants.lPFkP, Constants.lPFkI, Constants.lPFkD, Constants.lPFkV, Constants.lPFkA);
+        right.configurePIDVA(Constants.PFkP, Constants.PFkI, Constants.PFkD, Constants.PFkV, Constants.PFkA);
+        left.configurePIDVA(Constants.PFkP, Constants.PFkI, Constants.PFkD, Constants.PFkV, Constants.PFkA);
     }
 
     public boolean isFinished()

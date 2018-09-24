@@ -87,7 +87,6 @@ public class Robot extends IterativeRobot
 		while(DriverStation.getInstance().isAutonomous() && !DriverStation.getInstance().isDisabled())
 		{
 			Elevator.setElevatorEncoder();
-			Wrist.setLimitSwitch();
 			Wrist.setWristEncoder();
 			Lights.LightOutput(false, false, false);
 			Autonomous.chezyDoubleSwitchRightFromRight(enc, navX);
@@ -205,12 +204,11 @@ public class Robot extends IterativeRobot
 		Wrist.setWristButtons(joy.dPadDown,joy.dPadSide,joy.dPadUp);
 		Wrist.setManualWristOverride(joy.leftJoySticky1 * 0.45);
 		Wrist.runWrist();
-		Wrist.setLimitSwitch();
 	}
 
 	public void runPistonsandForks()
 	{
-		//Intake.runIntake(joy.rightBumper1);
+		Intake.runIntake(joy.rightBumper1);
 		Forks.runPiston(joy.buttonX);
 		Shifter.runPiston(joy.buttonY);
 		TiltServo.PullForks(joy.leftTrigger, joy.rightTrigger);
@@ -230,7 +228,6 @@ public class Robot extends IterativeRobot
 		{
 			//Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky, joy.rightJoyStickx);
 			//Drivetrain.FRCarcadedrive(joy.leftJoySticky, joy.rightJoyStickx);
-			//Drivetrain.runMEATDrivetrain(joy.leftJoySticky, joy.rightJoyStickx);
 			Drivetrain.newArcadeDrive(joy.leftJoySticky, joy.rightJoyStickx, navX.yaw);
 		}
 	}
@@ -268,7 +265,7 @@ public class Robot extends IterativeRobot
 		}
 		if(wristEncoder)
 		{
-			wrist.testWristEncoder();
+			Wrist.testWristEncoder();
 		}
 		if(wristCurrent)
 		{

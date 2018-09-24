@@ -573,10 +573,10 @@ public class ProfileGenerator
     {
     	if(choUnits.equals("FEET")) {
 	        timeStep = 0.02;
-	        velocity = 10;
-	        acceleration = 11;
-	        jerk = 200;
-	        wheelBaseW = 2.1;
+	        velocity = 9;
+	        acceleration = 5;
+	        jerk = 60;
+	        wheelBaseW = 2.37;
 	        wheelBaseD = 0;
 	
 	        fitMethod = FitMethod.HERMITE_CUBIC;

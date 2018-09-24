@@ -62,14 +62,9 @@ public class Wrist
 
 	}
 	
-	public static void setLimitSwitch()
-	{
-		limitSwitchState = limitSwitch.get();
-	}
-	
 	public static void testLimitSwitch()
 	{
-		if(limitSwitchState)
+		if(reachedFlat())
 		{
 			System.out.println("Limit switch triggered");
 		}
@@ -184,6 +179,16 @@ public class Wrist
 
 	public static void moveWristPosition(double position)
 	{
+		int wristPID;
+		if(IntakeWheels.getIntakeBannerSensor())//no cube
+		{
+			wristPID = Constants.noCubePID;
+		}
+		else
+		{
+			wristPID = Constants.cubePID;
+		}
+		wristMotor.selectProfileSlot(wristPID, 0);
 		wristMotor.set(ControlMode.MotionMagic, position);
 	}
 
@@ -199,16 +204,6 @@ public class Wrist
 	
 	public static void runWrist()
 	{
-		int wristPID;
-		if(IntakeWheels.getIntakeBannerSensor())//no cube
-		{
-			wristPID = Constants.noCubePID;
-		}
-		else
-		{
-			wristPID = Constants.cubePID;
-		}
-		wristMotor.selectProfileSlot(wristPID, 0);
 		if(manualOverride)
 		{
 			aimedWristState = -1;
