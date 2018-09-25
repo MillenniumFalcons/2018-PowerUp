@@ -1449,11 +1449,11 @@ public class Autonomous
 				double rotateRightDist = 3500;
 				if(rValue < rotateRightDist - 1300)
 				{
-					Drivetrain.setSpeed(0, .6);
+					Drivetrain.setSpeed(0, .5);
 				}
 				else if(rValue < rotateRightDist)
 				{
-					Drivetrain.setSpeed(0, .3);
+					Drivetrain.setSpeed(0, .2);
 				}
 				else
 				{
@@ -1499,7 +1499,7 @@ public class Autonomous
 				}
 				break;
 			case 6:
-				double spinDist = 1900;
+				double spinDist = 2550;
 				System.out.println(enc.rightEncoderValue);
 				if(enc.rightEncoderValue < spinDist - 1300)
 				{
@@ -1508,7 +1508,7 @@ public class Autonomous
 				}
 				else if(enc.rightEncoderValue < spinDist)
 				{
-					Drivetrain.setSpeed(-.25, .25);
+					Drivetrain.setSpeed(-.2, .2);
 					//IntakeWheels.runIntake(0, 0, true, 0, 0, false);
 					//Elevator.moveBottom(false);
 				}
@@ -1516,19 +1516,22 @@ public class Autonomous
 				{
 					Drivetrain.stop();
 					prevTime = stopWatch.get();
-					currentState = 929;
+					currentState = 7;
 				}
 				break;
 			case 7:
 				currTime = stopWatch.get() - prevTime;
+				Drivetrain.stop();
 				enc.resetEncoders();
-				if(Drivetrain.stopped())
-				{
-					prevTime = stopWatch.get();
-					//Elevator.moveBottom(false);
-					currentState = 8;
-				}
-				else if(currTime < .4)
+				gyro.resetAngle();
+				// if(Drivetrain.stopped())
+				// {
+				// 	prevTime = stopWatch.get();
+				// 	//Elevator.moveBottom(false);
+				// 	currentState = 8;
+				// }
+				// else 
+				if(currTime < .7)
 				{
 					//Elevator.moveBottom(false);
 				}
@@ -1546,15 +1549,25 @@ public class Autonomous
 				}
 				break;
 			case 9:
-				double straightDistForCube = 5000;
+				double straightDistForCube = 8400;
+				Wrist.moveToFlat();
 				if(enc.rightEncoderValue < straightDistForCube - 1500)
 				{
-					Drivetrain.setSpeed(.4, .4);
+					Drivetrain.jankStraight(0, .4);
+					IntakeWheels.runIntake(0, 0, true, .5, .5, false);
+					Intake.openIntake();
 				}
 				else if(enc.rightEncoderValue < straightDistForCube)
 				{
-					Drivetrain.setSpeed(.3, .3);
-
+					Drivetrain.jankStraight(0, .3);
+					IntakeWheels.runIntake(0, 0, true, .5, .5, false);
+					Intake.openIntake();
+				}
+				else 
+				{
+					Drivetrain.stop();
+					IntakeWheels.runIntake(0, 0, true, 0, 0, false);
+					Intake.closeIntake();
 				}
 				break;
 		}
@@ -1636,7 +1649,7 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				lValue = enc.leftEncoderValue - prevleftEncoder;
+				//lValue = enc.leftEncoderValue;
 				//Elevator.moveElevatorPosition(Constants.Scale);
 				//moveWristDownWhileRunning();
 				System.out.println(lValue);
