@@ -246,11 +246,11 @@ public class Elevator
 		int currentPosition = elevatorEncoderValue;
 		if(jValue > 0.05)
 		{
-			newPosition = currentPosition + 1000 * jValue;
+			newPosition = currentPosition + jValue;
 		}
 		else if(jValue < -0.05)
 		{
-			newPosition = currentPosition - 1000 * jValue;
+			newPosition = currentPosition - jValue;
 		}
 		moveElevatorPosition(newPosition);
 	}
