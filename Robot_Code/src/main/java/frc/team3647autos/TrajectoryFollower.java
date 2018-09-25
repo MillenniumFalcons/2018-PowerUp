@@ -137,8 +137,8 @@ public class TrajectoryFollower
 
     public void initialize()
     {
-        right.configureEncoder(0, 1440, Constants.wheelDiameter);//first arg set to 0 since encoders reset just before
-        left.configureEncoder(0, 1440, Constants.wheelDiameter);
+        right.configureEncoder(0, 360, Constants.wheelDiameter);//first arg set to 0 since encoders reset just before
+        left.configureEncoder(0, 360, Constants.wheelDiameter);
 
         //set PID values
         right.configurePIDVA(Constants.PFkP, Constants.PFkI, Constants.PFkD, Constants.PFkV, Constants.PFkA);
@@ -152,6 +152,7 @@ public class TrajectoryFollower
     
     public Trajectory reverseTrajectory(Trajectory trajectory)
     {
+
         Collections.reverse(Arrays.asList(trajectory));
         return trajectory;
     }

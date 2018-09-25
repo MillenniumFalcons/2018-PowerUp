@@ -78,7 +78,7 @@ public class Constants
 	public final static int wristLimitSwitch = 2;
 		//Levels
 	public final static int flat = 0;
-	public final static int aim = 440;
+	public final static int aim = 400;
 	public final static int up = 650;
 
 	//Wrist PID Values
@@ -127,7 +127,7 @@ public class Constants
 	public static final double lrStraightAfterWall = 	2928;
 
 		//Pathfinder Constants
-		public final static double wheelDiameter = .378;//.416666;
+	public final static double wheelDiameter = 0.378;//.416666;
 		//Used for waypoint generation method
 	public final static double wheelBase = 25.2;
 	public final static double maxVelocity = 15.5; // also used for csv file method
@@ -136,7 +136,7 @@ public class Constants
 	public final static double MPTimeStep = 0.02;
 		//PID Values
 	public final static double PFTurnkP = 0.8;
-	public final static double PFkP = 0.6;//3048; //0.19; //P Gain
+	public final static double PFkP = 0.005;//3048; //0.19; //P Gain
 	public final static double PFkI = 0; //I Gain (not used)
 	public final static double PFkD = 0; //D Gain
 	public final static double PFkV = 1 / maxVelocity ; //Feed Forward (1/max velocity)

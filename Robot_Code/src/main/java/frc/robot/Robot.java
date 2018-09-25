@@ -136,7 +136,7 @@ public class Robot extends IterativeRobot
 			Lights.runLights();
 			runTests();
 			//System.out.println(Elevator.elevatorEncoderValue);
-			System.out.println(Wrist.limitSwitchState);
+			System.out.println(Wrist.reachedFlat());
 		}
 		catch(Throwable t)
 		{

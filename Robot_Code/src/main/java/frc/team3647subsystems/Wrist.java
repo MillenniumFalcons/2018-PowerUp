@@ -24,7 +24,7 @@ public class Wrist
 	* 3. Facing Up
 	*/
 	
-	public static boolean start, flat, aim, up, manualOverride, originalPositionButton, limitSwitchState;
+	public static boolean start, flat, aim, up, manualOverride, originalPositionButton;
 	public static double overrideValue, speed; 
 	public static int wristEncoderValue, wristEncoderVelocity, wristEncoderCCL;
 	
@@ -61,6 +61,7 @@ public class Wrist
 		wristMotor.configMotionCruiseVelocity(Constants.wristCruiseVelocity, Constants.kTimeoutMs);
 
 	}
+	
 	
 	public static void testLimitSwitch()
 	{
@@ -108,7 +109,7 @@ public class Wrist
 	
 	public static boolean reachedFlat()
 	{
-		if(limitSwitchState)
+		if(limitSwitch.get())
 		{
 			return true;
 		} 
@@ -155,7 +156,7 @@ public class Wrist
 			//moveWrist(-0.2);
 			if(IntakeWheels.getIntakeBannerSensor())
 			{
-				moveWrist(-0.35);
+				moveWrist(-0.4);
 			}
 			else
 			{
@@ -220,7 +221,7 @@ public class Wrist
 		{
 			aimedWristState = 3;
 		}
-		else if(Elevator.currentWristState == 0)
+		else if(Elevator.currentWristState == 0) //this code makes wrist run when it is at flat -- need to fix
 		{
 			aimedWristState = -10;
 		}
