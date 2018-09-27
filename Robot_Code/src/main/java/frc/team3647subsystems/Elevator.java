@@ -134,6 +134,7 @@ public class Elevator
 			case 0:
 			if(Wrist.reachedFlat())
 			{
+				Wrist.stopWrist();
 				currentWristState = 1;
 			}
 			else
@@ -155,6 +156,7 @@ public class Elevator
 			case 0:
 			if(Wrist.reachedFlat())
 			{
+				Wrist.stopWrist();
 				currentWristState = 1;
 			}
 			else
@@ -168,7 +170,7 @@ public class Elevator
 		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
 		moveElevatorPosition(Constants.lowerScale);		
 	}
-	public static int currentWristState = 0;
+	public static int currentWristState = 1;
 
 	public static void moveScale()
 	{
@@ -177,6 +179,7 @@ public class Elevator
 			case 0:
 			if(Wrist.reachedFlat())
 			{
+				Wrist.stopWrist();
 				currentWristState = 1;
 			}
 			else
@@ -203,6 +206,7 @@ public class Elevator
 					case 0:
 						if(reachedBottom() && Wrist.reachedUp())
 						{
+							
 							currentWristState = 1;
 						}
 						else
@@ -312,8 +316,8 @@ public class Elevator
 				{
 					overrideValue = 0;
 				}
-				//moveManual(overrideValue);
-				moveElevator(overrideValue);
+				moveManual(overrideValue);
+				//moveElevator(overrideValue);
 				break;
         }
     }

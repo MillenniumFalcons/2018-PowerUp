@@ -148,6 +148,7 @@ public class Wrist
 	{
 		if(reachedFlat())
 		{
+			System.out.println("reached flat");
 			stopWrist();
 			resetWristEncoder();
 		}
@@ -228,6 +229,7 @@ public class Wrist
 		switch(aimedWristState)
 		{
 			case -10:
+				System.out.println("case -10");
 				break;
 			case 1:
 				moveToFlat();
