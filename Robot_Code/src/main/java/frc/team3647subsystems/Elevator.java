@@ -64,6 +64,73 @@ public class Elevator
 		leftGearboxSPX.setInverted(true);
 	}
 
+	public static void runElevator()
+	{
+		if(elevatorEncoderValue > Constants.elevatorSafetyLimit)
+		{
+			currentWristState = 0;
+			aimedElevatorState = -10;
+		}
+		else if(manualOverride)
+		{
+			currentWristState = 0;
+			aimedElevatorState = -1;
+		}
+		else if(bottom)
+		{
+			currentWristState = 0;
+			aimedElevatorState = 1;
+		}
+		else if(sWitch)
+		{
+			currentWristState = 0;
+			aimedElevatorState = 2;
+		}
+		else if(lowerScale)
+		{
+			currentWristState = 0;
+			aimedElevatorState = 3;
+		}
+		else if(scale)
+		{
+			currentWristState = 0;
+			aimedElevatorState = 4;
+		}
+		switch(aimedElevatorState)
+		{
+			case -10:
+				moveElevator(-0.1);
+				break;
+			case 0:
+				moveBottom(false);
+				break;
+			case 1:
+				moveBottom(true);
+				encoderState = 0;
+				break;
+			case 2:
+				moveSwitch();
+				encoderState = 0;
+				break;
+			case 3:
+				moveLowerScale();
+				encoderState = 0;
+				break;
+			case 4:
+				moveScale();
+				encoderState = 0;
+				break;
+			case -1:
+				if(!manualOverride)
+				{
+					overrideValue = 0;
+				}
+				moveManual(overrideValue);
+				//moveElevator(overrideValue);
+				break;
+		}
+	}
+	
 	public static void setElevatorEncoder()
 	{
         if(reachedBottom())
@@ -116,11 +183,9 @@ public class Elevator
 	
 	public static void setManualOverride(double jValue)
 	{
-		System.out.println(jValue);
         if(Math.abs(jValue) <.2 )
 		{
 			manualOverride = false;
-			jValue = 0;
 		}
 		else
 		{
@@ -247,119 +312,53 @@ public class Elevator
 
 	public static double newPosition;
 
+	// public static void moveManual(double jValue)
+	// {
+	// 	int currentPosition = elevatorEncoderValue;
+	// 	if(jValue > 0.05)
+	// 	{
+	// 		newPosition = currentPosition + jValue;
+	// 	}
+	// 	else if(jValue < -0.05)
+	// 	{
+	// 		newPosition = currentPosition - jValue;
+	// 	}
+	// 	moveElevatorPosition(newPosition);
+	// }
+
+	public static int encoderState;
+	public static int manualEncoderValue;
+
 	public static void moveManual(double jValue)
 	{
-		int currentPosition = elevatorEncoderValue;
-		if(jValue > 0.05)
+		if(jValue > 0)
 		{
-			newPosition = currentPosition + jValue;
+			System.out.println("oof up");
+			moveElevator(overrideValue);
+			encoderState = 0;
 		}
-		else if(jValue < -0.05)
+		else if(jValue < 0)
 		{
-			newPosition = currentPosition - jValue;
+			System.out.println("oof down");
+			moveElevator(overrideValue * 0.3);
+			encoderState = 0;
 		}
-		moveElevatorPosition(newPosition);
+		else
+		{
+			switch(encoderState)
+			{
+				case 0:
+					manualEncoderValue = elevatorEncoderValue;
+					System.out.println("set fixed elevator value");
+					encoderState = 1;
+					break;
+				case 1:
+					moveElevatorPosition(manualEncoderValue);
+					break;
+			}
+		}
 	}
 	
-	public static void runElevator(double jValue)
-	{
-		if(elevatorEncoderValue > Constants.elevatorSafetyLimit)
-		{
-			currentWristState = 0;
-			aimedElevatorState = -10;
-		}
-		else if(manualOverride)
-		{
-			currentWristState = 0;
-			aimedElevatorState = -1;
-		}
-		else if(bottom)
-		{
-			currentWristState = 0;
-			aimedElevatorState = 1;
-		}
-		else if(sWitch)
-		{
-			currentWristState = 0;
-			aimedElevatorState = 2;
-		}
-		else if(lowerScale)
-		{
-			currentWristState = 0;
-			aimedElevatorState = 3;
-		}
-		else if(scale)
-		{
-			currentWristState = 0;
-			aimedElevatorState = 4;
-		}
-        switch(aimedElevatorState)
-		{
-			case -10:
-				moveElevator(0);
-				break;
-			case 0:
-				moveBottom(false);
-				break;
-			case 1:
-				moveBottom(true);
-				encoderState = 0;
-				break;
-			case 2:
-				moveSwitch();
-				encoderState = 0;
-				break;
-			case 3:
-				moveLowerScale();
-				encoderState = 0;
-				break;
-			case 4:
-				moveScale();
-				encoderState = 0;
-				break;
-			// case -1:
-			// 	if(!manualOverride)
-			// 	{
-			// 		overrideValue = 0;
-			// 	}
-			// 	moveManual(overrideValue);
-			// 	//moveElevator(overrideValue);
-			// 	break;
-			case -1:
-				if(jValue > 0.2)
-				{
-					System.out.println("oof up");
-					moveElevator(overrideValue);
-					encoderState = 0;
-				}
-				else if(overrideValue < -0.2)
-				{
-					System.out.println("off down");
-					moveElevator(overrideValue * 0.3);
-					encoderState = 0;
-				}
-				else
-				{
-					switch(encoderState)
-					{
-						case 0:
-							elevatorEncoderTemp = elevatorEncoderValue;
-							System.out.println("In case 0");
-							encoderState = 1;
-							break;
-						case 1:
-							moveElevatorPosition(elevatorEncoderTemp);
-							break;
-					}
-					System.out.println("Tryingn to maintain pos");
-					
-				}
-				break;
-		
-        }
-	}
-	public static int encoderState;
-	public static int elevatorEncoderTemp;
     
     public static void testElevatorEncoders()
     {

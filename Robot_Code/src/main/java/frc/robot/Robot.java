@@ -107,13 +107,9 @@ public class Robot extends IterativeRobot
 		Shifter.lowGear();
 		Lock.unlock();
 		Lights.LightOutput(false, false, false);
-		//Elevator.aimedElevatorState = 0;
-		//Wrist.aimedWristState = 0;
 		stopWatch.stop();
 		stopWatch.reset();
 		run = 0;
-		Wrist.configWristPID();
-		//Wrist.aimedElevatorState = 1;
 		//ClimbButton.buttonState = 1;
 		navX.resetAngle();
 	}
@@ -129,12 +125,12 @@ public class Robot extends IterativeRobot
 			runPistonsandForks();
 			runDrivetrain();
 			runElevator();
-			//enc.testEncodersWithDrive(joy.buttonA);
-			//navX.testAngle();
-			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0, joy.leftBumper1);
 			runWrist();
+			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0, joy.leftBumper1);
 			Lights.runLights();
 			runTests();
+			//enc.testEncodersWithDrive(joy.buttonA);
+			//navX.testAngle();
 			//System.out.println(Elevator.elevatorEncoderValue);
 			//System.out.println(Wrist.reachedFlat());
 		}
