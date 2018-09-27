@@ -82,7 +82,7 @@ public class Joysticks
 	
 	public static double fixJoystickValue(double jValue)
 	{
-		if(jValue < .15 && jValue > -.15)
+		if(jValue < .1 && jValue > -.1)
 		{
 			return 0;
 		}

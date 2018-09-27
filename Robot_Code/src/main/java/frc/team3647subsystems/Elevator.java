@@ -116,9 +116,11 @@ public class Elevator
 	
 	public static void setManualOverride(double jValue)
 	{
-        if(Math.abs(jValue) <.1 )
+		System.out.println(jValue);
+        if(Math.abs(jValue) <.2 )
 		{
-            manualOverride = false;
+			manualOverride = false;
+			jValue = 0;
 		}
 		else
 		{
@@ -259,18 +261,18 @@ public class Elevator
 		moveElevatorPosition(newPosition);
 	}
 	
-	public static void runElevator()
+	public static void runElevator(double jValue)
 	{
 		if(elevatorEncoderValue > Constants.elevatorSafetyLimit)
 		{
 			currentWristState = 0;
 			aimedElevatorState = -10;
 		}
-		// else if(manualOverride)
-		// {
-		// 	currentWristState = 0;
-		// 	aimedElevatorState = -1;
-		// }
+		else if(manualOverride)
+		{
+			currentWristState = 0;
+			aimedElevatorState = -1;
+		}
 		else if(bottom)
 		{
 			currentWristState = 0;
@@ -301,26 +303,63 @@ public class Elevator
 				break;
 			case 1:
 				moveBottom(true);
+				encoderState = 0;
 				break;
 			case 2:
 				moveSwitch();
+				encoderState = 0;
 				break;
 			case 3:
 				moveLowerScale();
+				encoderState = 0;
 				break;
 			case 4:
 				moveScale();
+				encoderState = 0;
 				break;
+			// case -1:
+			// 	if(!manualOverride)
+			// 	{
+			// 		overrideValue = 0;
+			// 	}
+			// 	moveManual(overrideValue);
+			// 	//moveElevator(overrideValue);
+			// 	break;
 			case -1:
-				if(!manualOverride)
+				if(jValue > 0.2)
 				{
-					overrideValue = 0;
+					System.out.println("oof up");
+					moveElevator(overrideValue);
+					encoderState = 0;
 				}
-				moveManual(overrideValue);
-				//moveElevator(overrideValue);
+				else if(overrideValue < -0.2)
+				{
+					System.out.println("off down");
+					moveElevator(overrideValue * 0.3);
+					encoderState = 0;
+				}
+				else
+				{
+					switch(encoderState)
+					{
+						case 0:
+							elevatorEncoderTemp = elevatorEncoderValue;
+							System.out.println("In case 0");
+							encoderState = 1;
+							break;
+						case 1:
+							moveElevatorPosition(elevatorEncoderTemp);
+							break;
+					}
+					System.out.println("Tryingn to maintain pos");
+					
+				}
 				break;
+		
         }
-    }
+	}
+	public static int encoderState;
+	public static int elevatorEncoderTemp;
     
     public static void testElevatorEncoders()
     {
