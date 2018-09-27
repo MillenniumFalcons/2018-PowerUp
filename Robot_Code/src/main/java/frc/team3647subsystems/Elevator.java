@@ -328,19 +328,20 @@ public class Elevator
 
 	public static int encoderState;
 	public static int manualEncoderValue;
+	public static int manualAdjustment;
 
 	public static void moveManual(double jValue)
 	{
 		if(jValue > 0)
 		{
-			System.out.println("oof up");
-			moveElevator(overrideValue);
+			moveElevator(overrideValue * 0.65);
+			manualAdjustment = 1500;
 			encoderState = 0;
 		}
 		else if(jValue < 0)
 		{
-			System.out.println("oof down");
-			moveElevator(overrideValue * 0.3);
+			moveElevator(overrideValue * 0.2);
+			manualAdjustment = 0;
 			encoderState = 0;
 		}
 		else
@@ -348,8 +349,7 @@ public class Elevator
 			switch(encoderState)
 			{
 				case 0:
-					manualEncoderValue = elevatorEncoderValue;
-					System.out.println("set fixed elevator value");
+					manualEncoderValue = elevatorEncoderValue + manualAdjustment;
 					encoderState = 1;
 					break;
 				case 1:
