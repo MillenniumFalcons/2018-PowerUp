@@ -782,13 +782,13 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				double turnDist = 9850;
+				double turnDist = 10000;
 				//Elevator.moveElevatorPosition(Constants.Switch);
                 //moveWristDownWhileRunning();
                 rValue = enc.rightEncoderValue - prevRightEncoder;
                 if(rValue < turnDist - 2000)
                 {
-                    Drivetrain.setSpeed(0.0, .6);
+                    Drivetrain.setSpeed(0, .6);
                 }
 				else if(rValue < turnDist)
                 {

@@ -89,7 +89,7 @@ public class Robot extends IterativeRobot
 			Elevator.setElevatorEncoder();
 			Wrist.setWristEncoder();
 			Lights.LightOutput(false, false, false);
-			Autonomous.jankScale(enc, navX);
+			Autonomous.chezyDoubleSwitchRightFromRight(enc, navX);
 		}
 	}
 	

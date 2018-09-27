@@ -137,9 +137,28 @@ public class Drivetrain
 		}
 	}
 
+	public static void jankStraightNotFirst(double angle, double speed, double supposedAngle)
+	{
+		diff = supposedAngle - angle;
+		if(diff > 0)
+		{
+			constant = 1 - (.02 * diff);
+			setSpeed(speed * constant, speed);
+		}
+		else if(diff < 0)
+		{
+			diff = Math.abs(diff);
+			constant = 1 - (.02 * diff);
+			setSpeed(speed, speed * constant);
+		}
+		else 
+		{
+			setSpeed(speed, speed);
+		}
+	}
+
 	public static void newArcadeDrive(double yValue, double xValue, double angle)
 	{
-		
 		if(yValue != 0 && xValue == 0)
 	 	{
 			//System.out.println(0);
