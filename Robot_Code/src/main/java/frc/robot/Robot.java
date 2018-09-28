@@ -73,6 +73,8 @@ public class Robot extends IterativeRobot
 		{
 			CrashChecker.logAutoInit();
 			Autonomous.initialize(enc, navX);
+			// MPAutos.intialization(enc, navX);
+			// MPAutos.switchSide = "Right";
 		}
 		catch(Throwable t)
 		{
@@ -89,7 +91,8 @@ public class Robot extends IterativeRobot
 			Elevator.setElevatorEncoder();
 			Wrist.setWristEncoder();
 			Lights.LightOutput(false, false, false);
-			Autonomous.chezyDoubleSwitchRightFromRight(enc, navX);
+			Autonomous.chezyDoubleSwitchRightFromLeft(enc, navX);
+			//MPAutos.middleSwitch(enc, navX);
 		}
 	}
 	

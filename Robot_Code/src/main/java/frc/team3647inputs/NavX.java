@@ -7,7 +7,7 @@ public class NavX
 {
     AHRS AHRSnavX = new AHRS(SPI.Port.kMXP);
 
-    public double yaw, yawUnClamped, pitch, roll, actualYaw;
+    public double yaw, yawUnClamped, pitch, roll, actualYaw, b;
 
     public void setAngle()
     {
@@ -32,7 +32,8 @@ public class NavX
     {
         if(yaw < 0)
         {
-            actualYaw = 360 - yaw;
+            b = Math.abs(yaw);
+            actualYaw = 360 - b;
         }
         else
         {

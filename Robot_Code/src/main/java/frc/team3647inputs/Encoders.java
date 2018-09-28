@@ -13,11 +13,33 @@ public class Encoders
 	public int leftEncoderValue, rightEncoderValue;
 	public int  rVelocity, lVelocity;
 	public double rVelocityFPS, lVelocityFPS;
+
+	public int prevLEncoder, prevREncoder;
 	
 	public void setEncoderValues()
 	{
 		leftEncoderValue = Drivetrain.leftSRX.getSelectedSensorPosition(Constants.drivePID);
 		rightEncoderValue = Drivetrain.rightSRX.getSelectedSensorPosition(Constants.drivePID);
+	}
+
+	public void dontSkip()
+	{	
+		if(prevLEncoder > leftEncoderValue)
+		{
+			Drivetrain.leftSRX.setSelectedSensorPosition(prevLEncoder, Constants.drivePID, Constants.kTimeoutMs);
+		}
+		else 
+		{
+			prevREncoder = rightEncoderValue;
+		}
+		if(prevREncoder > rightEncoderValue)
+		{
+			Drivetrain.rightSRX.setSelectedSensorPosition(prevREncoder, Constants.drivePID, Constants.kTimeoutMs);
+		}
+		else 
+		{
+			prevLEncoder = leftEncoderValue;
+		}
 	}
 	
 	public void resetEncoders()

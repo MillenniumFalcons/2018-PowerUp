@@ -122,13 +122,13 @@ public class Drivetrain
 	{
 		if(angle > 0)
 		{
-			constant = 1 - (.02 * angle);
+			constant = 1 - (.04 * angle);
 			setSpeed(speed * constant, speed);
 		}
 		else if(angle < 0)
 		{
 			angle = Math.abs(angle);
-			constant = 1 - (.02 * angle);
+			constant = 1 - (.04 * angle);
 			setSpeed(speed, speed * constant);
 		}
 		else 
