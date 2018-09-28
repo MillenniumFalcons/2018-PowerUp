@@ -1003,7 +1003,7 @@ public class Autonomous
 				break;
 			case 3:
 				double turnDist = 5070;
-				double straighttDist = 11470;
+				double straighttDist = 11720;
 				double secondTurn = 5760;
 				Elevator.moveSwitch();
 				Wrist.moveToFlat();
@@ -1432,7 +1432,7 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				double totalScaleDist = 11400;
+				double totalScaleDist = 26000;
 				// if(enc.rightEncoderValue < (totalScaleDist/3.0))
 				// {
 				// 	//Wrist.moveUp();
@@ -1440,7 +1440,7 @@ public class Autonomous
 				// 	Drivetrain.setSpeed(speed, speed);
 				// }
 				// else 
-				if(enc.rightEncoderValue < 2000)
+				if(enc.rightEncoderValue < 3000)
 				{
 					Drivetrain.setSpeed(.4, .4);
 				}
@@ -1470,7 +1470,7 @@ public class Autonomous
 				//Elevator.moveElevatorPosition(Constants.Scale);
 				//moveWristDownWhileRunning();
 				System.out.println(rValue);
-				double rotateRightDist = 3500;
+				double rotateRightDist = 3550;
 				if(rValue < rotateRightDist - 1300)
 				{
 					Drivetrain.setSpeed(0, .5);
