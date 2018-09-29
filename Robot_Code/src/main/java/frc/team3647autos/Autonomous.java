@@ -154,17 +154,35 @@ public class Autonomous
 					}
 					else 
 					{
-						if(gameData.charAt(1) == 'L')
+						if(theyWillCross)
 						{
-							runAuto = 5;
-						}
-						else if(gameData.charAt(0) == 'L')
-						{
-							runAuto = 2;
+							if(gameData.charAt(1) == 'L')
+							{
+								runAuto = 5;
+							}
+							if(gameData.charAt(0) == 'L')
+							{
+								runAuto = 2;
+							}
+							else 
+							{
+								runAuto = 0; 
+							}
 						}
 						else 
 						{
-							runAuto = 0; 
+							if(gameData.charAt(1) == 'L')
+							{
+								runAuto = 8;
+							}
+							else if(gameData.charAt(0) == 'L')
+							{
+								runAuto = 2;
+							}
+							else 
+							{
+								runAuto = 0; 
+							}
 						}
 					}
 				}
