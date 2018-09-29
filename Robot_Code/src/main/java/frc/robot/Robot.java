@@ -92,7 +92,7 @@ public class Robot extends IterativeRobot
 		{
 			Elevator.setElevatorEncoder();
 			Wrist.setWristEncoder();
-			Lights.LightOutput(false, false, false);
+			Lights.runLights();
 			Autonomous.runAuto(enc, navX);
 			//MPAutos.middleSwitch(enc, navX);
 		}

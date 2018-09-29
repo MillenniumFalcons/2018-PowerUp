@@ -20,15 +20,7 @@ public class Lights
 	
 	public static void runLights()
 	{
-		if(!IntakeWheels.getIntakeBannerSensor())
-		{
-			LightOutput(true, false, false);
-		}
-		else if(Shifter.piston.get() == DoubleSolenoid.Value.kReverse)
-		{
-			LightOutput(false, true, false);
-		}
-		else if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue)
+		if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue)
 		{
 			LightOutput(false, false, true);
 		}

@@ -87,7 +87,7 @@ public class Autonomous
 	public static void runAuto(Encoders enc, NavX gyro)
 	{
 		boolean cross = false;
-		boolean cantCross = false;
+		boolean cantCross = true;
 		boolean theyWillCross = true; 
 		boolean right = false;
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -483,11 +483,11 @@ public class Autonomous
                 lValue = enc.leftEncoderValue - prevLeftEncoder;
                 if(lValue < turnDist - 2000)
                 {
-                    Drivetrain.setSpeed(0, .58);
+                    Drivetrain.setSpeed(.58, 0);
                 }
 				else if(lValue < turnDist)
                 {
-                    Drivetrain.setSpeed(0, .3);
+                    Drivetrain.setSpeed(.3, 0);
 				}
 				else 
 				{
@@ -1028,11 +1028,11 @@ public class Autonomous
 				lValue = enc.leftEncoderValue - prevLeftEncoder;
                 if(lValue < rotateDist - 2000)
                 {
-                    Drivetrain.setSpeed(0, .58);
+                    Drivetrain.setSpeed(.58, 0);
                 }
 				else if(lValue < rotateDist)
                 {
-                    Drivetrain.setSpeed(0, .3);
+                    Drivetrain.setSpeed(.3, 0);
 				}
 				else
 				{
