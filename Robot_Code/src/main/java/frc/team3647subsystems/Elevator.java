@@ -260,6 +260,12 @@ public class Elevator
 		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
 		moveElevatorPosition(Constants.scale);
 	}
+
+	public static void moveScaleAuto()
+	{
+		leftGearboxMaster.selectProfileSlot(Constants.interstagePID, 0);
+		moveElevatorPosition(Constants.scale);
+	}
 	
 	public static void moveBottom(boolean moveWristUp)
 	{

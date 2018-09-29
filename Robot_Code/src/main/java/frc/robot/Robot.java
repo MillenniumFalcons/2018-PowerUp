@@ -91,7 +91,7 @@ public class Robot extends IterativeRobot
 			Elevator.setElevatorEncoder();
 			Wrist.setWristEncoder();
 			Lights.LightOutput(false, false, false);
-			Autonomous.chezyDoubleSwitchRightFromLeft(enc, navX);
+			Autonomous.jankScale(enc, navX);
 			//MPAutos.middleSwitch(enc, navX);
 		}
 	}
@@ -221,13 +221,13 @@ public class Robot extends IterativeRobot
 		enc.setEncoderValues();
 		if(Elevator.elevatorEncoderValue > 30000 || joy.leftBumper)
 		{
-			Drivetrain.newArcadeDrive(joy.leftJoySticky * Constants.driveElevatorSpeedModifier, joy.rightJoyStickx * Constants.driveElevatorSpeedModifier, navX.yaw);
+			Drivetrain.newArcadeDrive(joy.leftJoySticky * Constants.driveElevatorSpeedModifier, joy.rightJoyStickx * Constants.driveElevatorSpeedModifier, navX.yaw, navX);
 		}
 		else
 		{
 			//Drivetrain.arcadeDrive(Encoders.leftEncoderValue, Encoders.rightEncoderValue, joy.leftJoySticky, joy.rightJoyStickx);
 			//Drivetrain.FRCarcadedrive(joy.leftJoySticky, joy.rightJoyStickx);
-			Drivetrain.newArcadeDrive(joy.leftJoySticky, joy.rightJoyStickx, navX.yaw);
+			Drivetrain.newArcadeDrive(joy.leftJoySticky, joy.rightJoyStickx, navX.yaw, navX);
 		}
 	}
 	

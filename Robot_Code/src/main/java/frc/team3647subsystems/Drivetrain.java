@@ -157,21 +157,22 @@ public class Drivetrain
 		}
 	}
 
-	public static void newArcadeDrive(double yValue, double xValue, double angle)
+	public static void newArcadeDrive(double yValue, double xValue, double angle, NavX gyro)
 	{
 		if(yValue != 0 && xValue == 0)
 	 	{
 			//System.out.println(0);
-			Drivetrain.setSpeed(yValue, yValue);
-			//Drivetrain.straightFow(yValue, angle, supposedAngle);;
+			Drivetrain.jankStraight(0, yValue);
 	 	}
 		else if(yValue == 0 && xValue == 0)
 		{
+			gyro.resetAngle();
 			tankDrive(0, 0);
 			supposedAngle = angle;
 		}
 		else
 		{
+			gyro.resetAngle();
 			curvatureDrive(xValue, yValue);
 			supposedAngle = angle;
 			//System.out.println(1);
