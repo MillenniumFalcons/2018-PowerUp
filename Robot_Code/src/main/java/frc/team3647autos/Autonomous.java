@@ -28,7 +28,7 @@ public class Autonomous
 		}
 		else
 		{
-			Wrist.moveWrist(-.15);
+			Wrist.moveToFlat();
 		}
 	}
 
