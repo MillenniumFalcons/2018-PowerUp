@@ -88,8 +88,8 @@ public class Autonomous
 	{
 		boolean cross = false;
 		boolean cantCross = false;
-		boolean theyWillCross = false; 
-		boolean right = true;
+		boolean theyWillCross = true; 
+		boolean right = false;
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switch(autoState)
 		{
@@ -156,10 +156,10 @@ public class Autonomous
 					{
 						if(theyWillCross)
 						{
-							if(gameData.charAt(1) == 'L')
-							{
-								runAuto = 5;
-							}
+							// if(gameData.charAt(1) == 'L')
+							// {
+							// 	runAuto = 5;
+							// }
 							if(gameData.charAt(0) == 'L')
 							{
 								runAuto = 2;
@@ -1005,7 +1005,7 @@ public class Autonomous
 				{
 					Elevator.moveElevatorPosition(Constants.sWitch);
 					moveWristDownWhileRunning();
-					Drivetrain.jankStraight(gyro.yaw, .8);
+					Drivetrain.jankStraight(gyro.yaw, .9);
 				}
 				else if(enc.leftEncoderValue < totalScaleDist)
 				{
