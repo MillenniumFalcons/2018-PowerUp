@@ -75,6 +75,8 @@ public class Autonomous
 	public static void runAuto(Encoders enc, NavX gyro)
 	{
 		boolean cross = false;
+		boolean cantCross = false;
+		boolean theyCanCross = false; 
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if(cross)
 		{
@@ -90,11 +92,25 @@ public class Autonomous
 			{
 				if(gameData.charAt(0) == 'R')
 				{
-					chezyDoubleSwitchRightFromRight(enc, gyro);
+					if(theyCanCross)
+					{
+						cross(enc, gyro);
+					}
+					else 
+					{
+						chezyDoubleSwitchRightFromRight(enc, gyro);
+					}	
 				}
 				else 
 				{
-					chezyDoubleSwitchLeftFromRight(enc, gyro);
+					if(cantCross)
+					{
+						cross(enc, gyro);
+					}
+					else 
+					{
+						chezyDoubleSwitchLeftFromRight(enc, gyro);
+					}
 				}
 			}
 		}
@@ -114,7 +130,55 @@ public class Autonomous
 
 	public static void cross(Encoders enc, NavX gyro)
 	{
-
+		switch(currentState)
+		{
+			case 0:
+				stopWatch.stop();
+				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && checkWristIdle(Wrist.wristEncoderValue) && gyro.actualYaw == 0)
+				{
+					stopWatch.start();
+					currentState = 1;
+				}
+				else
+				{
+					enc.resetEncoders();
+                    stopWatch.reset();
+                    gyro.resetAngle();
+					Wrist.wristMotor.setSelectedSensorPosition(Constants.up, Constants.cubePID, Constants.kTimeoutMs);
+				}
+				break;
+			case 1:
+				//
+				Wrist.moveUp();
+				if(Elevator.elevatorEncoderValue == 0)
+				{
+					Elevator.stopElevator();
+					currentState = 2;
+				}
+				else if(stopWatch.get() > 1)
+				{
+					Elevator.stopElevator();
+					currentState = 2;
+				}
+				else
+				{
+					Elevator.moveElevator(-.3);
+				}
+				break;
+			case 2:
+				if(enc.leftEncoderValue < 9000)
+				{
+					Drivetrain.setSpeed(.4, .4);
+				}
+				else 
+				{
+					currentState = 3;
+				}
+				break;
+			case 3:
+				Drivetrain.stop();
+				break;
+		}
 	}
 
     public static void chezyDoubleSwitchRightFromRight(Encoders enc, NavX gyro)
