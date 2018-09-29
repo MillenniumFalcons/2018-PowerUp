@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.*;
 import frc.team3647autos.*;
 import frc.team3647pistons.*;
@@ -91,7 +93,7 @@ public class Robot extends IterativeRobot
 			Elevator.setElevatorEncoder();
 			Wrist.setWristEncoder();
 			Lights.LightOutput(false, false, false);
-			Autonomous.jankScale(enc, navX);
+			Autonomous.runAuto(enc, navX);
 			//MPAutos.middleSwitch(enc, navX);
 		}
 	}
@@ -165,6 +167,7 @@ public class Robot extends IterativeRobot
 	public void testPeriodic() 
 	{
 		updateJoysticks();
+		Drivetrain.rightSRX.set(ControlMode.PercentOutput, joy.leftJoySticky);
 		//runDrivetrain();
 		//runElevator();
 		runWrist();

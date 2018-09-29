@@ -191,6 +191,7 @@ public class Autonomous
 		{
 			case 0:
 				stopWatch.stop();
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && checkWristIdle(Wrist.wristEncoderValue) && gyro.actualYaw == 0)
 				{
 					stopWatch.start();
@@ -223,7 +224,7 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				double straightDist = 18100;
+				double straightDist = 17800;
 				enc.dontSkip();
 				if(enc.leftEncoderValue < 3000)
 				{
@@ -250,13 +251,13 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				double turnDist = 9700;
+				double turnDist = 10150;
 				Elevator.moveElevatorPosition(Constants.sWitch);
                 moveWristDownWhileRunning();
                 rValue = enc.rightEncoderValue - prevRightEncoder;
                 if(rValue < turnDist - 2000)
                 {
-                    Drivetrain.setSpeed(0, .58);
+                    Drivetrain.setSpeed(0, .55);
                 }
 				else if(rValue < turnDist)
                 {
@@ -473,6 +474,7 @@ public class Autonomous
 		switch(currentState)
 		{
 			case 0:
+			IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				stopWatch.stop();
 				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && checkWristIdle(Wrist.wristEncoderValue) && gyro.actualYaw == 0)
 				{
@@ -921,6 +923,7 @@ public class Autonomous
 		switch(currentState)
 		{
 			case 0:
+			IntakeWheels.runIntake(0, 0, true, .12, .12, false);
 				stopWatch.stop();
 				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && checkWristIdle(Wrist.wristEncoderValue) && gyro.actualYaw == 0)
 				{
