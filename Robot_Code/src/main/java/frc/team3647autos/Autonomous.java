@@ -87,9 +87,9 @@ public class Autonomous
 	public static void runAuto(Encoders enc, NavX gyro)
 	{
 		boolean cross = false;
-		boolean cantCross = true;
-		boolean theyWillCross = true; 
-		boolean right = false;
+		boolean cantCross = false;
+		boolean theyWillCross = false; 
+		boolean right = true;
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switch(autoState)
 		{
@@ -768,7 +768,7 @@ public class Autonomous
 				break;
 			case 2:
 				Wrist.moveUp();
-				double straightDist = 18200;
+				double straightDist = 18100;
 				enc.dontSkip();
 				if(enc.leftEncoderValue < 3000)
 				{
@@ -793,7 +793,7 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				double turnDist = 5070;
+				double turnDist = 5220;
 				double straighttDist = 12820;
 				double secondTurn = 5760;
 				Elevator.moveElevatorPosition(Constants.sWitch);
