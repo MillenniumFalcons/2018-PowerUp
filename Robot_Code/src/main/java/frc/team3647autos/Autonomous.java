@@ -630,7 +630,7 @@ public class Autonomous
 				}
 				break;
 			case 7:
-				double deliverDist = 3000;
+				double deliverDist = 3300;
 				lValue = enc.leftEncoderValue;
 				if(lValue < deliverDist)
 				{
@@ -652,15 +652,15 @@ public class Autonomous
 					intakeCube();
 					enc.resetEncoders();
 				}
-				else if(currTime < .8)
+				else if(currTime < 1)
 				{
 					Intake.closeIntake();
-					IntakeWheels.runIntake(0, 0, true, .25, .25, false);
+					IntakeWheels.runIntake(0, 0, true, .45, .45, false);
 					 enc.resetEncoders();
 				}
 				else 
 				{
-					IntakeWheels.runIntake(0, 0, true, .12, .12, false);
+					IntakeWheels.runIntake(0, 0, true, .2, .2, false);
 					currentState = 9;
 				}
 				break;
@@ -861,7 +861,7 @@ public class Autonomous
 				}
 				break;
 			case 7:
-				double deliverDist = 2800;
+				double deliverDist = 3100;
 				lValue = enc.leftEncoderValue;
 				if(lValue < deliverDist)
 				{
@@ -883,15 +883,15 @@ public class Autonomous
 					intakeCube();
 					enc.resetEncoders();
 				}
-				else if(currTime < .8)
+				else if(currTime < 1)
 				{
 					Intake.closeIntake();
-					IntakeWheels.runIntake(0, 0, true, .25, .25, false);
+					IntakeWheels.runIntake(0, 0, true, .45, .45, false);
 					 enc.resetEncoders();
 				}
 				else 
 				{
-					IntakeWheels.runIntake(0, 0, true, .12, .12, false);
+					IntakeWheels.runIntake(0, 0, true, .2, .2, false);
 					currentState = 9;
 				}
 				break;
