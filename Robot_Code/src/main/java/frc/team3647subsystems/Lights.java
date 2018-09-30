@@ -3,6 +3,7 @@ package frc.team3647subsystems;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import frc.team3647pistons.Intake;
 import frc.team3647pistons.Shifter;
 
 public class Lights 
@@ -20,7 +21,15 @@ public class Lights
 	
 	public static void runLights()
 	{
-		if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue)
+		if(IntakeWheels.getIntakeBannerSensor())
+		{
+			LightOutput(true, false, false);
+		}
+		else if(Shifter.piston.get() == DoubleSolenoid.Value.kForward)
+		{
+			LightOutput(false, true, false);
+		}
+		else if(DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue)
 		{
 			LightOutput(false, false, true);
 		}
