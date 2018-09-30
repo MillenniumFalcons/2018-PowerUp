@@ -86,10 +86,10 @@ public class Autonomous
 
 	public static void runAuto(Encoders enc, NavX gyro)
 	{
-		boolean cross = false;
-		boolean cantCross = false;
-		boolean theyWillCross = false; 
-		boolean right = true;
+		boolean cross = false; //always false
+		boolean cantCross = true; //for us if we cross or not
+		boolean theyWillCross = true; //if they will cross or not
+		boolean right = true; //if we run right
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switch(autoState)
 		{
@@ -104,11 +104,7 @@ public class Autonomous
 					{
 						if(theyWillCross)
 						{
-							if(gameData.charAt(1) == 'R')
-							{
-								runAuto = 6;
-							}
-							else if(gameData.charAt(0) == 'R')
+							if(gameData.charAt(0) == 'R')
 							{
 								runAuto = 1;
 							}
@@ -119,11 +115,7 @@ public class Autonomous
 						}
 						else if(cantCross)
 						{
-							if(gameData.charAt(1) == 'R')
-							{
-								runAuto = 7;
-							}
-							else if(gameData.charAt(0) == 'R')
+							if(gameData.charAt(0) == 'R')
 							{
 								runAuto = 3;
 							}
@@ -134,11 +126,7 @@ public class Autonomous
 						}
 						else 
 						{
-							if(gameData.charAt(1) == 'R')
-							{
-								runAuto = 7;
-							}
-							else if(gameData.charAt(0) == 'R')
+							if(gameData.charAt(0) == 'R')
 							{
 								runAuto = 3;
 							}
@@ -268,7 +256,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				Wrist.moveUp();
+				//Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -326,7 +314,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				Wrist.moveUp();
+				//Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -343,13 +331,13 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				double straightDist = 12800;
+				double straightDist = 11200;
 				enc.dontSkip();
 				Elevator.moveElevatorPosition(Constants.sWitch);
 				if(enc.leftEncoderValue < 3000)
 				{
 					Drivetrain.setSpeed(.4, .4);
-					Wrist.moveUp();
+					//Wrist.moveUp();
 				}
 				else if(enc.leftEncoderValue < ((2 * straightDist)/3.0))
 				{
@@ -369,7 +357,7 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				double turnDist = 5070;
+				double turnDist = 5150;
 				Elevator.moveElevatorPosition(Constants.sWitch);
                 moveWristDownWhileRunning();
                 rValue = enc.rightEncoderValue - prevRightEncoder;
@@ -434,7 +422,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				Wrist.moveUp();
+				//Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -457,7 +445,7 @@ public class Autonomous
 				if(enc.leftEncoderValue < 3000)
 				{
 					Drivetrain.setSpeed(.4, .4);
-					Wrist.moveUp();
+					//Wrist.moveUp();
 				}
 				else if(enc.leftEncoderValue < ((2 * straightDist)/3.0))
 				{
@@ -541,7 +529,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				Wrist.moveUp();
+				//Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -558,17 +546,17 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				double straightDist = 17800;
+				double straightDist = 17450;
 				enc.dontSkip();
 				if(enc.leftEncoderValue < 3000)
 				{
 					Drivetrain.setSpeed(.4, .4);
-					Wrist.moveUp();
+					//Wrist.moveUp();
 				}
 				else if(enc.leftEncoderValue < ((2 * straightDist)/3.0))
 				{
 					Drivetrain.jankStraight(gyro.yaw, .6);
-					Wrist.moveUp();
+					//Wrist.moveUp();
 				}
 				else if(enc.leftEncoderValue < straightDist)
 				{
@@ -621,7 +609,7 @@ public class Autonomous
 				}
 				break;
 			case 5:
-				double backUpDist = 1700;
+				double backUpDist = 1400;
 				Elevator.moveBottom(false);
 				lValue = Math.abs(enc.leftEncoderValue);
 				if(lValue < backUpDist)
@@ -750,7 +738,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				Wrist.moveUp();
+				//Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -767,7 +755,7 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				Wrist.moveUp();
+				//Wrist.moveUp();
 				double straightDist = 18100;
 				enc.dontSkip();
 				if(enc.leftEncoderValue < 3000)
@@ -979,7 +967,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				Wrist.moveUp();
+				//Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -1098,7 +1086,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				Wrist.moveUp();
+				//Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -1198,6 +1186,7 @@ public class Autonomous
 	{
 		enc.setEncoderValues();
 		gyro.setAngle();
+		enc.testEncoders();
 		switch(currentState)
 		{
 			case 0:
@@ -1218,7 +1207,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				Wrist.moveUp();
+				//Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -1235,7 +1224,7 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				double totalScaleDist = 25700;
+				double totalScaleDist = 20500;
 				Drivetrain.rightSRX.setSelectedSensorPosition(enc.leftEncoderValue, Constants.drivePID, Constants.kTimeoutMs);
 				if(enc.leftEncoderValue < 3000)
 				{
@@ -1266,7 +1255,7 @@ public class Autonomous
 				rValue = enc.rightEncoderValue - prevRightEncoder;
 				Elevator.moveElevatorPosition(Constants.scale);
 				moveWristDownWhileRunning();
-				double rotateRightDist = 3500;
+				double rotateRightDist = 3700;
 				if(rValue < rotateRightDist - 1300)
 				{
 					Drivetrain.setSpeed(0, .5);
@@ -1307,7 +1296,7 @@ public class Autonomous
 				}
 				break;
 			case 6:
-				double spinDist = 2550;
+				double spinDist = 2750;
 				System.out.println(enc.rightEncoderValue);
 				if(enc.rightEncoderValue < spinDist - 1300)
 				{
@@ -1370,7 +1359,7 @@ public class Autonomous
 					IntakeWheels.runIntake(0, 0, true, .2, .2, false);
 					Intake.closeIntake();
 					prevTime = stopWatch.get();
-					currentState = 10;
+					//currentState = 10;
 				}
 				break;
 			case 10:
@@ -1391,12 +1380,12 @@ public class Autonomous
 				double backDistForSecondCube = 8400;
 				if(lValue < backDistForSecondCube - 1500)
 				{
-					Wrist.moveUp();
+					//Wrist.moveUp();
 					Drivetrain.jankStraight(0, -.4);
 				}
 				else if(lValue < backDistForSecondCube)
 				{
-					Wrist.moveUp();
+					//Wrist.moveUp();
 					Drivetrain.jankStraight(0, -.3);
 				}
 				else 
@@ -1540,12 +1529,12 @@ public class Autonomous
 				double backDistForSecondScale = 9900;
 				if(lValue < backDistForSecondScale - 1500)
 				{
-					Wrist.moveUp();
+					//Wrist.moveUp();
 					Drivetrain.jankStraight(0, -.4);
 				}
 				else if(lValue < backDistForSecondScale)
 				{
-					Wrist.moveUp();
+					//Wrist.moveUp();
 					Drivetrain.jankStraight(0, -.3);
 				}
 				else 
@@ -1652,7 +1641,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				Wrist.moveUp();
+				//Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -1673,7 +1662,7 @@ public class Autonomous
 				Drivetrain.rightSRX.setSelectedSensorPosition(enc.leftEncoderValue, Constants.drivePID, Constants.kTimeoutMs);
 				// if(enc.rightEncoderValue < (totalScaleDist/3.0))
 				// {
-				// 	//Wrist.moveUp();
+				// 	////Wrist.moveUp();
 				// 	speed = speedUp(.15, .8, 0, (totalScaleDist/3.0), enc.rightEncoderValue);
 				// 	Drivetrain.setSpeed(speed, speed);
 				// }
@@ -1829,12 +1818,12 @@ public class Autonomous
 				double backDistForSecondCube = 8400;
 				if(lValue < backDistForSecondCube - 1500)
 				{
-					Wrist.moveUp();
+					//Wrist.moveUp();
 					Drivetrain.jankStraight(0, -.4);
 				}
 				else if(lValue < backDistForSecondCube)
 				{
-					Wrist.moveUp();
+					//Wrist.moveUp();
 					Drivetrain.jankStraight(0, -.3);
 				}
 				else 
@@ -1978,12 +1967,12 @@ public class Autonomous
 				double backDistForSecondScale = 9900;
 				if(lValue < backDistForSecondScale - 1500)
 				{
-					Wrist.moveUp();
+					//Wrist.moveUp();
 					Drivetrain.jankStraight(0, -.4);
 				}
 				else if(lValue < backDistForSecondScale)
 				{
-					Wrist.moveUp();
+					//Wrist.moveUp();
 					Drivetrain.jankStraight(0, -.3);
 				}
 				else 
