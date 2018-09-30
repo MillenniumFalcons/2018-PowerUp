@@ -93,7 +93,7 @@ public class Robot extends IterativeRobot
 			Elevator.setElevatorEncoder();
 			Wrist.setWristEncoder();
 			Lights.runLights();
-			Autonomous.runAuto(enc, navX);
+			Autonomous.quickRightScale(enc, navX);
 			//MPAutos.middleSwitch(enc, navX);
 		}
 	}

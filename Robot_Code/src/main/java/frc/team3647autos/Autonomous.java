@@ -296,7 +296,7 @@ public class Autonomous
 				break;
 			case 2:
 				currTime = stopWatch.get() - prevTime;
-				if(enc.leftEncoderValue < 9500 || currTime < 1.8)
+				if(enc.leftEncoderValue < 9500 || currTime < 1.5)
 				{
 					Drivetrain.setSpeed(.6, .6);
 				}
@@ -337,7 +337,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				Wrist.moveUp();
+				//Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -354,8 +354,9 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				double straightDist = 11200;
+				double straightDist = 11000;
 				enc.dontSkip();
+				Wrist.moveToFlat();
 				Elevator.moveElevatorPosition(Constants.sWitch);
 				if(enc.leftEncoderValue < 3000)
 				{
@@ -380,7 +381,7 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				double turnDist = 5150;
+				double turnDist = 5300;
 				Elevator.moveElevatorPosition(Constants.sWitch);
                 moveWristDownWhileRunning();
                 rValue = enc.rightEncoderValue - prevRightEncoder;
@@ -412,7 +413,7 @@ public class Autonomous
 				}
 				else 
 				{
-					IntakeWheels.runIntake(0, 0, true, 0, 0, false);
+					IntakeWheels.runIntake(0, 0, true, -.9, -.9, false);
 				}
 				break;
 		
@@ -596,13 +597,13 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				double turnDist = 10150;
+				double turnDist = 11050;
 				Elevator.moveElevatorPosition(Constants.sWitch);
                 moveWristDownWhileRunning();
                 rValue = enc.rightEncoderValue - prevRightEncoder;
                 if(rValue < turnDist - 2000)
                 {
-                    Drivetrain.setSpeed(0, .55);
+                    Drivetrain.setSpeed(0, .5);
                 }
 				else if(rValue < turnDist)
                 {
@@ -659,7 +660,7 @@ public class Autonomous
 				}
 				break;
 			case 7:
-				double deliverDist = 4200;
+				double deliverDist = 3300;
 				lValue = enc.leftEncoderValue;
 				if(lValue < deliverDist)
 				{
@@ -722,11 +723,11 @@ public class Autonomous
 			case 11:
 				Elevator.moveElevatorPosition(Constants.sWitch);
 				Wrist.moveToFlat();
-				if(enc.leftEncoderValue < 2000)
+				if(enc.leftEncoderValue < 2500)
 				{
 					Drivetrain.setSpeed(.35, .35);
 				}
-				else if(enc.leftEncoderValue > 2000)
+				else if(enc.leftEncoderValue > 2500)
 				{
 					Drivetrain.stop();
 					IntakeWheels.runIntake(0, 0, true, -1, -.75, false);
@@ -1089,6 +1090,7 @@ public class Autonomous
 	{
 		enc.setEncoderValues();
 		gyro.setAngle();
+		enc.testEncoders();
 		switch(currentState)
 		{
 			case 0:
@@ -1126,41 +1128,47 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				double totalScaleDist = 26600;
 				if(enc.leftEncoderValue < 3000)
 				{
 					Drivetrain.setSpeed(.4, .4);
 				}
-				else if(enc.leftEncoderValue < ((2 * totalScaleDist)/3.0))
+				else
+				{
+					currentState = 254;
+				} 
+				break;
+			case 254:
+				double totalScaleDist = 25300;
+				if(enc.leftEncoderValue < ((2 * totalScaleDist)/3.0))
 				{
 					Elevator.moveElevatorPosition(Constants.sWitch);
 					moveWristDownWhileRunning();
-					Drivetrain.jankStraight(gyro.yaw, .8);
+					Drivetrain.jankStraight(gyro.yaw, .6);
 				}
 				else if(enc.leftEncoderValue < totalScaleDist)
 				{
 					Elevator.moveElevatorPosition(Constants.scale);
 					moveWristDownWhileRunning();
-					speed = slowDown(.15, .8, ((2 * totalScaleDist)/3.0), totalScaleDist, enc.leftEncoderValue);
+					speed = slowDown(.15, .6, ((2 * totalScaleDist)/3.0), totalScaleDist, enc.leftEncoderValue);
 					Drivetrain.jankStraight(gyro.yaw, speed);
 				}
 				else
 				{
 					Elevator.moveElevatorPosition(Constants.scale);
 					moveWristDownWhileRunning();
-					prevLeftEncoder = enc.leftEncoderValue;
+					prevRightEncoder = enc.leftEncoderValue;
 					currentState = 3;
 				}
 				break;
 			case 3:
 				Elevator.moveElevatorPosition(Constants.scale);
-				double rotateDist = 5070;
-				lValue = enc.leftEncoderValue - prevLeftEncoder;
-                if(lValue < rotateDist - 2000)
+				double rotateDist = 5700;
+				rValue = enc.rightEncoderValue - prevRightEncoder;
+                if(rValue < rotateDist - 2000)
                 {
                     Drivetrain.setSpeed(0, .58);
                 }
-				else if(lValue < rotateDist)
+				else if(rValue < rotateDist)
                 {
                     Drivetrain.setSpeed(0, .3);
 				}
