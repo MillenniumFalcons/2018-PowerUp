@@ -24,7 +24,7 @@ public class Autonomous
 
     static TrajectoryFollower traj = new TrajectoryFollower();
     public static Timer stopWatch = new Timer();
-    public static int currentState, autoState, runAuto;
+    public static int currentState, autoState, runAuto, RhighValue, LhighValue;
     public static double time;
 	static double currTime, prevTime;
 
@@ -86,10 +86,10 @@ public class Autonomous
 
 	public static void runAuto(Encoders enc, NavX gyro)
 	{
-		boolean cross = false; //always false
-		boolean cantCross = true; //for us if we cross or not
-		boolean theyWillCross = true; //if they will cross or not
-		boolean right = true; //if we run right
+		boolean cross = false;
+		boolean cantCross = true;
+		boolean theyWillCross = true; 
+		boolean right = false;
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switch(autoState)
 		{
@@ -104,7 +104,11 @@ public class Autonomous
 					{
 						if(theyWillCross)
 						{
-							if(gameData.charAt(0) == 'R')
+							if(gameData.charAt(1) == 'R')
+							{
+								runAuto = 6;
+							}
+							else if(gameData.charAt(0) == 'R')
 							{
 								runAuto = 1;
 							}
@@ -115,7 +119,11 @@ public class Autonomous
 						}
 						else if(cantCross)
 						{
-							if(gameData.charAt(0) == 'R')
+							if(gameData.charAt(1) == 'R')
+							{
+								runAuto = 7;
+							}
+							else if(gameData.charAt(0) == 'R')
 							{
 								runAuto = 3;
 							}
@@ -126,7 +134,11 @@ public class Autonomous
 						}
 						else 
 						{
-							if(gameData.charAt(0) == 'R')
+							if(gameData.charAt(1) == 'R')
+							{
+								runAuto = 7;
+							}
+							else if(gameData.charAt(0) == 'R')
 							{
 								runAuto = 3;
 							}
@@ -1186,7 +1198,6 @@ public class Autonomous
 	{
 		enc.setEncoderValues();
 		gyro.setAngle();
-		enc.testEncoders();
 		switch(currentState)
 		{
 			case 0:
@@ -1207,7 +1218,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				//Wrist.moveUp();
+				Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -1224,13 +1235,34 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				double totalScaleDist = 20500;
-				Drivetrain.rightSRX.setSelectedSensorPosition(enc.leftEncoderValue, Constants.drivePID, Constants.kTimeoutMs);
 				if(enc.leftEncoderValue < 3000)
 				{
 					Drivetrain.setSpeed(.4, .4);
 				}
-				else if(enc.leftEncoderValue < ((2 * totalScaleDist)/3.0))
+				else
+				{
+					currentState = 254;
+				} 
+				break;
+			case 254:
+				double totalScaleDist = 23000;
+				if(enc.leftEncoderValue > 4000)
+				{
+					LhighValue = enc.leftEncoderValue;
+				}
+				else 
+				{
+					Drivetrain.leftSRX.setSelectedSensorPosition(LhighValue, Constants.drivePID, Constants.kTimeoutMs);
+				}
+				if(enc.rightEncoderValue > 4000)
+				{
+					RhighValue = enc.rightEncoderValue;
+				}
+				else 
+				{
+					Drivetrain.rightSRX.setSelectedSensorPosition(RhighValue, Constants.drivePID, Constants.kTimeoutMs);
+				}
+				if(enc.leftEncoderValue < ((2 * totalScaleDist)/3.0))
 				{
 					Elevator.moveElevatorPosition(Constants.sWitch);
 					moveWristDownWhileRunning();
