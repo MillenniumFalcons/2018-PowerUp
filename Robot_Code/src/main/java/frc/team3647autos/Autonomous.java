@@ -89,7 +89,7 @@ public class Autonomous
 		//cross between scale and switch scale from left to right
 		boolean cross = false; //always false -- true sets it so that we WILL ALWAYS cross auto - stay false
 		boolean cantCross = false; //true sets it so that we can't go across left and right
-		boolean theyWillCross = false; //if other other team will cross from left to right (v.v.) -> True
+		boolean theyWillCross = true; //if other other team will cross from left to right (v.v.) -> True
 		boolean right = true; //if we are on right side of field - false for left and true for right
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switch(autoState)
@@ -105,11 +105,12 @@ public class Autonomous
 					{
 						if(theyWillCross)
 						{
-							if(gameData.charAt(1) == 'R')
-							{
-								runAuto = 6;
-							}
-							else if(gameData.charAt(0) == 'R')
+							// if(gameData.charAt(1) == 'R')
+							// {
+							// 	runAuto = 6;
+							// }
+							// else 
+							if(gameData.charAt(0) == 'R')
 							{
 								runAuto = 1;
 							}
@@ -269,7 +270,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				//Wrist.moveUp();
+				Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -327,7 +328,7 @@ public class Autonomous
 				break;
 			case 1:
 				//
-				//Wrist.moveUp();
+				Wrist.moveUp();
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
@@ -649,7 +650,7 @@ public class Autonomous
 				}
 				break;
 			case 7:
-				double deliverDist = 3300;
+				double deliverDist = 4200;
 				lValue = enc.leftEncoderValue;
 				if(lValue < deliverDist)
 				{

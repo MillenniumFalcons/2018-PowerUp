@@ -105,7 +105,7 @@ public class Elevator
 				moveBottom(false);
 				break;
 			case 1:
-				moveBottom(false);
+				moveBottom(true);
 				encoderState = 0;
 				break;
 			case 2:
