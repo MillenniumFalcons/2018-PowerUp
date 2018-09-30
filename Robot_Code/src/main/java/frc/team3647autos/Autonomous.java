@@ -88,7 +88,7 @@ public class Autonomous
 	{
 		//cross between scale and switch scale from left to right
 		boolean cross = false; //always false -- true sets it so that we WILL ALWAYS cross auto - stay false
-		boolean cantCross = false; //true sets it so that we can't go across left and right
+		boolean cantCross = true; //true sets it so that we can't go across left and right
 		boolean theyWillCross = true; //if other other team will cross from left to right (v.v.) -> True
 		boolean right = true; //if we are on right side of field - false for left and true for right
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -110,7 +110,11 @@ public class Autonomous
 							// 	runAuto = 6;
 							// }
 							// else 
-							if(gameData.charAt(0) == 'R')
+							if(gameData.charAt(0) == 'R' &&gameData.charAt(1) == 'L' )
+							{
+								runAuto = 3;
+							}
+							else if(gameData.charAt(0) == 'R')
 							{
 								runAuto = 1;
 							}
@@ -251,6 +255,8 @@ public class Autonomous
 
 	public static void cross(Encoders enc, NavX gyro)
 	{
+		enc.setEncoderValues();
+		enc.testEncoders();
 		switch(currentState)
 		{
 			case 0:
@@ -274,11 +280,13 @@ public class Autonomous
 				if(Elevator.elevatorEncoderValue == 0)
 				{
 					Elevator.stopElevator();
+					prevTime = stopWatch.get();
 					currentState = 2;
 				}
 				else if(stopWatch.get() > 1)
 				{
 					Elevator.stopElevator();
+					prevTime = stopWatch.get();
 					currentState = 2;
 				}
 				else
@@ -287,7 +295,8 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				if(enc.leftEncoderValue < 9500)
+				currTime = stopWatch.get() - prevTime;
+				if(enc.leftEncoderValue < 9500 || currTime < 1.8)
 				{
 					Drivetrain.setSpeed(.6, .6);
 				}
