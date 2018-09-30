@@ -86,10 +86,11 @@ public class Autonomous
 
 	public static void runAuto(Encoders enc, NavX gyro)
 	{
-		boolean cross = false;
-		boolean cantCross = true;
-		boolean theyWillCross = true; 
-		boolean right = false;
+		//cross between scale and switch scale from left to right
+		boolean cross = false; //always false -- true sets it so that we WILL ALWAYS cross auto - stay false
+		boolean cantCross = false; //true sets it so that we can't go across left and right
+		boolean theyWillCross = false; //if other other team will cross from left to right (v.v.) -> True
+		boolean right = true; //if we are on right side of field - false for left and true for right
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switch(autoState)
 		{
