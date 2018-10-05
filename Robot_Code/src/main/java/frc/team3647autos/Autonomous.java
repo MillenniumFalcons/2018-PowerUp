@@ -109,7 +109,6 @@ public class Autonomous
 							// {
 							// 	runAuto = 6;
 							// }
-							// else 
 							if(gameData.charAt(0) == 'R' &&gameData.charAt(1) == 'L' )
 							{
 								runAuto = 3;
