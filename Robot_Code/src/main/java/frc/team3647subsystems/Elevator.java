@@ -66,10 +66,15 @@ public class Elevator
 
 	public static void runElevator()
 	{
-		if(elevatorEncoderValue > Constants.elevatorSafetyLimit)
+		if(elevatorEncoderValue > Constants.elevatorSafetyLimit && overrideValue != 0)
 		{
 			currentWristState = 0;
 			aimedElevatorState = -10;
+		}
+		else if(elevatorEncoderValue > Constants.elevatorSafetyLimit && overrideValue == 0)
+		{
+			currentWristState = 0;
+			aimedElevatorState = -11;
 		}
 		else if(manualOverride)
 		{
@@ -99,7 +104,10 @@ public class Elevator
 		switch(aimedElevatorState)
 		{
 			case -10:
-				moveElevator(-0.1);
+				moveElevatorPosition(Constants.elevatorSafetyLimit + manualAdjustment);
+				break;
+			case -11:
+				moveElevator(-0.2);
 				break;
 			case 0:
 				moveBottom(false);

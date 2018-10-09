@@ -80,6 +80,7 @@ public class Constants
 	public final static int flat = 0;
 	public final static int aim = 400;
 	public final static int up = 650;
+	public final static int kWristSafetyLimit = 700;
 
 	//Wrist PID Values
 		//Motion Magic Values

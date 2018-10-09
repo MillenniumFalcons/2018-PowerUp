@@ -16,7 +16,7 @@ public class Wrist
 	public static WPI_TalonSRX wristMotor = new WPI_TalonSRX(Constants.wristPin);
 	public static DigitalInput limitSwitch = new DigitalInput(Constants.wristLimitSwitch); 
 	
-	public static int elevatorState, aimedElevatorState;
+	public static int elevatorState;
 	/*
 	* 0. Start
 	* 1. Flat
@@ -203,10 +203,51 @@ public class Wrist
 	{
 		moveWristPosition(Constants.up);
 	}
+
+	public static int encoderState;
+	public static int manualEncoderValue;
+	public static int manualAdjustment;
+
+	public static void moveManual(double jValue)
+	{
+		if(jValue > 0)
+		{
+			moveWrist(overrideValue * 0.65);
+			manualAdjustment = 50;
+			encoderState = 0;
+		}
+		else if(jValue < 0)
+		{
+			moveWrist(overrideValue * 0.2);
+			manualAdjustment = 0;
+			encoderState = 0;
+		}
+		else
+		{
+			switch(encoderState)
+			{
+				case 0:
+					manualEncoderValue = wristEncoderValue + manualAdjustment;
+					encoderState = 1;
+					break;
+				case 1:
+					moveWristPosition(manualEncoderValue);
+					break;
+			}
+		}
+	}
 	
 	public static void runWrist()
 	{
-		if(manualOverride)
+		if(wristEncoderValue > Constants.kWristSafetyLimit && overrideValue != 0)
+		{
+			aimedWristState = -3;
+		}
+		else if(wristEncoderValue > Constants.kWristSafetyLimit && overrideValue == 0)
+		{
+			aimedWristState = -2;
+		}
+		else if(manualOverride)
 		{
 			aimedWristState = -1;
 		}
@@ -230,6 +271,12 @@ public class Wrist
 		{
 			case -10:
 				//System.out.println("case -10");
+				break;
+			case -3:
+				moveWristPosition(Constants.kWristSafetyLimit + manualAdjustment);
+				break;
+			case -2:
+				moveWrist(-0.15);
 				break;
 			case 1:
 				moveToFlat();
