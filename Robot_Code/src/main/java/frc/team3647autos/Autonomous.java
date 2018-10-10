@@ -89,9 +89,8 @@ public class Autonomous
 		enc.setEncoderValues();
 		gyro.setAngle();
 		enc.testEncoders();
+		
 		switch(currentState)
-		{
-			switch(currentState)
 		{
 			case 0:
 				stopWatch.stop();
@@ -1317,22 +1316,7 @@ public class Autonomous
 				break;
 			case 254:
 				double totalScaleDist = 23000;
-				if(enc.leftEncoderValue > 4000)
-				{
-					LhighValue = enc.leftEncoderValue;
-				}
-				else 
-				{
-					Drivetrain.leftSRX.setSelectedSensorPosition(LhighValue, Constants.drivePID, Constants.kTimeoutMs);
-				}
-				if(enc.rightEncoderValue > 4000)
-				{
-					RhighValue = enc.rightEncoderValue;
-				}
-				else 
-				{
-					Drivetrain.rightSRX.setSelectedSensorPosition(RhighValue, Constants.drivePID, Constants.kTimeoutMs);
-				}
+				enc.dontSkip();
 				if(enc.leftEncoderValue < ((2 * totalScaleDist)/3.0))
 				{
 					Elevator.moveElevatorPosition(Constants.sWitch);
@@ -1394,6 +1378,7 @@ public class Autonomous
 				}
 				else
 				{
+					System.out.println(stopWatch.get());
 					prevTime = stopWatch.get();
 					currentState = 6;
 				}
@@ -1462,7 +1447,7 @@ public class Autonomous
 					IntakeWheels.runIntake(0, 0, true, .2, .2, false);
 					Intake.closeIntake();
 					prevTime = stopWatch.get();
-					//currentState = 10;
+					currentState = 10;
 				}
 				break;
 			case 10:
@@ -1550,6 +1535,7 @@ public class Autonomous
 				}
 				else 
 				{
+					System.out.println(stopWatch.get());
 					currentState = 15;
 				}
 				break;
@@ -1700,6 +1686,7 @@ public class Autonomous
 				}
 				else 
 				{
+					System.out.println(stopWatch.get());
 					currentState = 22;
 				}
 				break;

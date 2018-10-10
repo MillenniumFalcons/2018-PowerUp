@@ -84,7 +84,7 @@ public class Robot extends IterativeRobot
 			throw t;
 		}	
 	}
-
+ 
 	@Override
 	public void autonomousPeriodic() 
 	{
@@ -93,7 +93,7 @@ public class Robot extends IterativeRobot
 			Elevator.setElevatorEncoder();
 			Wrist.setWristEncoder();
 			Lights.runLights();
-			Autonomous.quickRightScale(enc, navX);
+			Autonomous.jankScale(enc, navX);
 			//MPAutos.middleSwitch(enc, navX);
 		}
 	}
