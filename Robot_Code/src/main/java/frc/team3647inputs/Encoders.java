@@ -30,7 +30,7 @@ public class Encoders
 		}
 		else 
 		{
-			prevREncoder = rightEncoderValue;
+			prevLEncoder = leftEncoderValue;
 		}
 		if(prevREncoder > rightEncoderValue)
 		{
@@ -38,7 +38,7 @@ public class Encoders
 		}
 		else 
 		{
-			prevLEncoder = leftEncoderValue;
+			prevREncoder = rightEncoderValue;
 		}
 	}
 	

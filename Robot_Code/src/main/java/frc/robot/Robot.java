@@ -134,10 +134,7 @@ public class Robot extends IterativeRobot
 			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0, joy.leftBumper1);
 			Lights.runLights();
 			runTests();
-			//enc.testEncodersWithDrive(joy.buttonA);
-			//navX.testAngle();
-			//System.out.println(Elevator.elevatorEncoderValue);
-			//System.out.println(Wrist.reachedFlat());
+			enc.testEncoders();
 		}
 		catch(Throwable t)
 		{

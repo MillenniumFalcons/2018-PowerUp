@@ -84,6 +84,59 @@ public class Autonomous
 		}
 	}
 
+	public static void middleAutoLeft(Encoders enc, NavX gyro)
+	{
+		enc.setEncoderValues();
+		gyro.setAngle();
+		enc.testEncoders();
+		switch(currentState)
+		{
+			switch(currentState)
+		{
+			case 0:
+				stopWatch.stop();
+				IntakeWheels.runIntake(0, 0, true, .12, .12, false);
+				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && checkWristIdle(Wrist.wristEncoderValue) && gyro.actualYaw == 0)
+				{
+					stopWatch.start();
+					currentState = 1;
+				}
+				else
+				{
+					enc.resetEncoders();
+                    stopWatch.reset();
+                    gyro.resetAngle();
+					Wrist.wristMotor.setSelectedSensorPosition(Constants.up, Constants.cubePID, Constants.kTimeoutMs);
+				}
+				break;
+			case 1:
+				//
+				//Wrist.moveUp();
+				if(Elevator.elevatorEncoderValue == 0)
+				{
+					Elevator.stopElevator();
+					currentState = 2;
+				}
+				else if(stopWatch.get() > 1)
+				{
+					Elevator.stopElevator();
+					currentState = 2;
+				}
+				else
+				{
+					Elevator.moveElevator(-.3);
+				}
+				break;
+			case 2:
+				double straightDist = 3000;
+				enc.dontSkip();
+				Wrist.moveToFlat();
+				
+				break;
+			
+		}
+	}
+
 	public static void runAuto(Encoders enc, NavX gyro)
 	{
 		//cross between scale and switch scale from left to right
