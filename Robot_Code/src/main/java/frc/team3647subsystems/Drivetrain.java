@@ -159,15 +159,15 @@ public class Drivetrain
 
 	public static void newArcadeDrive(double yValue, double xValue, double angle, NavX gyro)
 	{
-		if(yValue != 0 && xValue == 0)
+		if(yValue != 0 && Math.abs(xValue) < 0.15)
 	 	{
 			//System.out.println(0);
-			Drivetrain.jankStraight(0, yValue);
+			setSpeed(yValue, yValue);
 	 	}
-		else if(yValue == 0 && xValue == 0)
+		else if(yValue == 0 && Math.abs(xValue) < 0.15)
 		{
 			gyro.resetAngle();
-			tankDrive(0, 0);
+			stop();
 			supposedAngle = angle;
 		}
 		else

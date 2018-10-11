@@ -104,7 +104,7 @@ public class Elevator
 		switch(aimedElevatorState)
 		{
 			case -10:
-				moveElevatorPosition(Constants.elevatorSafetyLimit + manualAdjustment);
+				moveElevatorPosition(Constants.elevatorSafetyLimit);
 				break;
 			case -11:
 				moveElevator(-0.2);

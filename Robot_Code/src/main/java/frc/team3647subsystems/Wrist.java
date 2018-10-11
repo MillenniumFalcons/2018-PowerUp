@@ -273,7 +273,7 @@ public class Wrist
 				//System.out.println("case -10");
 				break;
 			case -3:
-				moveWristPosition(Constants.kWristSafetyLimit + manualAdjustment);
+				moveWristPosition(Constants.kWristSafetyLimit);
 				break;
 			case -2:
 				moveWrist(-0.15);

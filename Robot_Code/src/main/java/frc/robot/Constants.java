@@ -14,13 +14,13 @@ public class Constants
 	public final static int kTimeoutMs = 10;  //Universal Constant
 	public final static int drivePID = 0;
 	public final static double lDrivekF = 0.65;
-	public final static double lDrivekP = .4;
+	public final static double lDrivekP = 1.75;
 	public final static double lDrivekI = 0;
-	public final static double lDrivekD = 40;
+	public final static double lDrivekD = 0;
 	public final static double rDrivekF = 0.64;
-	public final static double rDrivekP = .4;
+	public final static double rDrivekP = 1.75;
 	public final static double rDrivekI = 0;
-	public final static double rDrivekD = 40;
+	public final static double rDrivekD = 0;
 	public final static double velocityConstant = 1550;
 
 	public final static double driveElevatorSpeedModifier = 0.6;
