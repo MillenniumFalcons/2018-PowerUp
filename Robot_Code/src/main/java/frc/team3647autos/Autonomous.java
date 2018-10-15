@@ -2106,7 +2106,7 @@ public class Autonomous
 
 	public static void middleAuto1(Encoders enc, NavX gyro)
 	{
-		enc.setEncodersValues();
+		enc.setEncoderValues();
 		gyro.setAngle();
 		switch(currentState)
 		{
@@ -2169,11 +2169,11 @@ public class Autonomous
 			case 3:
 				double rightTurnDist = 1500;
                 rValue = enc.rightEncoderValue - prevRightEncoder;
-                if(rValue < turnDist - 2000)
+                if(rValue < rightTurnDist - 2000)
                 {
                     Drivetrain.setSpeed(0, .5);
                 }
-				else if(rValue < turnDist)
+				else if(rValue < rightTurnDist)
                 {
                     Drivetrain.setSpeed(0, .3);
                 }
@@ -2186,12 +2186,12 @@ public class Autonomous
 				break;
 			case 4:
 				double leftTurnDist = 1500;
-                LValue = enc.leftEncoderValue - prevleftEncoder;
-                if(lValue < turnDist - 2000)
+                lValue = enc.leftEncoderValue - prevLeftEncoder;
+                if(lValue < leftTurnDist - 2000)
                 {
                     Drivetrain.setSpeed(0, .5);
                 }
-				else if(lValue < turnDist)
+				else if(lValue < leftTurnDist)
                 {
                     Drivetrain.setSpeed(0, .3);
                 }
@@ -2203,7 +2203,7 @@ public class Autonomous
 				}
 				break;
 			case 5:
-				double straightDist = 10000;
+				straightDist = 10000;
 				if(enc.leftEncoderValue < 3000)
 				{
 					Drivetrain.setSpeed(.4,.4);
