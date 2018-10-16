@@ -2102,12 +2102,13 @@ public class Autonomous
 				}
 				break;
 		}
-	}
+	} 
 
 	public static void middleAuto1(Encoders enc, NavX gyro)
 	{
 		enc.setEncoderValues();
 		gyro.setAngle();
+		System.out.println(gyro.yaw);
 		switch(currentState)
 		{
 			case 0:
@@ -2142,89 +2143,184 @@ public class Autonomous
 				}
 				break;
 			case 2: 
-				double straightDist = 10000;
-				if(enc.leftEncoderValue < 3000)
+				double straightDist = 1000;
+				if(enc.leftEncoderValue < 1700)
 				{
 					Drivetrain.setSpeed(.4,.4);
 				}
-				else if(enc.leftEncoderValue < ((2 * straightDist)/3.0))
-				{
-					Drivetrain.jankStraight(gyro.yaw, .6);
-					//Wrist.moveUp();
-				}
-				else if(enc.leftEncoderValue < straightDist)
-				{
-					Elevator.moveElevatorPosition(Constants.sWitch);
-					moveWristDownWhileRunning();
-					speed = slowDown(.15, .6, ((2 * straightDist)/3.0), straightDist, enc.leftEncoderValue);
-					Drivetrain.jankStraight(gyro.yaw, speed);
-
-				}
 				else 
 				{
-					prevRightEncoder = enc.leftEncoderValue;
+					prevLeftEncoder = enc.leftEncoderValue;
+					prevTime = stopWatch.get();
 					currentState = 3;
 				}
 				break;
 			case 3:
-				double rightTurnDist = 1500;
-                rValue = enc.rightEncoderValue - prevRightEncoder;
-                if(rValue < rightTurnDist - 2000)
+				double rightTurnDist = 2500;
+				currTime = stopWatch.get() - prevTime;
+				System.out.println(currTime);
+                lValue = enc.leftEncoderValue - prevLeftEncoder;
+                if(currTime < .66)
                 {
-                    Drivetrain.setSpeed(0, .5);
-                }
-				else if(rValue < rightTurnDist)
-                {
-                    Drivetrain.setSpeed(0, .3);
+                    Drivetrain.setSpeed(0.5, 0.2);
                 }
 				else 
 				{
 					Drivetrain.stop();
 					prevTime = stopWatch.get();
+					prevRightEncoder = enc.rightEncoderValue;
 					currentState = 4;
 				}
 				break;
 			case 4:
-				double leftTurnDist = 1500;
-                lValue = enc.leftEncoderValue - prevLeftEncoder;
-                if(lValue < leftTurnDist - 2000)
+				//leftTurnDist = 2500;
+				rValue = enc.rightEncoderValue - prevRightEncoder;
+				System.out.println(currTime);
+				currTime = stopWatch.get() - prevTime;
+                if(currTime < .66)
                 {
-                    Drivetrain.setSpeed(0, .5);
+                    Drivetrain.setSpeed(0.2, 0.5);
                 }
-				else if(lValue < leftTurnDist)
+				else 
+				{
+					Drivetrain.stop();
+					prevLeftEncoder = enc.leftEncoderValue;
+					prevTime = stopWatch.get();
+					currentState = 5;
+				}
+				break;
+			case 5:
+				straightDist = 1500;
+				currTime = stopWatch.get() - prevTime;
+				lValue = enc.leftEncoderValue - prevLeftEncoder;
+				if(currTime < 0)
+				{
+
+					Drivetrain.jankStraight(gyro.yaw, .4);
+				}
+				else 
+				{
+					prevRightEncoder = enc.leftEncoderValue;
+					Drivetrain.stop();
+					//currentState = 6;
+				}
+				break;
+		}
+	}
+	public static void middleAuto2(Encoders enc, NavX gyro)
+	{
+		enc.setEncoderValues();
+		gyro.setAngle();
+		System.out.println(gyro.yaw);
+		switch(currentState)
+		{
+			case 0:
+			stopWatch.stop();
+			if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && gyro.yaw == 0)
+				{
+					stopWatch.start();
+					currentState = 2;
+				}
+				else
+				{
+					enc.resetEncoders();
+					stopWatch.reset();
+					gyro.resetAngle();
+					//Wrist.wristMotor.getSensorCollection().setQuadraturePosition(Constants.up, 10);
+				}
+				break;
+			case 1:
+				if(Elevator.elevatorEncoderValue == 0)
+				{
+					Elevator.stopElevator();
+					currentState = 2;
+				}
+				else if(stopWatch.get() > 1)
+				{
+					Elevator.stopElevator();
+					currentState = 2;
+				}
+				else
+				{
+					Elevator.moveElevator(-.3);
+				}
+				break;
+			case 2: 
+				double straightDist = 1000;
+				if(enc.leftEncoderValue < 1700)
+				{
+					Drivetrain.setSpeed(.4,.4);
+				}
+				else 
+				{
+					prevLeftEncoder = enc.leftEncoderValue;
+					prevTime = stopWatch.get();
+					currentState = 3;
+				}
+				break;
+			case 3:
+				currTime = stopWatch.get() - prevTime;
+				System.out.println(currTime);
+                lValue = enc.leftEncoderValue - prevLeftEncoder;
+                if(currTime < .66)
                 {
-                    Drivetrain.setSpeed(0, .3);
+                    Drivetrain.setSpeed(0.1, 0.58);
                 }
 				else 
 				{
 					Drivetrain.stop();
 					prevTime = stopWatch.get();
+					prevRightEncoder = enc.rightEncoderValue;
 					currentState = 4;
 				}
 				break;
-			case 5:
-				straightDist = 10000;
-				if(enc.leftEncoderValue < 3000)
+			case 4:
+				straightDist = 1500;
+				currTime = stopWatch.get() - prevTime;
+				lValue = enc.leftEncoderValue - prevLeftEncoder;
+				if(currTime < .88)
 				{
-					Drivetrain.setSpeed(.4,.4);
-				}
-				else if(enc.leftEncoderValue < ((2 * straightDist)/3.0))
-				{
-					Drivetrain.jankStraight(gyro.yaw, .6);
-					//Wrist.moveUp();
-				}
-				else if(enc.leftEncoderValue < straightDist)
-				{
-					Elevator.moveElevatorPosition(Constants.sWitch);
-					moveWristDownWhileRunning();
-					speed = slowDown(.15, .6, ((2 * straightDist)/3.0), straightDist, enc.leftEncoderValue);
-					Drivetrain.jankStraight(gyro.yaw, speed);
 
+					Drivetrain.setSpeed(.4,.4);
 				}
 				else 
 				{
 					prevRightEncoder = enc.leftEncoderValue;
-					//currentState = 6;
+					Drivetrain.stop();
+					prevTime = stopWatch.get();
+					currentState = 5;
+				}
+				break;
+			case 5:
+				//leftTurnDist = 2500;
+				rValue = enc.rightEncoderValue - prevRightEncoder;
+				System.out.println(currTime);
+				currTime = stopWatch.get() - prevTime;
+                if(currTime < .66)
+                {
+                    Drivetrain.setSpeed(0.53, 0.15);
+                }
+				else 
+				{
+					Drivetrain.stop();
+					prevLeftEncoder = enc.leftEncoderValue;
+					prevTime = stopWatch.get();
+					currentState = 6;
+				}
+				break;
+			case 6:
+				straightDist = 1500;
+				currTime = stopWatch.get() - prevTime;
+				lValue = enc.leftEncoderValue - prevLeftEncoder;
+				if(currTime < 0)
+				{
+
+					Drivetrain.jankStraight(gyro.yaw, .4);
+				}
+				else 
+				{
+					prevRightEncoder = enc.leftEncoderValue;
+					Drivetrain.stop();
 				}
 				break;
 		}
