@@ -111,11 +111,11 @@ public class Wrist
 	{
 		if(limitSwitch.get())
 		{
-			return true;
+			return false;
 		} 
 		else 
 		{
-			return false;
+			return true;
 		}
 	}
 	
@@ -239,11 +239,11 @@ public class Wrist
 	
 	public static void runWrist()
 	{
-		if(wristEncoderValue > Constants.kWristSafetyLimit && overrideValue != 0)
-		{
-			aimedWristState = -3;
-		}
-		else if(wristEncoderValue > Constants.kWristSafetyLimit && overrideValue == 0)
+		// if(wristEncoderValue > Constants.kWristSafetyLimit && overrideValue != 0)
+		// {
+		// 	aimedWristState = -3;
+		// }
+		if(wristEncoderValue > Constants.kWristSafetyLimit)
 		{
 			aimedWristState = -2;
 		}
