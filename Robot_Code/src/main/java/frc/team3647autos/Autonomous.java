@@ -310,6 +310,8 @@ public class Autonomous
 		}
 	}
 
+
+	// 151.5 inches in y, 55.5 inches in x
 	public static void chezySwitchRightFromRight(Encoders enc, NavX gyro)
 	{
 		enc.setEncoderValues();
@@ -419,6 +421,7 @@ public class Autonomous
 		}
 	}
 
+	// 151.5 inches in y, 55.5 inches in x
 	public static void chezySwitchLeftFromLeft(Encoders enc, NavX gyro)
 	{
 		enc.setEncoderValues();
@@ -462,8 +465,9 @@ public class Autonomous
 				}
 				break;
 			case 2:
-				double straightDist = 12800;
+				double straightDist = 11000;
 				enc.dontSkip();
+				Wrist.moveToFlat();
 				Elevator.moveElevatorPosition(Constants.sWitch);
 				if(enc.leftEncoderValue < 3000)
 				{
@@ -488,7 +492,7 @@ public class Autonomous
 				}
 				break;
 			case 3:
-				double turnDist = 5070;
+				double turnDist = 5300;
 				Elevator.moveElevatorPosition(Constants.sWitch);
                 moveWristDownWhileRunning();
                 lValue = enc.leftEncoderValue - prevLeftEncoder;
@@ -520,9 +524,10 @@ public class Autonomous
 				}
 				else 
 				{
-					IntakeWheels.runIntake(0, 0, true, 0, 0, false);
+					IntakeWheels.runIntake(0, 0, true, -.9, -.9, false);
 				}
 				break;
+		
 		}
 	}
 

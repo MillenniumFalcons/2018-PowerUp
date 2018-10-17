@@ -20,9 +20,13 @@ public class Robot extends IterativeRobot
 	MotorSafety safety;
 	MotorSafetyHelper safetyChecker;
 	CameraServer server;
+	PracDigitalPin yes;
 	
 	Timer stopWatch = new Timer();
 	Timer newStopWatch = new Timer();
+
+	public static boolean pracBot;
+
 	int run = 0;
 	double prevLeftEncoder = 0, prevRightEncoder = 0;
 
@@ -35,6 +39,7 @@ public class Robot extends IterativeRobot
 		try
 		{
 			CrashChecker.logRobotInit();
+			yes = new PracDigitalPin();
 			enc = new Encoders();
 			safetyChecker = new MotorSafetyHelper(safety);
 			joy = new Joysticks();
@@ -42,7 +47,7 @@ public class Robot extends IterativeRobot
 			navX = new NavX();
 			Elevator.resetElevatorEncoders();
 			Elevator.elevatorInitialization();
-			Drivetrain.drivetrainInitialization();
+			Drivetrain.drivetrainInitialization(false);
 			setTests();
 			Wrist.configWristPID();
 			
