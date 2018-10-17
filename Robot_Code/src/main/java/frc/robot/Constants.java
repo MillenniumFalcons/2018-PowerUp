@@ -24,12 +24,12 @@ public class Constants
 	public final static double velocityConstant = 1550;
 
 	//PracBot
-	public final static double lDrivekF1 = 0.65;
-	public final static double lDrivekP1 = 1.75;
+	public final static double lDrivekF1 = 0.66;
+	public final static double lDrivekP1 = 1.5;
 	public final static double lDrivekI1 = 0;
 	public final static double lDrivekD1 = 0;
-	public final static double rDrivekF1 = 0.64;
-	public final static double rDrivekP1 = 1.75;
+	public final static double rDrivekF1 = 0.67;
+	public final static double rDrivekP1 = 1.5;
 	public final static double rDrivekI1 = 0;
 	public final static double rDrivekD1 = 0;
 	public final static double velocityConstant1 = 1550;
