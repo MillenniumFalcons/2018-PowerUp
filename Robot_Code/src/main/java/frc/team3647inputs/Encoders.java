@@ -71,6 +71,13 @@ public class Encoders
 		System.out.println("Left Encoder Velocity: " + lVelocity + "Left FPS: " + lVelocityFPS);
 		System.out.println("Right Encoder Velocity: " + rVelocity + "Right FPS: " + rVelocityFPS);
 	}
+
+	public void encoderVelocity()
+	{
+		rVelocity = Drivetrain.rightSRX.getSelectedSensorVelocity(Constants.drivePID);
+		lVelocity = Drivetrain.leftSRX.getSelectedSensorVelocity(Constants.drivePID);
+		System.out.println("L: " + lVelocity + " R: " + rVelocity);
+	}
  	public void testEncoderCLError()
 	{
 		System.out.println("Left Encoder CL Error: " + Drivetrain.leftSRX.getClosedLoopError(Constants.drivePID));
