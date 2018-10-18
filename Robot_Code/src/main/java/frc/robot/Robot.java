@@ -98,7 +98,7 @@ public class Robot extends IterativeRobot
 			Elevator.setElevatorEncoder();
 			Wrist.setWristEncoder();
 			Lights.runLights();
-			Autonomous.middleAuto2(enc, navX);
+			Autonomous.jankScale(enc, navX);
 			//MPAutos.middleSwitch(enc, navX);
 		}
 	}
@@ -106,7 +106,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void disabledPeriodic()
 	{
-		Drivetrain.setToBrake();
+		Drivetrain.setToCoast();
 	}
 	
 	@Override

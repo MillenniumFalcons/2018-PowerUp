@@ -971,6 +971,8 @@ public class Autonomous
 		}
 	}
 	
+
+	//307.15 icnhes, 10 inches max
 	public static void quickleftScale(Encoders enc, NavX gyro)
 	{
 		enc.setEncoderValues();
@@ -1013,6 +1015,7 @@ public class Autonomous
 				break;
 			case 2:
 				double totalScaleDist = 26600;
+				enc.dontSkip();
 				if(enc.leftEncoderValue < 3000)
 				{
 					Drivetrain.setSpeed(.4, .4);
@@ -1072,7 +1075,7 @@ public class Autonomous
 				else
 				{
 					prevTime = stopWatch.get();
-					currentState = 5;
+					// currentState = 5;
 				}
 				break;
 			case 5:
@@ -1090,6 +1093,8 @@ public class Autonomous
 		}
 	}
 
+
+	//307.15 icnhes, 10 inches max
 	public static void quickRightScale(Encoders enc, NavX gyro)
 	{
 		enc.setEncoderValues();
@@ -1143,6 +1148,7 @@ public class Autonomous
 				break;
 			case 254:
 				double totalScaleDist = 25300;
+				enc.dontSkip();
 				if(enc.leftEncoderValue < ((2 * totalScaleDist)/3.0))
 				{
 					Elevator.moveElevatorPosition(Constants.sWitch);
@@ -1221,6 +1227,8 @@ public class Autonomous
 	{
 		enc.setEncoderValues();
 		gyro.setAngle();
+		System.out.println(gyro.yaw);
+		enc.testEncoders();
 		switch(currentState)
 		{
 			case 0:
@@ -1269,22 +1277,7 @@ public class Autonomous
 				break;
 			case 254:
 				double totalScaleDist = 23000;
-				if(enc.leftEncoderValue > 4000)
-				{
-					LhighValue = enc.leftEncoderValue;
-				}
-				else 
-				{
-					Drivetrain.leftSRX.setSelectedSensorPosition(LhighValue, Constants.drivePID, Constants.kTimeoutMs);
-				}
-				if(enc.rightEncoderValue > 4000)
-				{
-					RhighValue = enc.rightEncoderValue;
-				}
-				else 
-				{
-					Drivetrain.rightSRX.setSelectedSensorPosition(RhighValue, Constants.drivePID, Constants.kTimeoutMs);
-				}
+				enc.dontSkip();
 				if(enc.leftEncoderValue < ((2 * totalScaleDist)/3.0))
 				{
 					Elevator.moveElevatorPosition(Constants.sWitch);
@@ -1351,14 +1344,13 @@ public class Autonomous
 				}
 				break;
 			case 6:
-				double spinDist = 2750;
-				System.out.println(enc.rightEncoderValue);
-				if(enc.rightEncoderValue < spinDist - 1300)
+				double reqAngle = 200;
+				if(gyro.actualYaw > reqAngle + 30)
 				{
 					Drivetrain.setSpeed(-.5, .5);
 					Elevator.moveElevatorPosition(Constants.scale);
 				}
-				else if(enc.rightEncoderValue < spinDist)
+				else if(gyro.actualYaw > reqAngle)
 				{
 					Drivetrain.setSpeed(-.2, .2);
 					IntakeWheels.runIntake(0, 0, true, 0, 0, false);
@@ -1398,13 +1390,13 @@ public class Autonomous
 				Wrist.moveToFlat();
 				if(enc.leftEncoderValue < straightDistForCube - 1500)
 				{
-					Drivetrain.jankStraight(0, .4);
+					Drivetrain.jankStraightNotFirst(gyro.actualYaw, .5, 200);
 					IntakeWheels.runIntake(0, 0, true, .5, .5, false);
 					Intake.openIntake();
 				}
 				else if(enc.leftEncoderValue < straightDistForCube)
 				{
-					Drivetrain.jankStraight(0, .3);
+					Drivetrain.jankStraightNotFirst(gyro.actualYaw, .3, 200);
 					IntakeWheels.runIntake(0, 0, true, .5, .5, false);
 					Intake.openIntake();
 				}
@@ -1467,7 +1459,7 @@ public class Autonomous
 				}
 				break;
 			case 13:
-				spinDist = 2550;
+				double spinDist = 2550;
 				Wrist.moveToFlat();
 				rValue = Math.abs(enc.rightEncoderValue);
 				Elevator.moveElevatorPosition(Constants.scale);
