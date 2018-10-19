@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot
 	Timer stopWatch = new Timer();
 	Timer newStopWatch = new Timer();
 
-	public static boolean pracBot;
+	public static boolean pracBot = true;
 
 	int run = 0;
 	double prevLeftEncoder = 0, prevRightEncoder = 0;
@@ -47,7 +47,7 @@ public class Robot extends IterativeRobot
 			navX = new NavX();
 			Elevator.resetElevatorEncoders();
 			Elevator.elevatorInitialization();
-			Drivetrain.drivetrainInitialization(false);
+			Drivetrain.drivetrainInitialization(pracBot);
 			setTests();
 			Wrist.configWristPID();
 			
