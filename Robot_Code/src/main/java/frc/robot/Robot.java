@@ -65,12 +65,12 @@ public class Robot extends IterativeRobot
 		driveCurrent = false;
 		elevatorCurrent = false;
 		elevatorEncoder = false;
-		bannerSensor = false;
+		bannerSensor = true;
 		currentState = false;
 		wristEncoder = false;
 		wristLimitSwitch = false;
 		wristCurrent = false;
-		intakeBanner = false;
+		intakeBanner = true;
 	}
 	
 	@Override
@@ -98,7 +98,7 @@ public class Robot extends IterativeRobot
 			Elevator.setElevatorEncoder();
 			Wrist.setWristEncoder();
 			Lights.runLights();
-			Autonomous.jankScale(enc, navX);
+			Autonomous.quickleftScale(enc, navX);
 			//MPAutos.middleSwitch(enc, navX);
 		}
 	}
@@ -134,12 +134,12 @@ public class Robot extends IterativeRobot
 			runMotorSafety();
 			runPistonsandForks();
 			runDrivetrain();
-			runElevator();
+			//runElevator();
 			runWrist();
 			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0, joy.leftBumper1);
 			Lights.runLights();
 			runTests();
-			enc.testEncoders();
+			//enc.testEncoders();
 		}
 		catch(Throwable t)
 		{

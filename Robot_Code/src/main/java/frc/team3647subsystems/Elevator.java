@@ -173,11 +173,11 @@ public class Elevator
 	{
         if(bannerSensor.get())
 		{
-            return false;
+            return true;
 		}
 		else
 		{
-            return true;
+            return false;
 		}
 	}
     
