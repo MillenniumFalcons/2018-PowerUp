@@ -98,7 +98,7 @@ public class Autonomous
 		boolean cross = false; //always false -- true sets it so that we WILL ALWAYS cross auto - stay false
 		boolean cantCross = false; //true sets it so that we can't go across left and right
 		boolean theyWillCross = false; //if other other team will cross from left to right (v.v.) -> True
-		double side; //0 = left, 1 = middle, 2 = right
+		double side = 2; //0 = left, 1 = middle, 2 = right
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switch(autoState)
 		{
