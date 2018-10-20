@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot
 	Timer stopWatch = new Timer();
 	Timer newStopWatch = new Timer();
 
-	public static boolean pracBot = true;
+	public static boolean pracBot = false;
 
 	int run = 0;
 	double prevLeftEncoder = 0, prevRightEncoder = 0;
@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot
 			Drivetrain.drivetrainInitialization(pracBot);
 			setTests();
 			Wrist.configWristPID();
-			
+			yes.setPin();   
 		}
 		catch(Throwable t)
 		{
@@ -98,7 +98,7 @@ public class Robot extends IterativeRobot
 			Elevator.setElevatorEncoder();
 			Wrist.setWristEncoder();
 			Lights.runLights();
-			Autonomous.quickleftScale(enc, navX);
+			Autonomous.middleAutoR(enc, navX);
 			//MPAutos.middleSwitch(enc, navX);
 		}
 	}
@@ -134,7 +134,7 @@ public class Robot extends IterativeRobot
 			runMotorSafety();
 			runPistonsandForks();
 			runDrivetrain();
-			//runElevator();
+			runElevator();
 			runWrist();
 			IntakeWheels.runIntake(joy.leftTrigger1, joy.rightTrigger1, false, 0, 0, joy.leftBumper1);
 			Lights.runLights();

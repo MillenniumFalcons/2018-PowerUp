@@ -4,19 +4,19 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 public class PracDigitalPin
 {
-//    DigitalInput prac = new DigitalInput(0);
+    DigitalInput prac = new DigitalInput(0);
 
      boolean pracBot;
 
-//     public void setPin()
-//     {
-//         if(prac.get() == true)
-//         {
-//             pracBot = true;
-//         }
-//         else 
-//         {
-//             pracBot = false;
-//         }
-//     }
+    public void setPin()
+    {
+        if(prac.get() == true)
+        {
+            pracBot = true;
+        }
+        else 
+        {
+            pracBot = false;
+        }
+    }
 }

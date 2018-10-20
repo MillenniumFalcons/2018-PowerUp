@@ -169,15 +169,15 @@ public class Elevator
         leftGearboxMaster.set(ControlMode.MotionMagic, position);
     }
 
-	public static boolean reachedBottom()
+	public static boolean reachedBottom()//false/true for comp, true/false for prac
 	{
         if(bannerSensor.get())
 		{
-            return true;
+            return false;//true for prac, false for comp
 		}
 		else
 		{
-            return false;
+            return true;
 		}
 	}
     
