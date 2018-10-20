@@ -20,6 +20,12 @@ public class Autonomous
 	6. quickRightScale
 	7. jankScale
 	8. jankScaleDeIzquierda
+	9. middleRightAuto
+	10. middleLeftAuto
+	11. middleRightAuto1
+	12. middleLeftAuto1
+	13. chezySwitchRightFromRight1
+	14. chezySwitchLeftFromLeft1
 	*/
 
     static TrajectoryFollower traj = new TrajectoryFollower();
@@ -88,9 +94,9 @@ public class Autonomous
 	{
 		//cross between scale and switch scale from left to right
 		boolean cross = false; //always false -- true sets it so that we WILL ALWAYS cross auto - stay false
-		boolean cantCross = true; //true sets it so that we can't go across left and right
-		boolean theyWillCross = true; //if other other team will cross from left to right (v.v.) -> True
-		boolean right = true; //if we are on right side of field - false for left and true for right
+		boolean cantCross = false; //true sets it so that we can't go across left and right
+		boolean theyWillCross = false; //if other other team will cross from left to right (v.v.) -> True
+		double side; //0 = left, 1 = middle, 2 = right
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switch(autoState)
 		{
@@ -101,36 +107,39 @@ public class Autonomous
 				}
 				else 
 				{
-					if(right)
+					if(Robot.pracBot)
 					{
-						if(theyWillCross)
+						if(side == 0)
 						{
-							// if(gameData.charAt(1) == 'R')
-							// {
-							// 	runAuto = 6;
-							// }
-							if(gameData.charAt(0) == 'R' &&gameData.charAt(1) == 'L' )
+							if(gameData.charAt(0) == 'L')
 							{
-								runAuto = 3;
+								runAuto = 14;
+							}
+							else 
+							{
+								runAuto = 0;
+							}	
+						}
+						else if(side == 1)
+						{
+							if(gameData.charAt(0) == 'L')
+							{
+								runAuto = 12;
 							}
 							else if(gameData.charAt(0) == 'R')
 							{
-								runAuto = 1;
+								runAuto = 11;
 							}
 							else 
 							{
 								runAuto = 0;
 							}
 						}
-						else if(cantCross)
+						else if(side == 2)
 						{
-							if(gameData.charAt(1) == 'R')
+							if(gameData.charAt(0) == 'R')
 							{
-								runAuto = 7;
-							}
-							else if(gameData.charAt(0) == 'R')
-							{
-								runAuto = 3;
+								runAuto = 13;
 							}
 							else 
 							{
@@ -139,58 +148,88 @@ public class Autonomous
 						}
 						else 
 						{
-							if(gameData.charAt(1) == 'R')
-							{
-								runAuto = 7;
-							}
-							else if(gameData.charAt(0) == 'R')
-							{
-								runAuto = 3;
-							}
-							else if(gameData.charAt(0) == 'L')
-							{
-								runAuto = 4;
-							}
-							else 
-							{
-								runAuto = 0;
-							}
+							runAuto = 0;
 						}
 					}
 					else 
 					{
-						if(theyWillCross)
+						if(side == 0)
 						{
-							// if(gameData.charAt(1) == 'L')
-							// {
-							// 	runAuto = 5;
-							// }
 							if(gameData.charAt(0) == 'L')
 							{
 								runAuto = 2;
 							}
 							else 
 							{
-								runAuto = 0; 
+								runAuto = 0;
+							}	
+						}
+						else if(side == 1)
+						{
+							if(gameData.charAt(0) == 'L')
+							{
+								runAuto = 10;
+							}
+							else if(gameData.charAt(0) == 'R')
+							{
+								runAuto = 9;
+							}
+							else 
+							{
+								runAuto = 0;
+							}
+						}
+						else if(side == 2)
+						{
+							if(theyWillCross)
+							{
+								if(gameData.charAt(1) == 'L' && gameData.charAt(0) == 'R')
+								{
+									runAuto = 3;
+								}
+								else if(gameData.charAt(0) == 'R')
+								{
+									runAuto = 1;
+								}
+								else 
+								{
+									runAuto = 0;
+								}
+							}
+							else if(cantCross)
+							{
+								if(gameData.charAt(0) == 'R')
+								{
+									runAuto = 3;
+								}
+								else 
+								{
+									runAuto = 0;
+								}
+							}
+							else 
+							{
+								if(gameData.charAt(0) == 'R')
+								{
+									runAuto = 3;
+								}
+								else if(gameData.charAt(0) == 'L')
+								{
+									runAuto = 4;
+								}
+								else 
+								{
+									runAuto = 0;
+								}
 							}
 						}
 						else 
 						{
-							if(gameData.charAt(1) == 'L')
-							{
-								runAuto = 8;
-							}
-							else if(gameData.charAt(0) == 'L')
-							{
-								runAuto = 2;
-							}
-							else 
-							{
-								runAuto = 0; 
-							}
+							runAuto = 0;
 						}
 					}
 				}
+
 				autoState = 1;
 				break;
 			 case 1:
@@ -214,21 +253,45 @@ public class Autonomous
 				{
 					chezyDoubleSwitchLeftFromRight(enc, gyro);
 				}
-				else if(runAuto == 5)
+				// else if(runAuto == 5)
+				// {
+				// 	quickleftScale(enc, gyro);
+				// }
+				// else if(runAuto == 6)
+				// {
+				// 	quickRightScale(enc, gyro);
+				// }
+				// else if(runAuto == 7)
+				// {
+				// 	jankScale(enc, gyro);
+				// }
+				// else if(runAuto == 8)
+				// {
+				// 	jankScaleDeIzquierda(enc, gyro);
+				// }
+				else if(runAuto == 9)
 				{
-					quickleftScale(enc, gyro);
+					middleAutoR(enc, gyro);
 				}
-				else if(runAuto == 6)
+				else if(runAuto == 10)
 				{
-					quickRightScale(enc, gyro);
+					middleAutoL(enc, gyro);
 				}
-				else if(runAuto == 7)
+				else if(runAuto == 11)
 				{
-					jankScale(enc, gyro);
+					middleAutoR2(enc, gyro);
 				}
-				else if(runAuto == 8)
+				else if(runAuto == 12)
 				{
-					jankScaleDeIzquierda(enc, gyro);
+					middleAutoL2(enc, gyro);
+				}
+				else if(runAuto == 13)
+				{
+					chezySwitchRightFromRight2(enc, gyro);
+				}
+				else if(runAuto == 14)
+				{
+					chezySwitchLeftFromLeft2(enc, gyro);
 				}
 				else
 				{

@@ -171,14 +171,29 @@ public class Elevator
 
 	public static boolean reachedBottom()//false/true for comp, true/false for prac
 	{
-        if(bannerSensor.get())
+		if(!Robot.pracBot)
 		{
-            return false;//true for prac, false for comp
+			if(bannerSensor.get())
+			{
+				return false;//true for prac, false for comp
+			}
+			else
+			{
+				return true;
+			}
 		}
-		else
+		else 
 		{
-            return true;
+			if(bannerSensor.get())
+			{
+				return true;//true for prac, false for comp
+			}
+			else
+			{
+				return false;
+			}
 		}
+        
 	}
     
 	public static void setElevatorButtons(boolean bottomButton, boolean switchButton, boolean scaleButton, boolean LSButton)

@@ -44,13 +44,14 @@ public class Robot extends IterativeRobot
 			safetyChecker = new MotorSafetyHelper(safety);
 			joy = new Joysticks();
 			eleVader = new Elevator();
+			yes.setPin();   
 			navX = new NavX();
 			Elevator.resetElevatorEncoders();
 			Elevator.elevatorInitialization();
 			Drivetrain.drivetrainInitialization(pracBot);
 			setTests();
 			Wrist.configWristPID();
-			yes.setPin();   
+			
 		}
 		catch(Throwable t)
 		{
@@ -98,7 +99,7 @@ public class Robot extends IterativeRobot
 			Elevator.setElevatorEncoder();
 			Wrist.setWristEncoder();
 			Lights.runLights();
-			Autonomous.middleAutoR(enc, navX);
+			Autonomous.runAuto(enc, navX);
 			//MPAutos.middleSwitch(enc, navX);
 		}
 	}
