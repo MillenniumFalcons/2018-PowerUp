@@ -98,8 +98,8 @@ public class Autonomous
 		//cross between scale and switch scale from left to right
 		boolean cross = false; //always false -- true sets it so that we WILL ALWAYS cross auto - stay false
 		boolean cantCross = false; //true sets it so that we can't go across left and right
-		boolean theyWillCross = false; //if other other team will cross from left to right (v.v.) -> True
-		double side = 2; //0 = left, 1 = middle, 2 = right
+		boolean theyWillCross = true; //if other other team will cross from left to right (v.v.) -> True
+		double side = 1; //0 = left, 1 = middle, 2 = right
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		switch(autoState)
 		{
@@ -321,15 +321,16 @@ public class Autonomous
 	public static void cross(Encoders enc, NavX gyro)
 	{
 		enc.setEncoderValues();
-		enc.testEncoders();
+		System.out.println(currentState);
+		//.testEncoders();
 		switch(currentState)
 		{
 			case 0:
 				stopWatch.stop();
-				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0 && stopWatch.get() == 0 && checkWristIdle(Wrist.wristEncoderValue) && gyro.actualYaw == 0)
+				if(enc.leftEncoderValue == 0 && enc.rightEncoderValue == 0)
 				{
 					stopWatch.start();
-					currentState = 1;
+					currentState = 2;
 				}
 				else
 				{
@@ -363,6 +364,7 @@ public class Autonomous
 				currTime = stopWatch.get() - prevTime;
 				if(enc.leftEncoderValue < 9500 || currTime < 1.5)
 				{
+					System.out.println(99);
 					Drivetrain.setSpeed(.6, .6);
 				}
 				else 
@@ -1094,8 +1096,8 @@ public class Autonomous
 				break;
 			case 3:
 				double turnDist = 5220;
-				double straighttDist = 12820;
-				double secondTurn = 5760;
+				double straighttDist = 13020;
+				double secondTurn = 5960;
 				Elevator.moveElevatorPosition(Constants.sWitch);
                 moveWristDownWhileRunning();
                 rValue = enc.rightEncoderValue - prevRightEncoder;
@@ -2785,7 +2787,7 @@ public class Autonomous
 			case 2: 
 				double straightDist = 1000;
 				Elevator.moveElevatorPosition(Constants.sWitch);
-				if(enc.leftEncoderValue < 1700)
+				if(enc.leftEncoderValue < 1650)
 				{
 					Drivetrain.jankStraight(gyro.yaw,.4);
 				}
@@ -2801,7 +2803,7 @@ public class Autonomous
 				currTime = stopWatch.get() - prevTime;
 				Elevator.moveElevatorPosition(Constants.sWitch);
                 lValue = enc.leftEncoderValue - prevLeftEncoder;
-                if(currTime < .63)
+                if(currTime < .7)
                 {
                     Drivetrain.setSpeed(0.5, 0.2);
                 }
@@ -2818,7 +2820,7 @@ public class Autonomous
 				rValue = enc.rightEncoderValue - prevRightEncoder;
 				Elevator.moveElevatorPosition(Constants.sWitch);
 				currTime = stopWatch.get() - prevTime;
-                if(currTime < .63)
+                if(currTime < .7)
                 {
                     Drivetrain.setSpeed(0.2, 0.5);
                 }
@@ -2835,7 +2837,7 @@ public class Autonomous
 				currTime = stopWatch.get() - prevTime;
 				Elevator.moveElevatorPosition(Constants.sWitch);
 				lValue = enc.leftEncoderValue - prevLeftEncoder;
-				if(currTime < 0)
+				if(currTime < 0.2)
 				{
 
 					Drivetrain.jankStraight(gyro.yaw, .4);

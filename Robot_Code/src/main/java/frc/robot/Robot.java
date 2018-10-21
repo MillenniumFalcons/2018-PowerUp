@@ -1,4 +1,4 @@
-package frc.robot;
+ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -20,12 +20,12 @@ public class Robot extends IterativeRobot
 	MotorSafety safety;
 	MotorSafetyHelper safetyChecker;
 	CameraServer server;
-	PracDigitalPin yes;
+	PracDigitalPin yes; 
 	
 	Timer stopWatch = new Timer();
 	Timer newStopWatch = new Timer();
 
-	public static boolean pracBot = false;
+	public static boolean pracBot = false; //
 
 	int run = 0;
 	double prevLeftEncoder = 0, prevRightEncoder = 0;
@@ -65,13 +65,13 @@ public class Robot extends IterativeRobot
 		driveEncoders = false;
 		driveCurrent = false;
 		elevatorCurrent = false;
-		elevatorEncoder = false;
+		elevatorEncoder = true;
 		bannerSensor = true;
 		currentState = false;
 		wristEncoder = false;
 		wristLimitSwitch = false;
 		wristCurrent = false;
-		intakeBanner = true;
+		intakeBanner = false;
 	}
 	
 	@Override
@@ -196,9 +196,19 @@ public class Robot extends IterativeRobot
 		}
 		else
 		{
-			Elevator.setElevatorButtons(joy.buttonA1, joy.buttonB1,  joy.buttonY1, joy.buttonX1);
+			if(Robot.pracBot)
+			{
+				Elevator.setElevatorButtons(joy.buttonA1, false, false, false);
 			Elevator.setManualOverride(joy.rightJoySticky1 * 1);
 			Elevator.runElevator();
+			}
+			else
+			{
+				Elevator.setElevatorButtons(joy.buttonA1, joy.buttonB1,  joy.buttonY1, joy.buttonX1);
+				Elevator.setManualOverride(joy.rightJoySticky1 * 1);
+				Elevator.runElevator();
+			}
+			
 		}
 		//Elevator.climbPrep(joy.buttonB);
 	}
