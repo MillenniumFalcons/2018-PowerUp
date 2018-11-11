@@ -7,6 +7,12 @@ import frc.team3647autos.*;
 import frc.team3647pistons.*;
 import frc.team3647subsystems.*;
 import frc.team3647inputs.*;
+import edu.wpi.first.wpilibj.CameraServer;
+import org.json.*;
+
+import jssc.SerialPort.*;
+import jssc.SerialPortException;
+import jssc.SerialPortList;
 
 
 public class Robot extends IterativeRobot 
@@ -124,6 +130,8 @@ public class Robot extends IterativeRobot
 		//ClimbButton.buttonState = 1;
 		navX.resetAngle();
 	}
+
+
 	
 	@Override
 	public void teleopPeriodic() 
@@ -148,6 +156,8 @@ public class Robot extends IterativeRobot
 			throw t;
 		}
 	}
+
+	//boo
 
 	@Override
 	public void testInit()
