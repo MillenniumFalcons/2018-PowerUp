@@ -8,11 +8,6 @@ import frc.team3647pistons.*;
 import frc.team3647subsystems.*;
 import frc.team3647inputs.*;
 import edu.wpi.first.wpilibj.CameraServer;
-import org.json.*;
-
-import jssc.SerialPort.*;
-import jssc.SerialPortException;
-import jssc.SerialPortList;
 
 
 public class Robot extends IterativeRobot 
@@ -23,8 +18,6 @@ public class Robot extends IterativeRobot
 	NavX navX;
 	Elevator eleVader;
 	Wrist wrist;
-	MotorSafety safety;
-	MotorSafetyHelper safetyChecker;
 	CameraServer server;
 	PracDigitalPin yes; 
 	
@@ -47,7 +40,6 @@ public class Robot extends IterativeRobot
 			CrashChecker.logRobotInit();
 			yes = new PracDigitalPin();
 			enc = new Encoders();
-			safetyChecker = new MotorSafetyHelper(safety);
 			joy = new Joysticks();
 			eleVader = new Elevator();
 			yes.setPin();   
@@ -182,10 +174,10 @@ public class Robot extends IterativeRobot
 		updateJoysticks();
 		Drivetrain.rightSRX.set(ControlMode.PercentOutput, joy.leftJoySticky);
 		Drivetrain.FRCarcadedrive(joy.leftJoySticky, joy.rightJoyStickx);
-		//runDrivetrain();
-		//runElevator();
+		runDrivetrain();
+		runElevator();
 		runWrist();
-		//runTests();
+		// runTests();
 		//Elevator.testElevatorEncoders();
 		Wrist.testWristEncoder();
 		//System.out.println("NavX: " + navX.yaw);
@@ -260,7 +252,7 @@ public class Robot extends IterativeRobot
 	
 	public void runMotorSafety()
 	{
-		safetyChecker.setSafetyEnabled(false);
+		// safetyChecker.setSafetyEnabled(false);
 	}
 	
 	public void runTests()
